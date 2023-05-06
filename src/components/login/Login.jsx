@@ -1,14 +1,14 @@
 import { Container, Button, Form } from 'react-bootstrap';
 
 // Import redux methods
-// import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 // Import actions from redux/actions folder
-// import { authenticateUser } from "../../redux/actions"
+import { authenticateUser } from "../../redux/actions"
 
 const Login = () => {
     // Create object of useDispatch method
-    // const dispatch = useDispatch();
+    const dispatch = useDispatch();
 
     const handleLogin = () => {
         const crediantials = {
@@ -16,7 +16,7 @@ const Login = () => {
             Password: "123"
         }
         // Call actions with data
-        // dispatch(authenticateUser(crediantials));
+        dispatch(authenticateUser(crediantials));
     }
 
     // // Get user details

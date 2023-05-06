@@ -1,4 +1,4 @@
-import AUTHENTICATE_USER from "../constants/users";
+import { AUTHENTICATE_USER } from "../constants/users"
 
 const authenticateUser = (data) => {
     return (

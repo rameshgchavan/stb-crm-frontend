@@ -8,7 +8,7 @@ import { AUTHENTICATE_USER } from "../constants/users";
 const initialState = [];
 
 // Create and export Ruducers
-export const userReducer = (state = initialState, action) => {
+export const usersReducer = (state = initialState, action) => {
     // Destruct action
     const { type, data } = action;
 
