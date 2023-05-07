@@ -3,6 +3,7 @@ import { Outlet, Route, Routes } from 'react-router-dom'
 import HomePage from "../pages/HomePage";
 import CustomersPage from "../pages/CustomersPage";
 import TransactionsPage from "../pages/TransactionsPage";
+import SignupPage from "../pages/SignupPage";
 import PageNotFound from "../pages/PageNotFound";
 
 const PagesRoutes = () => {
@@ -13,6 +14,7 @@ const PagesRoutes = () => {
                     <Route index element={<HomePage />} />
                     <Route path="/customers" element={<CustomersPage />} />
                     <Route path="/transactions" element={<TransactionsPage />} />
+                    <Route path="/signup" element={<SignupPage />} />
                     <Route path="*" element={<PageNotFound />} />
                 </Route>
             </Routes>
