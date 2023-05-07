@@ -1,5 +1,8 @@
 import { Container, Button, Form } from 'react-bootstrap';
 
+// Import axios
+import axios from "axios";
+
 // Import redux methods
 import { useSelector, useDispatch } from "react-redux";
 
@@ -7,27 +10,39 @@ import { useSelector, useDispatch } from "react-redux";
 import { authenticateUser } from "../../redux/actions"
 
 const Login = () => {
+    // // Get user details
+    const user = useSelector(reducers => reducers.usersReducer)
+
     // Create object of useDispatch method
     const dispatch = useDispatch();
 
-    const handleLogin = () => {
+    const handleLogin = async () => {
         const crediantials = {
             Email: "admin",
             Password: "123"
         }
-        // Call actions with data
-        dispatch(authenticateUser(crediantials));
+
+        const user1 = await axios("/users/login", {
+            method: "post",
+            data: crediantials
+        })
+
+        dispatch(authenticateUser(user1.data))
+
+        // await axios("/users/login", {
+        //     method: "post",
+        //     data: crediantials
+        // }).then(res => {
+        //     // Call actions with data
+        //     dispatch(authenticateUser(res.data))
+        // }).catch(err => {
+        //     console.warn(err);
+        // });
     }
-
-    // // Get user details
-    // const user = useSelector(state => state.userReducer)
-
-    // console.warn(user);
 
     return (
         <Container style={{ width: "22rem" }} className='border px-2 py-4 shadow' >
             <Form >
-                {/* <Col sm={6} md={5} lg={4} xl={4}> */}
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Email address</Form.Label>
                     <Form.Control type="email" placeholder="Enter email" />
@@ -44,7 +59,7 @@ const Login = () => {
                 <Button variant="primary" type="button" onClick={handleLogin}>
                     Login
                 </Button>
-                {/* </Col> */}
+                <p>{JSON.stringify(user.Name)}</p>
             </Form>
         </Container>
     )

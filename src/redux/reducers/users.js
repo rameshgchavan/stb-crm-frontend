@@ -1,11 +1,8 @@
-//Import axioxs
-import axios from "axios";
-
 // Import constants
 import { AUTHENTICATE_USER } from "../constants/users";
 
 // Initialize state
-const initialState = [];
+const initialState = {};
 
 // Create and export Ruducers
 export const usersReducer = (state = initialState, action) => {
@@ -14,15 +11,9 @@ export const usersReducer = (state = initialState, action) => {
 
     switch (type) {
         case AUTHENTICATE_USER:
-            const user = axios("/users/login", {
-                method: "post",
-                data
-            }).then(res => res).catch(err => err);
+            return data;
 
-            console.warn(user)
-
-            // return user;
-
-        default: return state
+        default:
+            return state
     }
 }
