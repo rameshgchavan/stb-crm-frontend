@@ -51,8 +51,15 @@ const Signup = () => {
     }
 
     return (
-        <Container style={{ width: "22rem" }} className='border p-4 shadow' >
-            <Form onSubmit={handleLogin}>
+        <Container style={{ width: "22rem" }} className='border px-4 pt-2 pb-4 shadow' >
+            <div class="d-flex flex-column">
+                <Button variant="danger" size='sm'
+                    className="flex-direction: column align-self-end rounded"
+                    onClick={() => navigate("/")}
+                >X</Button>
+            </div>
+
+            <Form onSubmit={handleLogin} className='mt-4'>
                 <Form.Group className="mb-3" controlId="formBasicUserName">
                     <Form.Label>User Name</Form.Label>
                     <Form.Control type="text" placeholder="Enter user name" required
