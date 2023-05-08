@@ -19,7 +19,7 @@ const Signup = () => {
         e.preventDefault();
 
         if (password.current !== confirmPassword.current) {
-            alert("Signup successful. Wait for approvel or contact to authority")
+            alert("Password not matching, try again.")
             return
         }
 
@@ -38,9 +38,16 @@ const Signup = () => {
             data: userDetails
         })
 
-        alert("Check Email ID or password");
+        user.data.code === 201
+            ? alert(`${user.data.message} Wait for approval or contact to authority.`)
+            : user.data.code === 409
+                ? alert(`${user.data.message} Try another one.`)
+                : alert(user.data);
 
-        navigate("/");
+        user.data.code === 201
+            ? navigate("/")
+            : navigate("/signup")
+
     }
 
     return (

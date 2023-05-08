@@ -37,7 +37,7 @@ const Login = () => {
         user.data
             ? user.data.Approved
                 ? navigate("/customers")
-                : alert("Wait for approvel or contact to authority")
+                : alert("Wait for approval or contact to authority")
             : alert("Check Email ID or password")
 
         // await axios("/users/login", {
