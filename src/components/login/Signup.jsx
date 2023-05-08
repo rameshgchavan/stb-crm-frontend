@@ -1,62 +1,60 @@
 import { Container, Button, Form } from 'react-bootstrap';
 
-import { useDispatch } from 'react-redux';
-
 // Import axios
 import axios from "axios";
 
 // Import actions from redux/actions folder
-import { authenticateUser } from "../../redux/actions"
 import { useNavigate } from 'react-router-dom';
 import { useRef } from 'react';
 
-const Login = () => {
+const Signup = () => {
+    const userName = useRef(null);
     const emailID = useRef(null);
     const password = useRef(null);
+    const confirmPassword = useRef(null);
 
     const navigate = useNavigate();
-
-    // Create object of useDispatch method
-    const dispatch = useDispatch();
 
     const handleLogin = async (e) => {
         e.preventDefault();
 
-        const crediantials = {
-            Email: emailID.current,
-            Password: password.current
+        if (password.current !== confirmPassword.current) {
+            alert("Signup successful. Wait for approvel or contact to authority")
+            return
         }
 
-        const user = await axios("/users/login", {
+        const userDetails = {
+            Admin: false,
+            Approved: false,
+            Name: userName.current,
+            AreaManager: userName.current,
+            Email: emailID.current,
+            Password: password.current,
+            LastLogin: ""
+        }
+
+        const user = await axios("/users/signup", {
             method: "post",
-            data: crediantials
+            data: userDetails
         })
 
-        dispatch(authenticateUser(user.data))
+        alert("Check Email ID or password");
 
-        user.data
-            ? user.data.Approved
-                ? navigate("/customers")
-                : alert("Wait for approvel or contact to authority")
-            : alert("Check Email ID or password")
-
-        // await axios("/users/login", {
-        //     method: "post",
-        //     data: crediantials
-        // }).then(res => {
-        //     // Call actions with data
-        //     dispatch(authenticateUser(res.data))
-        // }).catch(err => {
-        //     console.warn(err);
-        // });
+        navigate("/");
     }
 
     return (
         <Container style={{ width: "22rem" }} className='border p-4 shadow' >
             <Form onSubmit={handleLogin}>
+                <Form.Group className="mb-3" controlId="formBasicUserName">
+                    <Form.Label>User Name</Form.Label>
+                    <Form.Control type="text" placeholder="Enter user name" required
+                        onChange={(e) => userName.current = e.target.value} />
+                </Form.Group>
+
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Email address</Form.Label>
-                    <Form.Control type="text" placeholder="Enter email" required
+                    <Form.Control type="email" placeholder="Enter email" required
                         onChange={(e) => emailID.current = e.target.value} />
                     <Form.Text className="text-muted">
                         We'll never share your email with anyone else.
@@ -69,12 +67,18 @@ const Login = () => {
                         onChange={(e) => password.current = e.target.value} />
                 </Form.Group>
 
+                <Form.Group className="mb-3" controlId="formBasicConfirmPassword">
+                    <Form.Label>Confirm password</Form.Label>
+                    <Form.Control type="password" placeholder="Confirm password" required
+                        onChange={(e) => confirmPassword.current = e.target.value} />
+                </Form.Group>
+
                 <Button variant="primary" type="submit" >
-                    Login
+                    Signup
                 </Button>
             </Form>
         </Container>
     )
 }
 
-export default Login
+export default Signup

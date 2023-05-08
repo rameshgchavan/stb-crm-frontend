@@ -1,6 +1,10 @@
+import Signup from "../components/login/Signup"
+
 const SignupPage = () => {
   return (
-    <div>Signup</div>
+    <div>
+      <Signup />
+    </div>
   )
 }
 
