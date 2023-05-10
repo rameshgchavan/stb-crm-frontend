@@ -31,14 +31,14 @@ const ForgotPassword = () => {
         });
 
         if (isEmail.data.code == 200) {
-            console.warn(emailOTP);
+            // console.warn(emailOTP);
 
-            // emailjs.sendForm('service_6bhhezj', 'template_svo2tbq', otpForm.current, 'llSBBJFE7skawlOYO')
-            //     .then((result) => {
-            //         console.warn(result.text);
-            //     }, (error) => {
-            //         console.warn(error.text);
-            //     });
+            emailjs.sendForm('service_6bhhezj', 'template_svo2tbq', otpForm.current, 'llSBBJFE7skawlOYO')
+                .then((result) => {
+                    console.warn(result.text);
+                }, (error) => {
+                    console.warn(error.text);
+                });
 
             setDidsabled(true);
             setHidden(false);
