@@ -1,4 +1,4 @@
-import { Container, Button, Form } from 'react-bootstrap';
+import { Container, Button, Form, Nav } from 'react-bootstrap';
 
 import { useDispatch } from 'react-redux';
 
@@ -56,7 +56,7 @@ const Login = () => {
             <Form onSubmit={handleLogin}>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Email address</Form.Label>
-                    <Form.Control type="text" placeholder="Enter email" required
+                    <Form.Control type="email" placeholder="Enter email" required
                         onChange={(e) => emailID.current = e.target.value} />
                     <Form.Text className="text-muted">
                         We'll never share your email with anyone else.
@@ -73,6 +73,10 @@ const Login = () => {
                     Login
                 </Button>
             </Form>
+
+            <Nav className='d-flex flex-column align-items-center mt-4'>
+                <Nav.Link onClick={() => navigate("/forgotpass")}>Forgot password</Nav.Link>
+            </Nav>
         </Container>
     )
 }

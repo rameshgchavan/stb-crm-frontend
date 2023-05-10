@@ -4,9 +4,11 @@ import { useSelector } from 'react-redux';
 import HomePage from "../pages/HomePage";
 import CustomersPage from "../pages/CustomersPage";
 import TransactionsPage from "../pages/TransactionsPage";
-import SignupPage from "../pages/SignupPage";
 import PageNotFound from "../pages/PageNotFound";
 
+import Login from '../components/login/Login';
+import Signup from "../components/login/Signup";
+import ForgotPassward from "../components/login/ForgotPassward";
 
 const PagesRoutes = () => {
     const user = useSelector(state => state.usersReducer);
@@ -16,7 +18,7 @@ const PagesRoutes = () => {
         <div className='mt-4'>
             <Routes >
                 <Route path="/" element={<Outlet />}>
-                    <Route index element={<HomePage />} />
+                    <Route index element={<HomePage ><Login /> </HomePage>} />
                     {
                         user.Admin
                             ? <Route>
@@ -31,7 +33,8 @@ const PagesRoutes = () => {
                                 : <Route element={<HomePage />} />
                     }
 
-                    <Route path="/signup" element={<SignupPage />} />
+                    <Route path="/signup" element={<HomePage ><Signup /> </HomePage>} />
+                    <Route path="/forgotpass" element={<HomePage ><ForgotPassward /> </HomePage>} />
                     <Route path="*" element={<PageNotFound />} />
                 </Route>
             </Routes>

@@ -1,21 +1,13 @@
 import { Container, Button, Form } from 'react-bootstrap';
-import emailjs from "@emailjs/browser";
+
 // Import axios
 import axios from "axios";
 
 // Import actions from redux/actions folder
 import { useNavigate } from 'react-router-dom';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 
-const Signup = () => {
-    const [disabled, setDidsabled] = useState(false);
-    const [hidden, setHidden] = useState(true);
-
-    const otpForm = useRef();
-
-    const randomNumber = Math.floor(Math.random() * (1000000 - 1)).toString();
-    const emailOTP = useRef(randomNumber);
-    const userOTP = useRef(null)
+const ForgotPassward = () => {
     const userName = useRef(null);
     const emailID = useRef(null);
     const password = useRef(null);
@@ -23,44 +15,8 @@ const Signup = () => {
 
     const navigate = useNavigate();
 
-    const sendEmail = async (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
-
-        const email = otpForm.current["user_email"].value.trim();
-
-        const isEmail = await axios("/users/isemail", {
-            method: "post",
-            data: { Email: email }
-        });
-
-        if (isEmail.data.code == 409) {
-            alert(`${email} is already in use, try anothe one.`)
-        }
-
-        else if (isEmail.data.code == 200) {
-            // console.warn(emailOTP);
-
-            emailjs.sendForm('service_6bhhezj', 'template_svo2tbq', otpForm.current, 'llSBBJFE7skawlOYO')
-                .then((result) => {
-                    console.warn(result.text);
-                }, (error) => {
-                    console.warn(error.text);
-                });
-
-            setDidsabled(true);
-            setHidden(false);
-        }
-
-        else { alert(isEmail) }
-    };
-
-    const handleSinup = async (e) => {
-        e.preventDefault();
-
-        if (emailOTP.current !== userOTP.current) {
-            alert("OTP not matching, check again.")
-            return
-        }
 
         if (password.current !== confirmPassword.current) {
             alert("Password not matching, try again.")
@@ -103,42 +59,26 @@ const Signup = () => {
                 >X</Button>
             </div>
             <hr />
-            <Form ref={otpForm} onSubmit={sendEmail}>
-                <Form.Group className="mb-3" controlId="formBasicUserName">
-                    <Form.Label>User Name</Form.Label>
-                    <Form.Control name="user_name" type="text" placeholder="Enter user name" required
-                        disabled={disabled}
-                        onChange={(e) => { userName.current = e.target.value }} />
-                </Form.Group>
-
+            <Form onSubmit={handleLogin} className='mt-3'>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Text className="text-muted">
-                        We'll never share your email with anyone else.
-                    </Form.Text>
-                    <Form.Control name="user_email" type="email" placeholder="Enter email" required
-                        disabled={disabled}
-                        onChange={(e) => { emailID.current = e.target.value }} />
-
-                    <input name="email_otp" defaultValue={emailOTP.current} hidden/>
-
-                    <Button variant="success" type="submit" size='sm' className='mt-2'
-                        disabled={disabled}>
+                    <Form.Label>Enter your registered email id</Form.Label>
+                    <Form.Control type="email" placeholder="Enter email" required
+                        onChange={(e) => emailID.current = e.target.value} />
+                    <Button variant="success" type="button" size='sm' className='mt-2' >
                         Send OTP
                     </Button>
                 </Form.Group>
-            </Form>
 
-            <Form onSubmit={handleSinup} className='mt-3' hidden={hidden}>
                 <Form.Group className="my-3" controlId="formBasicOTP">
                     <Form.Text className="text-muted">
                         Check your email for OTP
                     </Form.Text>
                     <Form.Control type="text" placeholder="Enter OTP" required
-                        onChange={(e) => userOTP.current = e.target.value} />
+                        onChange={(e) => userName.current = e.target.value} />
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicPassword">
-                    <Form.Label>Enter password</Form.Label>
+                    <Form.Label>New Password</Form.Label>
                     <Form.Control type="password" placeholder="Enter new password" required
                         onChange={(e) => password.current = e.target.value} />
                 </Form.Group>
@@ -150,11 +90,11 @@ const Signup = () => {
                 </Form.Group>
 
                 <Button variant="primary" type="submit" >
-                    Signup
+                    Save
                 </Button>
             </Form>
         </Container>
     )
 }
 
-export default Signup
+export default ForgotPassward

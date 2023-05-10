@@ -1,9 +1,7 @@
-import Login from "../components/login/Login"
-
-const HomePage = () => {
+const HomePage = ({ children }) => {
     return (
         <div>
-            <Login />
+            {children}
         </div>
     )
 }
