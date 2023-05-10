@@ -24,7 +24,7 @@ const Login = () => {
 
         const crediantials = {
             Email: emailID.current,
-            Password: password.current
+            Password: password.current.toString()
         }
 
         const user = await axios("/users/login", {
@@ -32,13 +32,21 @@ const Login = () => {
             data: crediantials
         })
 
+        if (user.data.code == 404) {
+            alert("Email ID not matching or not registered")
+            return
+        }
+
+        if (user.data.code == 403) {
+            alert("Passward not matching, please check again.")
+            return
+        }
+
         dispatch(authenticateUser(user.data))
 
-        user.data
-            ? user.data.Approved
-                ? navigate("/customers")
-                : alert("Wait for approval or contact to authority")
-            : alert("Check Email ID or password")
+        user.data.Approved
+            ? navigate("/customers")
+            : alert("Wait for approval or contact to authority")
 
         // await axios("/users/login", {
         //     method: "post",
