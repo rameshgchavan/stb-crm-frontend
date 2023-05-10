@@ -7,7 +7,7 @@ import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import { useRef, useState } from 'react';
 
-const Signup = () => {
+const ForgotPassword = () => {
     const [disabled, setDidsabled] = useState(false);
     const [hidden, setHidden] = useState(true);
 
@@ -16,9 +16,8 @@ const Signup = () => {
     const randomNumber = Math.floor(Math.random() * (1000000 - 1)).toString();
     const emailOTP = useRef(randomNumber);
     const userOTP = useRef(null)
-    const userName = useRef(null);
     const emailID = useRef(null);
-    const password = useRef(null);
+    const newPassword = useRef(null);
     const confirmPassword = useRef(null);
 
     const navigate = useNavigate();
@@ -26,35 +25,31 @@ const Signup = () => {
     const sendEmail = async (e) => {
         e.preventDefault();
 
-        // const email = otpForm.current["user_email"].value.trim();
-
         const isEmail = await axios("/users/isemail", {
             method: "post",
             data: { Email: emailID.current.trim() }
         });
 
         if (isEmail.data.code == 200) {
-            alert(`${emailID.current} is already in use, try another one.`)
-        }
+            console.warn(emailOTP);
 
-        else if (isEmail.data.code == 404) {
-            // console.warn(emailOTP);
-
-            emailjs.sendForm('service_6bhhezj', 'template_svo2tbq', otpForm.current, 'llSBBJFE7skawlOYO')
-                .then((result) => {
-                    console.warn(result.text);
-                }, (error) => {
-                    console.warn(error.text);
-                });
+            // emailjs.sendForm('service_6bhhezj', 'template_svo2tbq', otpForm.current, 'llSBBJFE7skawlOYO')
+            //     .then((result) => {
+            //         console.warn(result.text);
+            //     }, (error) => {
+            //         console.warn(error.text);
+            //     });
 
             setDidsabled(true);
             setHidden(false);
         }
-
+        else if (isEmail.data.code == 404) {
+            alert(isEmail.data.message);
+        }
         else { alert(isEmail) }
     };
 
-    const handleSinup = async (e) => {
+    const handleReset = async (e) => {
         e.preventDefault();
 
         if (emailOTP.current !== userOTP.current) {
@@ -62,35 +57,26 @@ const Signup = () => {
             return
         }
 
-        if (password.current !== confirmPassword.current) {
+        if (newPassword.current !== confirmPassword.current) {
             alert("Password not matching, try again.")
             return
         }
 
-        const userDetails = {
-            Admin: false,
-            Approved: false,
-            Name: userName.current,
-            AreaManager: userName.current,
+        const userCredentails = {
             Email: emailID.current.trim(),
-            Password: password.current.trim(),
-            LastLogin: ""
+            Password: newPassword.current.trim(),
         }
 
-        const user = await axios("/users/signup", {
-            method: "post",
-            data: userDetails
+        const user = await axios("/users/resetpass", {
+            method: "put",
+            data: userCredentails
         })
 
-        user.data.code === 201
-            ? alert(`${user.data.message} Wait for approval or contact to authority.`)
-            : user.data.code === 409
-                ? alert(`${user.data.message} Try another one.`)
-                : alert(user.data);
-
-        user.data.code === 201
-            ? navigate("/")
-            : navigate("/signup")
+        if (user.data.code === 202) {
+            alert("Password changed successfully.");
+            navigate("/");
+        }
+        else { navigate("/forgotpass"); }
 
     }
 
@@ -104,13 +90,6 @@ const Signup = () => {
             </div>
             <hr />
             <Form ref={otpForm} onSubmit={sendEmail}>
-                <Form.Group className="mb-3" controlId="formBasicUserName">
-                    <Form.Label>User Name</Form.Label>
-                    <Form.Control name="user_name" type="text" placeholder="Enter user name" required
-                        disabled={disabled}
-                        onChange={(e) => { userName.current = e.target.value }} />
-                </Form.Group>
-
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Text className="text-muted">
                         We'll never share your email with anyone else.
@@ -128,7 +107,7 @@ const Signup = () => {
                 </Form.Group>
             </Form>
 
-            <Form onSubmit={handleSinup} className='mt-3' hidden={hidden}>
+            <Form onSubmit={handleReset} className='mt-3' hidden={hidden}>
                 <Form.Group className="my-3" controlId="formBasicOTP">
                     <Form.Text className="text-muted">
                         Check your email for OTP
@@ -137,10 +116,10 @@ const Signup = () => {
                         onChange={(e) => userOTP.current = e.target.value} />
                 </Form.Group>
 
-                <Form.Group className="mb-3" controlId="formBasicPassword">
+                <Form.Group className="mb-3" controlId="formBasicNewPassword">
                     <Form.Label>Enter password</Form.Label>
                     <Form.Control type="password" placeholder="Enter new password" required
-                        onChange={(e) => password.current = e.target.value} />
+                        onChange={(e) => newPassword.current = e.target.value} />
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicConfirmPassword">
@@ -150,11 +129,11 @@ const Signup = () => {
                 </Form.Group>
 
                 <Button variant="primary" type="submit" >
-                    Signup
+                    Reset
                 </Button>
             </Form>
         </Container>
     )
 }
 
-export default Signup
+export default ForgotPassword

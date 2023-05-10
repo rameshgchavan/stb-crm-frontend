@@ -8,7 +8,7 @@ import PageNotFound from "../pages/PageNotFound";
 
 import Login from '../components/login/Login';
 import Signup from "../components/login/Signup";
-import ForgotPassward from "../components/login/ForgotPassward";
+import ForgotPassword from "../components/login/ForgotPassword";
 
 const PagesRoutes = () => {
     const user = useSelector(state => state.usersReducer);
@@ -34,7 +34,7 @@ const PagesRoutes = () => {
                     }
 
                     <Route path="/signup" element={<HomePage ><Signup /> </HomePage>} />
-                    <Route path="/forgotpass" element={<HomePage ><ForgotPassward /> </HomePage>} />
+                    <Route path="/forgotpass" element={<HomePage ><ForgotPassword /> </HomePage>} />
                     <Route path="*" element={<PageNotFound />} />
                 </Route>
             </Routes>

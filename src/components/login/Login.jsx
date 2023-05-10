@@ -38,7 +38,7 @@ const Login = () => {
         }
 
         if (user.data.code == 403) {
-            alert("Passward not matching, please check again.")
+            alert("Password not matching, please check again.")
             return
         }
 
