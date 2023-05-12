@@ -15,17 +15,42 @@
 ![image](https://github.com/rameshgchavan/stb-crm-frontend/assets/109573381/b7a976c9-6506-4267-ad91-61548f1a1c76)
 
 ##
-### Steps to set sever >>>
+### Steps to redux state >>>
 ##
+- Create folders into redux folder as following
+1. constants
+2. actions
+3. reducers
+4. store
 
-### Setting environment keys (.env)
-- PORT and MONGODB_URL
+### constants
+- Create users.js 
+- Create constant into it (e.g const AUTHENTICATE_USER = "AUTHENTICATE_USER") and expot
 
-### Ignore (.ignore)
-- .env and /node_modules
+### actions
+- Create index.js and users.js 
+- Import constants and create actions into users.js and expot
+- Import all actions into index.js and export 
 
-### Create Models (/models/(e.g. UsersModel.js))
-- Import mongoose >> Create schema >> export mongoose model as module
+### reducers
+- Create index.js and users.js 
+- Import constants and create reducer into users.js and expot
+- Import combineReducers method from redux into index.js
+- Import all reducres combine them into index.js and export as rootReducer
+
+### store
+- Create index.js
+- Import createStore, applyMiddleware, compose methos from redux into index.js
+- Import redux-thunk as thunk into index.js
+- Import rootReducer into index.js
+- Create store and export
+
+#### Thus created redux store now use it
+- Into root index.js file import Provider compoment from react-redux
+- Import store
+- Wrap root App component inside Provider component
+- <Provider  store={store}><App /></Provider>
+
 
 ### Routes (/Routes/(e.g. UsersRoute.js))
 - Import express and models (e.g. UsersModel)
