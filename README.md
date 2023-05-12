@@ -63,8 +63,16 @@
 
 - Wrap root App component inside Provider component as image
 - ![image](https://github.com/rameshgchavan/stb-crm-frontend/assets/109573381/0187a9d2-8c9c-4d98-b145-aa1f871be878)
-
-
+- 
+#### To fetch data from redux state
+- Import useSelector method from react-redux
+- Create constant of useSelector and fetch data from redux state to it
+- ![image](https://github.com/rameshgchavan/stb-crm-frontend/assets/109573381/b4270e5d-8db1-4272-ab0b-998174974248)
+#### Update data to redux state
+- Import useDispatch method from react-redux
+- Import actions ![image](https://github.com/rameshgchavan/stb-crm-frontend/assets/109573381/1abcdabf-62e0-40cd-abe0-511b310829ea)
+- Create an object of useDispatch method ![image](https://github.com/rameshgchavan/stb-crm-frontend/assets/109573381/94ce39f4-2062-4234-a523-36b981cea975)
+- Dispatch action with data ![image](https://github.com/rameshgchavan/stb-crm-frontend/assets/109573381/cf6db8b0-211b-49e3-af25-10664ef3f1c5)
 
 ### Routes (/Routes/(e.g. UsersRoute.js))
 - Import express and models (e.g. UsersModel)
