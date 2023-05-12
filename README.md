@@ -1,17 +1,15 @@
 # stb-crm-frontend
 
 ### Step to create project on local machine
-1. create: stb-crm-backend folder into your drive
+1. create: stb-crm-project folder into your drive
 2. type: "cmd" in folder address bar and hit enter. Command prompt will open
-3. type: "code ." and hit enter. VS code editor will open
-4. create: .ingnore, .env and server.js files into folder stb-crm-backend
-5. create: src and client folders into stb-crm-backend
-6. create: routes and models folders into src folder
-7. add: if you have build of your frontend then add it into client folder
+3. type: npx create-react-app stb-crm-frontend and hit enter
+4. after successfull creation of app type cd stb-crm-frontend and hit enter
+5. type: "code ." and hit enter. VS code editor will open
+6. create: components, pages, redux, formik and routes folders into src folder
 
 ### Requarements: 
-- type: npm install cors, dotenv, express and mongoose --save 
-- type: npm install nodemon -g 
+- type: npm install bootstrap, react-bootstrap, react-router-dom, axios, redux, react-redux, redux-thunk, formik and yup
 
 ##### Project structure looks like as shown in image
 ![image](https://github.com/rameshgchavan/stb-crm-backend/assets/109573381/e220e09e-fa51-4cef-b499-97a23906357c)
