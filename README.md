@@ -73,3 +73,19 @@
 - Import actions ![image](https://github.com/rameshgchavan/stb-crm-frontend/assets/109573381/1abcdabf-62e0-40cd-abe0-511b310829ea)
 - Create an object of useDispatch method ![image](https://github.com/rameshgchavan/stb-crm-frontend/assets/109573381/94ce39f4-2062-4234-a523-36b981cea975)
 - Dispatch action with data ![image](https://github.com/rameshgchavan/stb-crm-frontend/assets/109573381/cf6db8b0-211b-49e3-af25-10664ef3f1c5)
+
+### Create routes in routes folder and navigate by NavBar.js
+
+## Flow>>
+- Home page with login
+- After login Cutomer page will be default page
+- If user is admin then show Customer, Trasaction, Users and Logout link in Navabar
+- If user is user (not admin) then show Logout link in Navabar
+- After Logout Home page with login will be shown
+
+### Pages
+- Home: Will shows Login, Singup and Forgot password as requirement
+- Users: List of users
+- Customers: List of Cutomers
+- Transactions: List of transactions
+- 404 page not found: if route not found or matched
