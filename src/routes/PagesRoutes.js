@@ -5,10 +5,11 @@ import HomePage from "../pages/HomePage";
 import CustomersPage from "../pages/CustomersPage";
 import TransactionsPage from "../pages/TransactionsPage";
 import PageNotFound from "../pages/PageNotFound";
+import UsersPage from '../pages/UsersPage';
 
-import Login from '../components/login/Login';
-import Signup from "../components/login/Signup";
-import ForgotPassword from "../components/login/ForgotPassword";
+import Login from '../components/scrutiny/Login';
+import Signup from "../components/scrutiny/Signup";
+import ForgotPassword from "../components/scrutiny/ForgotPassword";
 
 const PagesRoutes = () => {
     const user = useSelector(state => state.usersReducer);
@@ -24,6 +25,7 @@ const PagesRoutes = () => {
                             ? <Route>
                                 <Route path="/customers" element={<CustomersPage />} />
                                 <Route path="/transactions" element={<TransactionsPage />} />
+                                <Route path="/users" element={<UsersPage />} />
                             </Route>
                             : user.Name
                                 ?

@@ -20,13 +20,14 @@ const NavBar = () => {
         <Navbar bg="primary" variant="dark">
             {
                 user.Name
-                    ? <Container>
+                    ? <Container className="d-inline-flex">
                         <Navbar.Brand >STB CRM</Navbar.Brand>
                         {
                             user.Admin
                                 ? <Nav className="me-auto">
                                     <Nav.Link as={Link} to="/customers">Customers</Nav.Link>
                                     <Nav.Link as={Link} to="/transactions">Trasactions</Nav.Link>
+                                    <Nav.Link as={Link} to="/users">Users</Nav.Link>
                                 </Nav>
                                 : ""
                         }
