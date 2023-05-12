@@ -64,8 +64,6 @@
 - Wrap root App component inside Provider component as image
 - ![image](https://github.com/rameshgchavan/stb-crm-frontend/assets/109573381/0187a9d2-8c9c-4d98-b145-aa1f871be878)
 
-
-
 ### Routes (/Routes/(e.g. UsersRoute.js))
 - Import express and models (e.g. UsersModel)
 - Create express.Router object (e.g. UsersRoutes)
