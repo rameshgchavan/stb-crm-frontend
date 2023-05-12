@@ -15,7 +15,7 @@
 ![image](https://github.com/rameshgchavan/stb-crm-frontend/assets/109573381/b7a976c9-6506-4267-ad91-61548f1a1c76)
 
 ##
-### Steps to redux state >>>
+### Steps to create redux state >>>
 ##
 - Create folders into redux folder as following
 1. constants
@@ -45,7 +45,7 @@
 - Import rootReducer into index.js
 - Create store and export
 
-#### Thus created redux store now use it
+#### Thus created redux state now use it
 - Into root index.js file import Provider compoment from react-redux
 - Import store
 - Wrap root App component inside Provider component
