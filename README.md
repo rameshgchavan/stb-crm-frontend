@@ -78,7 +78,7 @@
 
 ## Flow>>
 - Home page with login
-- After login Cutomer page will be default page
+- After login Customer page will be default page
 - If user is admin then show Customer, Trasaction, Users and Logout link in Navabar
 - If user is user (not admin) then show Logout link in Navabar
 - After Logout Home page with login will be shown
