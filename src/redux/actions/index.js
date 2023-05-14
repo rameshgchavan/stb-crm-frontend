@@ -1,2 +1,2 @@
-import { authenticateUser } from "./users";
+import { authenticateUser } from "./scrutiny";
 export {authenticateUser}

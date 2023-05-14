@@ -18,7 +18,7 @@ const Login = () => {
     const navigate = useNavigate();
 
     // Create object of useDispatch method
-    
+
     const dispatch = useDispatch();
 
     const handleLogin = async (e) => {
@@ -44,11 +44,13 @@ const Login = () => {
             return
         }
 
-        dispatch(authenticateUser(user.data))
+        if (user.data.code == 102) {
+            alert("Wait for approval or contact to authority.")
+            return
+        }
 
-        user.data.Approved
-            ? navigate("/customers")
-            : alert("Wait for approval or contact to authority")
+        dispatch(authenticateUser(user.data))
+        navigate("/customers")
 
         // await axios("/users/login", {
         //     method: "post",

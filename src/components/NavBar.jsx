@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { authenticateUser } from "../redux/actions"
 
 const NavBar = () => {
-    const user = useSelector(reducers => reducers.usersReducer);
+    const user = useSelector(reducers => reducers.scrutinyReducer);
 
     JSON.stringify(user);
 

@@ -7,12 +7,12 @@ import TransactionsPage from "../pages/TransactionsPage";
 import PageNotFound from "../pages/PageNotFound";
 import UsersPage from '../pages/UsersPage';
 
-import Login from '../components/scrutiny/Login';
-import Signup from "../components/scrutiny/Signup";
-import ForgotPassword from "../components/scrutiny/ForgotPassword";
+import Login from '../components/security/Login';
+import Signup from "../components/security/Signup";
+import ForgotPassword from "../components/security/ForgotPassword";
 
 const PagesRoutes = () => {
-    const user = useSelector(state => state.usersReducer);
+    const user = useSelector(state => state.scrutinyReducer);
     JSON.stringify(user);
 
     return (

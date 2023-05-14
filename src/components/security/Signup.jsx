@@ -32,7 +32,7 @@ const Signup = () => {
             method: "post",
             data: { Email: emailID.current.trim() }
         });
-
+        console.warn(isEmail);
         if (isEmail.data.code == 200) {
             alert(`${emailID.current} is already in use, try another one.`)
         }
