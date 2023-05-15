@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 import axios from "axios";
 
 // Import actions from redux/actions folder
-import { authenticateUser } from "../../redux/actions"
+import { authenticateUserAction } from "../../redux/actions"
 
 
 const Login = () => {
@@ -18,7 +18,6 @@ const Login = () => {
     const navigate = useNavigate();
 
     // Create object of useDispatch method
-
     const dispatch = useDispatch();
 
     const handleLogin = async (e) => {
@@ -49,7 +48,7 @@ const Login = () => {
             return
         }
 
-        dispatch(authenticateUser(user.data))
+        dispatch(authenticateUserAction(user.data))
         navigate("/customers")
 
         // await axios("/users/login", {

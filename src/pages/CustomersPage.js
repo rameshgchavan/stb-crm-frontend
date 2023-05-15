@@ -1,7 +1,15 @@
+import { Button, ButtonGroup } from "react-bootstrap"
 
 const CustomersPage = () => {
     return (
-        <div>CustomersPage</div>
+        <div>
+            <ButtonGroup className="mb-3">
+                <Button variant="success">INLINE</Button>
+                <Button variant="warning">LEFTOUT</Button>
+                <Button variant="secondary">OUTGONE</Button>
+                <Button variant="primary">OTHER</Button>
+            </ButtonGroup>
+        </div>
     )
 }
 

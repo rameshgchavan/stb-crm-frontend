@@ -1,0 +1,2 @@
+ export const AUTHENTICATE_USER = "AUTHENTICATE_USER";
+ export const LIST_USERS = "LIST_USERS";

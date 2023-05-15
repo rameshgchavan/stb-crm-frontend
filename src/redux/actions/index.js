@@ -1,2 +1,2 @@
-import { authenticateUser } from "./scrutiny";
-export {authenticateUser}
+import { authenticateUserAction, listUsersAction } from "./users";
+export { authenticateUserAction, listUsersAction }

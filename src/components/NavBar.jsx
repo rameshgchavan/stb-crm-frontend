@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 // Import redux methods
 import { useSelector, useDispatch } from "react-redux";
-import { authenticateUser } from "../redux/actions"
+import { authenticateUserAction } from "../redux/actions"
 
 const NavBar = () => {
     const user = useSelector(reducers => reducers.scrutinyReducer);
@@ -13,7 +13,7 @@ const NavBar = () => {
     const dispatch = useDispatch();
 
     const handleLogout = () => {
-        dispatch(authenticateUser({}));
+        dispatch(authenticateUserAction({}));
     }
 
     return (
@@ -27,9 +27,13 @@ const NavBar = () => {
                                 ? <Nav className="me-auto">
                                     <Nav.Link as={Link} to="/customers">Customers</Nav.Link>
                                     <Nav.Link as={Link} to="/transactions">Trasactions</Nav.Link>
+                                    <Nav.Link as={Link} to="/expiry">Expiry</Nav.Link>
                                     <Nav.Link as={Link} to="/users">Users</Nav.Link>
                                 </Nav>
-                                : ""
+                                : <Nav className="me-auto">
+                                    <Nav.Link as={Link} to="/customers">Customers</Nav.Link>
+                                    <Nav.Link as={Link} to="/expiry">Expiry</Nav.Link>
+                                </Nav>
                         }
                         <Nav className="ms-auto">
                             <Nav.Link as={Link} to="/" onClick={handleLogout}>Logout</Nav.Link>

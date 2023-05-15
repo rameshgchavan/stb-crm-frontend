@@ -1,5 +1,5 @@
 // Import constants
-import { AUTHENTICATE_USER } from "../constants/scrutiny";
+import { AUTHENTICATE_USER } from "../../constants/users";
 
 // Initialize state
 const initialState = {};

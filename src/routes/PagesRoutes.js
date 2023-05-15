@@ -6,6 +6,7 @@ import CustomersPage from "../pages/CustomersPage";
 import TransactionsPage from "../pages/TransactionsPage";
 import PageNotFound from "../pages/PageNotFound";
 import UsersPage from '../pages/UsersPage';
+import ExpiryPage from "../pages/ExpiryPage"
 
 import Login from '../components/security/Login';
 import Signup from "../components/security/Signup";
@@ -16,7 +17,7 @@ const PagesRoutes = () => {
     JSON.stringify(user);
 
     return (
-        <div className='mt-4'>
+        <div className='mt-3'>
             <Routes >
                 <Route path="/" element={<Outlet />}>
                     <Route index element={<HomePage ><Login /> </HomePage>} />
@@ -26,11 +27,13 @@ const PagesRoutes = () => {
                                 <Route path="/customers" element={<CustomersPage />} />
                                 <Route path="/transactions" element={<TransactionsPage />} />
                                 <Route path="/users" element={<UsersPage />} />
+                                <Route path="/expiry" element={<ExpiryPage />} />
                             </Route>
                             : user.Name
                                 ?
                                 <Route>
                                     <Route path="/customers" element={<CustomersPage />} />
+                                    <Route path="/expiry" element={<ExpiryPage />} />
                                 </Route>
                                 : <Route element={<HomePage />} />
                     }
