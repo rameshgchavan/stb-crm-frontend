@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { Button, ButtonGroup, Container, Form } from "react-bootstrap"
 
 const UserCard = ({ userInfo }) => {
-    const { user, status } = userInfo;
+    const { user, status, updateStatus } = userInfo;
     const userName = useRef(user.Name);
 
     return (
@@ -12,14 +12,23 @@ const UserCard = ({ userInfo }) => {
                     <Form.Group className="d-flex align-items-end mb-sm-0 mb-2">
                         <Form.Group className="me-2">
                             <Form.Text>User Name</Form.Text>
-                            <Form.Control type="text" defaultValue={userName.current} />
+                            <Form.Control type="text"
+                                defaultValue={userName.current}
+                                onChange={(e) => { userName.current = e.target.value }} />
                         </Form.Group>
 
-                        {status == "approved" && <Button variant="primary" className="me-3">Rename</Button>}
+                        {status == "approved" && <Button variant="primary" className="me-3"
+                            onClick={() => { updateStatus(user._id, { Name: userName.current }) }}
+                        >Rename</Button>}
                     </Form.Group>
                     <ButtonGroup >
-                        {status != "approved" && <Button variant="success">Approve</Button>}
-                        {status != "blocked" && <Button variant="danger">Block</Button>}
+                        {status != "approved" && <Button variant="success"
+                            onClick={() => { updateStatus(user._id, { Status: "approved" }) }}
+                        >Approve</Button>}
+
+                        {status != "blocked" && <Button variant="danger"
+                            onClick={() => { updateStatus(user._id, { Status: "blocked" }) }}
+                        >Block</Button>}
                     </ButtonGroup>
 
                 </Form.Group>

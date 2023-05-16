@@ -7,10 +7,13 @@ import { useEffect, useState } from "react";
 import { Button, ButtonGroup } from "react-bootstrap";
 
 const UsersPage = () => {
+    const [status, setStatus] = useState("pending");
+
     const dispatch = useDispatch();
     const scrutiny = useSelector(state => state.scrutinyReducer);
-    const usersList = useSelector(state => state.usersReducer);
-    const [status, setStatus] = useState("pending");
+
+    const usersList = useSelector(state => state.usersReducer)
+        ?.data?.filter((user, index0) => user.Status == status);
 
     useEffect(() => {
         listUsers();
@@ -26,6 +29,18 @@ const UsersPage = () => {
         dispatch(listUsersAction(users.data));
     }
 
+    const updateStatus = async (id, object) => {
+        const users = await axios("/users/update", {
+            method: "put",
+            headers: { authorization: `bearer ${scrutiny.token}` },
+            data: { id, object }
+        });
+
+        if (users.data.code == 202) {
+            listUsers();
+        }
+    }
+
     return (
         <div>
             <ButtonGroup className="mb-3">
@@ -35,18 +50,19 @@ const UsersPage = () => {
             </ButtonGroup>
 
             {
-                usersList.data?.map((user, index) => {
-                    if (user.Status == status) {
-                        return (
-                            <div key={index} className="mb-3">
-                                <UserCard userInfo={{ user, status }} />
-                            </div>
-                        )
-                    }
+                usersList?.map((user, index) => {
+                    return (
+                        <div key={user._id} className="mb-3">
+                            <UserCard userInfo={{ user, status, updateStatus }} />
+                        </div>
+                    )
                 })
+
             }
-            <hr />
-        </div>
+
+            {usersList.length == 0 ? <p>Nothing found {status}</p> : ""}
+
+        </div >
     )
 }
 
