@@ -1,4 +1,9 @@
 import { scrutinyReducer } from "./scrutiny";
 import { usersReducer } from "./usersList";
+import { filterUsersReducer } from "./filterUsers";
 
-export { scrutinyReducer, usersReducer };
+export {
+    scrutinyReducer,
+    usersReducer,
+    filterUsersReducer
+};

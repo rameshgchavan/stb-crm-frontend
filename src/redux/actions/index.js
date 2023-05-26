@@ -1,2 +1,13 @@
-import { authenticateUserAction, listUsersAction } from "./users";
-export { authenticateUserAction, listUsersAction }
+import {
+    authenticateUserAction,
+    listUsersAction,
+    setUserStatusAction,
+    searchUserAction
+} from "./users";
+
+export {
+    authenticateUserAction,
+    listUsersAction,
+    setUserStatusAction,
+    searchUserAction
+};

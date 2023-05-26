@@ -1,8 +1,13 @@
 import { combineReducers } from "redux";
 
-import { scrutinyReducer, usersReducer } from "./users";
+import {
+    scrutinyReducer,
+    usersReducer,
+    filterUsersReducer
+} from "./users";
 
 export const rootReducer = combineReducers({
     scrutinyReducer,
-    usersReducer
-})
+    usersReducer,
+    filterUsersReducer
+});

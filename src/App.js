@@ -1,11 +1,13 @@
 import './App.css';
-import NavBar from './components/NavBar';
-import PagesRoutes from './routes/PagesRoutes';
+import Header from './components/Header';
+import FilterRoutes from './routes/FilterRoutes';
+import PagesRoutes from './routes/PageRoutes';
 
 function App() {
   return (
     <div className="App">
-      <NavBar />
+      <Header filter={<FilterRoutes />} />
+
       <PagesRoutes />
     </div>
   );

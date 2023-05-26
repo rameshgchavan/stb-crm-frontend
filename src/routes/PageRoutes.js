@@ -26,8 +26,8 @@ const PagesRoutes = () => {
                             ? <Route>
                                 <Route path="/customers" element={<CustomersPage />} />
                                 <Route path="/transactions" element={<TransactionsPage />} />
-                                <Route path="/users" element={<UsersPage />} />
                                 <Route path="/expiry" element={<ExpiryPage />} />
+                                <Route path="/users" element={<UsersPage />} />
                             </Route>
                             : user.Name
                                 ?

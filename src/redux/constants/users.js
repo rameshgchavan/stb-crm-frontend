@@ -1,2 +1,4 @@
  export const AUTHENTICATE_USER = "AUTHENTICATE_USER";
  export const LIST_USERS = "LIST_USERS";
+ export const SET_USER_STATUS = "SET_USER_STATUS";
+ export const SEARCH_USER = "SEARCH_USER";

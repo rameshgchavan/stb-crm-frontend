@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { Button, ButtonGroup, Container, Form } from "react-bootstrap"
 
 const UserCard = ({ userInfo }) => {
-    const { user, status, updateStatus } = userInfo;
+    const { user, userStatus, updateStatus } = userInfo;
     const userName = useRef(user.Name);
 
     return (
@@ -17,16 +17,16 @@ const UserCard = ({ userInfo }) => {
                                 onChange={(e) => { userName.current = e.target.value }} />
                         </Form.Group>
 
-                        {status == "approved" && <Button variant="primary" className="me-3"
+                        {userStatus == "approved" && <Button variant="primary" className="me-3"
                             onClick={() => { updateStatus(user._id, { Name: userName.current }) }}
                         >Rename</Button>}
                     </Form.Group>
                     <ButtonGroup >
-                        {status != "approved" && <Button variant="success"
+                        {userStatus != "approved" && <Button variant="success"
                             onClick={() => { updateStatus(user._id, { Status: "approved" }) }}
                         >Approve</Button>}
 
-                        {status != "blocked" && <Button variant="danger"
+                        {userStatus != "blocked" && <Button variant="danger"
                             onClick={() => { updateStatus(user._id, { Status: "blocked" }) }}
                         >Block</Button>}
                     </ButtonGroup>

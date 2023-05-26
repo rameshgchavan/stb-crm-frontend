@@ -1,4 +1,6 @@
-import { AUTHENTICATE_USER, LIST_USERS } from "../constants/users"
+import {
+    AUTHENTICATE_USER, LIST_USERS, SET_USER_STATUS, SEARCH_USER
+} from "../constants/users"
 
 const authenticateUserAction = (data) => {
     return (
@@ -7,7 +9,7 @@ const authenticateUserAction = (data) => {
             data
         }
     )
-}
+};
 
 const listUsersAction = (data) => {
     return (
@@ -16,6 +18,29 @@ const listUsersAction = (data) => {
             data
         }
     )
-}
+};
 
-export { authenticateUserAction, listUsersAction }
+const setUserStatusAction = (data) => {
+    return (
+        {
+            type: SET_USER_STATUS,
+            data
+        }
+    )
+};
+
+const searchUserAction = (data) => {
+    return (
+        {
+            type: SEARCH_USER,
+            data
+        }
+    )
+};
+
+export {
+    authenticateUserAction,
+    listUsersAction,
+    setUserStatusAction,
+    searchUserAction
+};

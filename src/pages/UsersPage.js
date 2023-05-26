@@ -2,18 +2,18 @@ import axios from "axios";
 import { useSelector, useDispatch } from "react-redux"
 import { listUsersAction } from "../redux/actions"
 
-import UserCard from "../components/users/UserCard"
-import { useEffect, useState } from "react";
-import { Button, ButtonGroup } from "react-bootstrap";
+import UserCard from "../components/cards/UserCard"
+import { useEffect } from "react";
 
 const UsersPage = () => {
-    const [status, setStatus] = useState("pending");
-
     const dispatch = useDispatch();
     const scrutiny = useSelector(state => state.scrutinyReducer);
 
+    const { userStatus, userName } = useSelector(state => state.filterUsersReducer);
+   
     const usersList = useSelector(state => state.usersReducer)
-        ?.data?.filter((user, index0) => user.Status == status);
+        ?.data?.filter((user, index) => user.Status == userStatus)
+        .filter((user, index) => { return user.Name.toLowerCase().includes(userName.toLowerCase()) });
 
     useEffect(() => {
         listUsers();
@@ -33,7 +33,7 @@ const UsersPage = () => {
         const users = await axios("/users/update", {
             method: "put",
             headers: { authorization: `bearer ${scrutiny.token}` },
-            data: { id, object }
+            data: { id, object } // here object is key Name or Status 
         });
 
         if (users.data.code == 202) {
@@ -43,24 +43,18 @@ const UsersPage = () => {
 
     return (
         <div>
-            <ButtonGroup className="mb-3">
-                <Button variant="warning" onClick={() => { setStatus("pending") }}>Pending</Button>
-                <Button variant="success" onClick={() => { setStatus("approved") }}>Approved</Button>
-                <Button variant="danger" onClick={() => { setStatus("blocked") }}>Blocked</Button>
-            </ButtonGroup>
-
             {
                 usersList?.map((user, index) => {
                     return (
                         <div key={user._id} className="mb-3">
-                            <UserCard userInfo={{ user, status, updateStatus }} />
+                            <UserCard userInfo={{ user, userStatus, updateStatus }} />
                         </div>
                     )
                 })
 
             }
 
-            {usersList.length == 0 ? <p>Nothing found {status}</p> : ""}
+            {usersList?.length == 0 ? <p>Nothing found {userStatus}</p> : ""}
 
         </div >
     )
