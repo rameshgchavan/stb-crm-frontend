@@ -1,37 +1,56 @@
-import { Button, ButtonGroup } from "react-bootstrap"
-import CustomerCard from "../components/cards/CustomerCard"
+import axios from "axios";
+import { useEffect, useRef, useState } from "react";
+
+import CustomerCard from "../components/cards/CustomerCard";
+import { useDispatch, useSelector } from "react-redux";
+
+import { listCustomersAction } from "../redux/actions";
 
 const CustomersPage = () => {
-    const customerData = {
-        Name: "Ramesh Chavan",
-        Mobile: "7020554505",
-        Area: "Risala",
-        Address: "Ganeshwadi road",
-    }
-    const stbData = {
-        STB_Date: "01/01/2022",
-        STBs: 1,
-        State: "Allocated",
-        Status: "Active",
-        Type: "NEW",
-        SDHD: "SD",
-        NDS: "5944738115550728",
-        STB_SR: "C763714102331377",
-        VCNDSMAC_ID: "0001234566",
-        AcNo: "1025468528",
-        LCO_Code: "1012464567"
-    }
-    const seedData = {
-        Location: "INLINE",
-        Origin: "Hingoli Store",
-        Area_Person: "Risala",
-        Area_Manager: "Ramesh Chavan"
+    const dispatch = useDispatch();
+    const cardsPerPage = 8;
+    const [currentPage, setCurrentPage] = useState(3);
+    const lastCardIndex = useRef(currentPage * cardsPerPage);
+    const firtCardIndex = useRef(lastCardIndex.current - cardsPerPage);
+
+    const scrutiny = useSelector(state => state.scrutinyReducer);
+    const customersList = useSelector(state => state.customersReducer).data.slice(firtCardIndex.current, lastCardIndex.current);
+
+    useEffect(() => {
+        listCustomers();
+    }, [])
+
+    const listCustomers = async () => {
+        const customers = await axios("/customers", {
+            method: "get",
+            headers: { authorization: `bearer ${scrutiny.token}` }
+        });
+
+        dispatch(listCustomersAction(customers.data));
     }
 
     return (
-        <div>
-            <CustomerCard customer={customerData} stb={stbData} seed={seedData} />
-            <CustomerCard customer={customerData} stb={stbData} seed={seedData} />
+        <div className="d-flex flex-wrap justify-content-evenly">
+            {
+                customersList?.map((customer, index) => {
+                    return <CustomerCard
+                        customer={{
+                            key: customer._id,
+                            SrNo: (index + 1) + firtCardIndex.current,
+                            Name: customer.CustName,
+                            Area: customer.Area,
+                            Address: customer.Address,
+                            Mobile: customer.MobNo
+                        }}
+                        stb={{
+                            AcNo: customer.AcNo,
+                            Status: customer.STBStatus,
+                            LCOCode: customer.LCOCode,
+                            VCNDSMAC_ID: customer.VC_NDS_MAC_ID
+                        }}
+                    />
+                })
+            }
         </div>
     )
 }

@@ -1,59 +1,42 @@
 import { useRef } from "react";
-import { Button, ButtonGroup, Container, Form } from "react-bootstrap"
+import { Button, Form } from "react-bootstrap"
 
-const CustomerCard = ({ customer, stb, seed }) => {
+const CustomerCard = ({ customer, stb }) => {
+    const srNo = useRef(customer.SrNo);
     const name = useRef(customer.Name);
     const mobile = useRef(customer.Mobile);
     const area = useRef(customer.Area);
     const address = useRef(customer.Address);
 
-    const stbDate = useRef(stb.STB_Date);
-    const stbs = useRef(stb.STBs);
-    const state = useRef(stb.State);
     const status = useRef(stb.Status);
-    const type = useRef(stb.Type);
-    const sdhd = useRef(stb.SDHD);
-    const nds = useRef(stb.NDS);
-    const stbSr = useRef(stb.STB_SR);
     const vcNdsMacId = useRef(stb.VCNDSMAC_ID);
     const acNo = useRef(stb.AcNo);
-    const lcoCode = useRef(stb.LCO_Code);
-
-    const location = useRef(seed.Location);
-    const origin = useRef(seed.Origin);
-    const areaPerson = useRef(seed.Area_Person);
-    const areaManager = useRef(seed.Area_Manager);
+    const lcoCode = useRef(stb.LCOCode);
 
     return (
-        <Container className="d-lg-flex justify-content-between align-items-start border rounded shadow mb-3 py-2">
-            <Form className="d-lg-flex">
-                <Form.Group className="border px-3 py-2 justify-content-between align-items-end">
-                    <Form.Label className="d-block">{name.current}</Form.Label>
-                    <Form.Label className="d-block">{area.current} {address.current}</Form.Label>
-                    <Form.Label className="d-block">Mobile: {mobile.current}</Form.Label>
-                </Form.Group>
+        <Form >
+            <Form.Group className="border rounded shadow px-3 py-2 mb-3" style={{ width: "20rem" }}>
+                <Form.Label className="d-flex justify-content-between fw-bold">
+                    <div className="fs-6 fw-bold text-start">{srNo.current}.</div>
+                    <div className="fs-6 fw-bold text-start">A/c:{acNo.current}</div>
+                    {status.current == "ACTIVE" ? <div className="fs-6 fw-bold text-lowercase text-success text-start">{status.current}</div>
+                        : <div className="fs-6 fw-bold text-lowercase text-danger text-start">{status.current}</div>}
+                </Form.Label>
 
-                <Form.Group className="border px-3 py-2 justify-content-between align-items-end">
-                    <Form.Label className="d-block"> {status.current} {acNo.current}</Form.Label>
-                    <Form.Label className="d-block">LCO: {lcoCode.current} ID: {vcNdsMacId.current}</Form.Label>
-                    <Form.Label className="d-block">STB Date: {stbDate.current}</Form.Label>
-                    <Form.Label className="d-block"> {type.current} STBs: {stbs.current} {sdhd.current} {stbSr.current}</Form.Label>
-                    <Form.Label className="d-block"> {state.current} {nds.current}</Form.Label>
-                </Form.Group>
+                <Form.Label className="d-block text-uppercase fw-bold text-primary text-truncate">{name.current}</Form.Label>
+                <Form.Label className="d-block text-truncate">{area.current}, {address.current}.<br /> Mobile: {mobile.current}</Form.Label>
 
-                <Form.Group className="border px-3 py-2 justify-content-between align-items-end">
-                    <Form.Label className="d-block">Location: {location.current}</Form.Label>
-                    <Form.Label className="d-block">Origin: {origin.current}</Form.Label>
-                    <Form.Label className="d-block">Area/ Person: {areaPerson.current}</Form.Label>
-                    <Form.Label className="d-block">Area Manager: {areaManager.current}</Form.Label>
-                </Form.Group>
-            </Form>
-            
-            <ButtonGroup className="mt-lg-0 mt-2">
-                <Button variant="warning" >Edit</Button>
-                <Button>View Package</Button>
-            </ButtonGroup>
-        </Container >
+                <Form.Label className="d-flex fw-bold justify-content-between">
+                    <div className="fs-6 fw-bold">LCO:{lcoCode.current}</div>
+                    <div className="fs-6 fw-bold text-primary">ID:{vcNdsMacId.current}</div>
+                </Form.Label>
+
+                <div className="d-flex justify-content-between">
+                    <Button variant="warning" size="sm">Edit</Button>
+                    <Button size="sm">More...</Button>
+                </div>
+            </Form.Group>
+        </Form>
     )
 }
 

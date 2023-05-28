@@ -5,9 +5,14 @@ import {
     searchUserAction
 } from "./users";
 
+import {
+    listCustomersAction
+} from "./customers";
+
 export {
     authenticateUserAction,
     listUsersAction,
     setUserStatusAction,
-    searchUserAction
+    searchUserAction,
+    listCustomersAction
 };

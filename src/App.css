@@ -1,3 +1,9 @@
 .App {
   text-align: center;
 }
+
+@media (max-width: 1024px) {
+  .mycollapse {
+    display: none;
+  }
+}
