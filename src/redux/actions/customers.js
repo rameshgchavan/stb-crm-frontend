@@ -1,5 +1,5 @@
 import {
-     LIST_CUSTOMERS
+    LIST_CUSTOMERS, FILTER_CUSTOMERS
 } from "../constants/customers"
 
 
@@ -12,6 +12,16 @@ const listCustomersAction = (data) => {
     )
 };
 
+const filterCustomersAction = (data, firtCardIndex) => {
+    return (
+        {
+            type: FILTER_CUSTOMERS,
+            data,
+            firtCardIndex
+        }
+    )
+};
+
 export {
-    listCustomersAction
+    listCustomersAction, filterCustomersAction
 };

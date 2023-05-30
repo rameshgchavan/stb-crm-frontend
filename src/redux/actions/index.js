@@ -6,7 +6,8 @@ import {
 } from "./users";
 
 import {
-    listCustomersAction
+    listCustomersAction,
+    filterCustomersAction
 } from "./customers";
 
 export {
@@ -14,5 +15,6 @@ export {
     listUsersAction,
     setUserStatusAction,
     searchUserAction,
-    listCustomersAction
+    listCustomersAction,
+    filterCustomersAction
 };

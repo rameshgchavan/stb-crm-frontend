@@ -8,11 +8,13 @@ import {
 
 import {
     customersReducer,
+    customersFilterationReducer
 } from "./customers";
 
 export const rootReducer = combineReducers({
     scrutinyReducer,
     usersReducer,
     filterUsersReducer,
-    customersReducer
+    customersReducer,
+    customersFilterationReducer
 });

@@ -1,57 +1,44 @@
-import axios from "axios";
-import { useEffect, useRef, useState } from "react";
-
+import { Button } from "react-bootstrap";
 import CustomerCard from "../components/cards/CustomerCard";
-import { useDispatch, useSelector } from "react-redux";
-
-import { listCustomersAction } from "../redux/actions";
+import { useSelector } from "react-redux";
 
 const CustomersPage = () => {
-    const dispatch = useDispatch();
-    const cardsPerPage = 8;
-    const [currentPage, setCurrentPage] = useState(3);
-    const lastCardIndex = useRef(currentPage * cardsPerPage);
-    const firtCardIndex = useRef(lastCardIndex.current - cardsPerPage);
+    // Note: data: filteredCustomers is not object key value pair
+    // data: filteredCustomers <-- here  filteredCustomers is alias of data
+    const { data: filteredCustomers, firtCardIndex } =
+        useSelector(state => state.customersFilterationReducer);
 
-    const scrutiny = useSelector(state => state.scrutinyReducer);
-    const customersList = useSelector(state => state.customersReducer).data.slice(firtCardIndex.current, lastCardIndex.current);
-
-    useEffect(() => {
-        listCustomers();
-    }, [])
-
-    const listCustomers = async () => {
-        const customers = await axios("/customers", {
-            method: "get",
-            headers: { authorization: `bearer ${scrutiny.token}` }
-        });
-
-        dispatch(listCustomersAction(customers.data));
-    }
+    // console.warn(filteredCustomers);
 
     return (
-        <div className="d-flex flex-wrap justify-content-evenly">
-            {
-                customersList?.map((customer, index) => {
-                    return <CustomerCard
-                        customer={{
-                            key: customer._id,
-                            SrNo: (index + 1) + firtCardIndex.current,
-                            Name: customer.CustName,
-                            Area: customer.Area,
-                            Address: customer.Address,
-                            Mobile: customer.MobNo
-                        }}
-                        stb={{
-                            AcNo: customer.AcNo,
-                            Status: customer.STBStatus,
-                            LCOCode: customer.LCOCode,
-                            VCNDSMAC_ID: customer.VC_NDS_MAC_ID
-                        }}
-                    />
-                })
-            }
-        </div>
+        <>
+            <div className="d-flex flex-wrap justify-content-evenly">
+                {filteredCustomers?.length == 0 ? <h3>Oops... no record found.</h3> : ""}
+
+                {
+                    filteredCustomers?.map((customer, index) => {
+                        return <CustomerCard
+                            customer={{
+                                key: customer._id,
+                                SrNo: (index + 1) + firtCardIndex,
+                                Name: customer.CustName,
+                                Area: customer.Area,
+                                Address: customer.Address,
+                                Mobile: customer.MobNo
+                            }}
+                            stb={{
+                                AcNo: customer.AcNo,
+                                Status: customer.STBStatus,
+                                LCOCode: customer.LCOCode,
+                                VCNDSMAC_ID: customer.VC_NDS_MAC_ID
+                            }}
+                        />
+                    })
+                }
+            </div>
+
+            <Button variant="success" size="sm" className="my-4">Add New</Button>
+        </>
     )
 }
 
