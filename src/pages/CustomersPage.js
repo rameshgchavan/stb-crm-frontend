@@ -1,14 +1,16 @@
 import { Button } from "react-bootstrap";
-import CustomerCard from "../components/cards/CustomerCard";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
+import CustomerCard from "../components/cards/CustomerCard";
 
 const CustomersPage = () => {
+    const navigate = useNavigate();
+
     // Note: data: filteredCustomers is not object key value pair
     // data: filteredCustomers <-- here  filteredCustomers is alias of data
     const { data: filteredCustomers, firtCardIndex } =
         useSelector(state => state.customersFilterationReducer);
-
-    // console.warn(filteredCustomers);
 
     return (
         <>
@@ -18,26 +20,17 @@ const CustomersPage = () => {
                 {
                     filteredCustomers?.map((customer, index) => {
                         return <CustomerCard
-                            customer={{
-                                key: customer._id,
-                                SrNo: (index + 1) + firtCardIndex,
-                                Name: customer.CustName,
-                                Area: customer.Area,
-                                Address: customer.Address,
-                                Mobile: customer.MobNo
-                            }}
-                            stb={{
-                                AcNo: customer.AcNo,
-                                Status: customer.STBStatus,
-                                LCOCode: customer.LCOCode,
-                                VCNDSMAC_ID: customer.VC_NDS_MAC_ID
-                            }}
+                            key={customer._id}
+                            srNo={(index + 1) + firtCardIndex}
+                            customer={customer}
                         />
                     })
                 }
             </div>
 
-            <Button variant="success" size="sm" className="my-4">Add New</Button>
+            <Button variant="success" size="sm" className="my-4"
+                onClick={() => navigate("/customer")}
+            >Add New</Button>
         </>
     )
 }

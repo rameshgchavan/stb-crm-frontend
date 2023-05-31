@@ -1,23 +1,23 @@
 import { Button, Form } from "react-bootstrap"
+import { useNavigate } from "react-router-dom";
 
-const CustomerCard = ({ customer, stb }) => {
+const CustomerCard = ({ customer, srNo }) => {
+    const navigate = useNavigate();
+
     // Destructured and put aliases. Here srNo is an alias of SrNo
     // Its not an object of key value pair.
-    
     const {
-        SrNo: srNo,
-        Name: name,
-        Mobile: mobile,
+        _id: id,
+        CustName: name,
+        MobNo: mobile,
         Area: area,
-        Address: address
-    } = customer;
+        Address: address,
 
-    const {
-        Status: status,
-        VCNDSMAC_ID: vcNdsMacId,
+        STBStatus: status,
+        VC_NDS_MAC_ID: vcNdsMacId,
         AcNo: acNo,
         LCOCode: lcoCode
-    } = stb;
+    } = customer;
 
     return (
         <Form >
@@ -37,9 +37,11 @@ const CustomerCard = ({ customer, stb }) => {
                     <div className="fs-6 fw-bold text-primary">ID:{vcNdsMacId}</div>
                 </Form.Label>
 
-                <div className="d-flex justify-content-between">
-                    <Button variant="warning" size="sm">Edit</Button>
-                    <Button size="sm">More...</Button>
+                <div className="d-flex justify-content-end">
+                    {/* <Button variant="warning" size="sm">Edit</Button> */}
+                    <Button size="sm"
+                        onClick={() => { navigate(`/customer/${id}`) }}
+                    >more...</Button>
                 </div>
             </Form.Group>
         </Form>
