@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { listCustomersAction, filterCustomersAction } from "../../redux/actions";
 
-import { Button, ButtonGroup, Container, Form, FormGroup } from "react-bootstrap"
+import { Button, ButtonGroup, Container, Form, FormGroup, ToggleButton, ToggleButtonGroup } from "react-bootstrap"
 
 const CustomerFilter = () => {
     const dispatch = useDispatch();
@@ -115,65 +115,69 @@ const CustomerFilter = () => {
     return (
         <Container className="bg-secondary shadow rounded-bottom">
             <Form className="d-lg-flex justify-content-between py-1">
-                <ButtonGroup size="sm">
-                    <Button variant="success"
+                <FormGroup className="d-flex flex-wrap gap-2 text-start">
+                    <Form.Check variant="outline-success" type="radio" name="stbs" label="INLINE"
+                        className="me-sm-3 text-warning fw-bold"
                         onClick={() => { location.current = "INLINE"; filterCustomers(); }}
-                    >INLINE</Button>
+                    />
 
-                    <Button variant="warning"
+                    <Form.Check variant="outline-warning" type="radio" name="stbs" label="LEFTOUT"
+                        className="me-sm-3 text-warning fw-bold"
                         onClick={() => { location.current = "LEFTOUT"; filterCustomers(); }}
-                    >LEFTOUT</Button>
+                    />
 
-                    <Button variant="danger"
+                    <Form.Check variant="outline-danger" type="radio" name="stbs" label="OUTGONE"
+                        className="me-sm-3 text-warning fw-bold"
                         onClick={() => { location.current = "OUTGONE"; filterCustomers(); }}
-                    >OUTGONE</Button>
+                    />
 
-                    <Button variant="primary"
+                    <Form.Check variant="outline-primary" type="radio" name="stbs" label="OTHER"
+                        className="text-warning fw-bold"
                         onClick={() => { location.current = "OTHER"; filterCustomers(); }}
-                    >OTHER</Button>
-                </ButtonGroup>
-
-                {filteredCustomres?.length > cardsPerPage.current && <FormGroup className="mt-xl-0 mt-1">
-
-                    {currentPage > 1 && <ButtonGroup size="sm">
-                        <Button variant="dark" className="fw-bold text-light"
-                            onClick={() => { handlePagination(1); }}
-                        > First </Button>
-
-                        <Button variant="light" className="fw-bold text-primary"
-                            onClick={() => { handlePagination(currentPage - 1); }}
-                        >Prev</Button>
-                    </ButtonGroup>}
-
-                    <Form.Label className="text-light mx-2">
-                        {
-                            firtCardIndex.current + 1 == filteredCustomres?.length // if first index equal to no of records
-                                ? ""
-                                : firtCardIndex.current + 1 + "-"
-                        }
-                        {
-                            lastCardIndex.current > filteredCustomres?.length // if last index is greater than no of records
-                                ? filteredCustomres?.length
-                                : lastCardIndex.current
-                        }
-                        {
-                            " of " + filteredCustomres?.length
-                        }
-                    </Form.Label>
-
-                    {currentPage < lastPage.current && <ButtonGroup size="sm">
-                        <Button variant="light" className="fw-bold text-primary"
-                            onClick={() => { handlePagination(currentPage + 1); }}
-                        >Next</Button>
-
-                        <Button variant="dark" className="fw-bold text-light"
-                            onClick={() => { handlePagination(lastPage.current); }}
-                        >Last</Button>
-                    </ButtonGroup>}
+                    />
                 </FormGroup>
+
+                {filteredCustomres?.length > cardsPerPage.current &&
+                    <FormGroup className="mt-xl-0 mt-1 d-flex justify-content-between align-items-start">
+                        {currentPage > 1 && <ButtonGroup size="sm">
+                            <Button variant="dark" className="fw-bold text-light"
+                                onClick={() => { handlePagination(1); }}
+                            > First </Button>
+
+                            <Button variant="light" className="fw-bold text-primary"
+                                onClick={() => { handlePagination(currentPage - 1); }}
+                            >Prev</Button>
+                        </ButtonGroup>}
+
+                        <Form.Label className="text-light mx-2">
+                            {
+                                firtCardIndex.current + 1 == filteredCustomres?.length // if first index equal to no of records
+                                    ? ""
+                                    : firtCardIndex.current + 1 + "-"
+                            }
+                            {
+                                lastCardIndex.current > filteredCustomres?.length // if last index is greater than no of records
+                                    ? filteredCustomres?.length
+                                    : lastCardIndex.current
+                            }
+                            {
+                                " of " + filteredCustomres?.length
+                            }
+                        </Form.Label>
+
+                        {currentPage < lastPage.current && <ButtonGroup size="sm">
+                            <Button variant="light" className="fw-bold text-primary"
+                                onClick={() => { handlePagination(currentPage + 1); }}
+                            >Next</Button>
+
+                            <Button variant="dark" className="fw-bold text-light"
+                                onClick={() => { handlePagination(lastPage.current); }}
+                            >Last</Button>
+                        </ButtonGroup>}
+                    </FormGroup>
                 }
 
-                <FormGroup size="sm" className="d-flex mt-xl-0 mt-1">
+                <FormGroup size="sm" className="d-flex mt-xl-0 mt-1 align-items-start">
                     <Form.Control type="text"
                         placeholder="Type and search"
                         onChange={(e) => { searchedName.current = e.target.value }} />
