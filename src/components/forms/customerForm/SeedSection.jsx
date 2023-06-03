@@ -2,8 +2,6 @@ import { Form, FormGroup } from "react-bootstrap";
 
 const SeedSection = ({ seed }) => {
     const {
-        location,
-        type,
         origin,
         areaPerson,
         areaManager,
@@ -14,48 +12,21 @@ const SeedSection = ({ seed }) => {
         <FormGroup className="col border shadow rounded p-3">
             <span className="fw-bold text-secondary">Seed Info</span>
 
-            <div className="d-flex justify-content-evenly mt-3">
-                {location &&
-                    <Form.Floating className="col-6 mb-3">
-                        <Form.Select placeholder="Location" defaultValue={location} >
-                            <option>Select</option>
-                            <option>INLINE</option>
-                            <option>CAMEIN</option>
-                            <option>LEFTOUT</option>
-                            <option>OUTGONE</option>
-                        </Form.Select>
-                        <Form.Label className="text-primary fw-bold">Location</Form.Label>
-                    </Form.Floating>
-                }
-
-                <Form.Floating className="col-6 mb-3">
-                    <Form.Select placeholder="Seed Type" defaultValue={type} >
-                        <option>Select</option>
-                        <option>NEW</option>
-                        <option>REPAIRED</option>
-                        <option>SAME-LINE</option>
-                        <option>SAME-CITY</option>
-                        <option>OUT-LINE</option>
-                        <option>OUT-CITY</option>
-                        <option>OUT-DIST</option>
-                        <option>OUT-STATE</option>
-                    </Form.Select>
-                    <Form.Label className="text-primary fw-bold">Seed Type</Form.Label>
-                </Form.Floating>
-            </div>
-
             <Form.Floating className="mb-3">
-                <Form.Select placeholder="Origin" defaultValue={origin} >
-                    <option>Select</option>
+                <Form.Control name="origin" placeholder="Origin"
+                    defaultValue={origin} required
+                    list="originList" />
+                <datalist id="originList">
                     <option>Hingoli Store</option>
                     <option>Aurangabad Store</option>
-                </Form.Select>
+                </datalist>
+
                 <Form.Label className="text-primary fw-bold">Origin</Form.Label>
             </Form.Floating>
 
             <Form.Floating className="mb-3">
-                <Form.Select placeholder="Area/ Person" defaultValue={areaPerson} >
-                    <option>Select</option>
+                <Form.Select name="areaPerson" placeholder="Area || Person" defaultValue={areaPerson} required>
+                    <option></option>
                     <option>Ajam Colony</option>
                     <option>Balu Chakke</option>
                     <option>Khwaja Mohammadiya Colony, Shivraj Nagar</option>
@@ -72,12 +43,12 @@ const SeedSection = ({ seed }) => {
                     <option>SRPF Quarter</option>
                     <option>Tofkhana</option>
                 </Form.Select>
-                <Form.Label className="text-primary fw-bold">Area/ Person</Form.Label>
+                <Form.Label className="text-primary fw-bold">Area || Person</Form.Label>
             </Form.Floating>
 
             <Form.Floating className="mb-3">
-                <Form.Select placeholder="Area Manager" defaultValue={areaManager} >
-                    <option>Select</option>
+                <Form.Select name="areaManager" placeholder="Area Manager" defaultValue={areaManager} required>
+                    <option></option>
                     <option>Balu Chakke</option>
                     <option>Madhav Bangar</option>
                     <option>Prakash Mujmule</option>
@@ -90,7 +61,7 @@ const SeedSection = ({ seed }) => {
             </Form.Floating>
 
             <Form.Floating className="mb-3">
-                <Form.Control placeholder="Remark" defaultValue={remark} />
+                <Form.Control name="remark" placeholder="Remark" defaultValue={remark} />
                 <Form.Label className="text-primary fw-bold">Remark</Form.Label>
             </Form.Floating>
         </FormGroup>
