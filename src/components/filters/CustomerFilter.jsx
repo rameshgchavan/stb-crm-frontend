@@ -1,10 +1,8 @@
-import axios from "axios";
+import { Button, ButtonGroup, Container, Form, FormGroup } from "react-bootstrap"
 import { useEffect, useRef, useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
-import { listCustomersAction, filterCustomersAction } from "../../redux/actions";
-
-import { Button, ButtonGroup, Container, Form, FormGroup, ToggleButton, ToggleButtonGroup } from "react-bootstrap"
+import { filterCustomersAction } from "../../redux/actions";
 
 const CustomerFilter = () => {
     const dispatch = useDispatch();
@@ -20,28 +18,18 @@ const CustomerFilter = () => {
 
     const [filteredCustomres, setFilteredCutomers] = useState();
 
-    const scrutiny = useSelector(state => state.scrutinyReducer); // to get token
     const customersList = useSelector(state => state.customersReducer)?.data;
 
     useEffect(() => {
-        listCustomers();
-    }, [])
-
-    const listCustomers = async () => {
-        const customers = await axios("/customers", {
-            method: "get",
-            headers: { authorization: `bearer ${scrutiny.token}` }
-        });
-
-        dispatch(listCustomersAction(customers?.data));
-    }
+        filterCustomers();
+    }, [customersList])
 
     const filterCustomers = () => {
         let filteredData;
 
         if (location.current == "INLINE") {
             filteredData = customersList
-                .filter((customer, index) => {
+                ?.filter((customer, index) => {
                     return customer.STBState == "Allocated"
                 })
                 .filter((customer) => {
@@ -117,7 +105,7 @@ const CustomerFilter = () => {
             <Form className="d-lg-flex justify-content-between py-1">
                 <FormGroup className="d-flex flex-wrap gap-2 text-start">
                     <Form.Check variant="outline-success" type="radio" name="stbs" label="INLINE"
-                        className="me-sm-3 text-warning fw-bold"
+                        className="me-sm-3 text-warning fw-bold" defaultChecked
                         onClick={() => { location.current = "INLINE"; filterCustomers(); }}
                     />
 
