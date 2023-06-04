@@ -1,11 +1,31 @@
 import { Button } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import axios from "axios";
 
 import CustomerCard from "../components/cards/CustomerCard";
 
+import { listCustomersAction } from "../redux/actions";
+
 const CustomersPage = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const scrutiny = useSelector(state => state.scrutinyReducer); // to get token
+
+    useEffect(() => {
+        listCustomers();
+    }, [])
+
+    const listCustomers = async () => {
+        const customers = await axios("/customers", {
+            method: "get",
+            headers: { authorization: `bearer ${scrutiny.token}` }
+        });
+
+        dispatch(listCustomersAction(customers?.data));
+    }
 
     // Note: data: filteredCustomers is not object key value pair
     // data: filteredCustomers <-- here  filteredCustomers is alias of data
