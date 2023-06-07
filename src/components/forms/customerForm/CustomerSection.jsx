@@ -2,7 +2,7 @@ import { Form, FormGroup } from "react-bootstrap";
 import { useSelector } from "react-redux";
 
 const CustomerSection = ({ customer }) => {
-    const customerList = useSelector(state => state.customersReducer).data;
+    const customersList = useSelector(state => state.customersListReducer)?.data;
 
     const {
         date, name, area, address, mobile
@@ -23,7 +23,7 @@ const CustomerSection = ({ customer }) => {
                 />
                 <datalist id="nameList">
                     {
-                        customerList.map((customer, index) => {
+                        customersList?.map((customer, index) => {
                             return (
                                 <option> {customer.CustName}</option>
                             )

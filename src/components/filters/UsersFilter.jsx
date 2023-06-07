@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { setUserStatusAction, searchUserAction } from "../../redux/actions";
 import { useRef } from "react";
 
-const UserFilter = () => {
+const UsersFilter = () => {
     const dispatch = useDispatch();
     const userName = useRef();
 
@@ -38,4 +38,4 @@ const UserFilter = () => {
     )
 }
 
-export default UserFilter
+export default UsersFilter

@@ -10,11 +10,22 @@ import {
     filterCustomersAction
 } from "./customers";
 
+import {
+    listTransactionsAction,
+    filterTransactionsAction,
+    summarizeTransactionsAction,
+} from "./transactios";
+
 export {
     authenticateUserAction,
     listUsersAction,
     setUserStatusAction,
     searchUserAction,
+
     listCustomersAction,
-    filterCustomersAction
+    filterCustomersAction,
+
+    listTransactionsAction,
+    filterTransactionsAction,
+    summarizeTransactionsAction
 };

@@ -1,7 +1,7 @@
-import { customersReducer } from "./customersList";
+import { customersListReducer } from "./customersList";
 import { customersFilterationReducer } from "./customersFilteration";
 
 export {
-    customersReducer,
+    customersListReducer,
     customersFilterationReducer
 };

@@ -1,14 +1,14 @@
-import { LIST_CUSTOMERS } from "../../constants/customers"
+import { LIST_TRANSACTIONS } from "../../constants/transactions"
 // Initialize state
 const initialState = {}
 
 // Create and export Ruducers
-export const customersListReducer = (state = initialState, action) => {
+export const transactionsListReducer = (state = initialState, action) => {
     // Destruct action
     const { type, data } = action;
 
     switch (type) {
-        case LIST_CUSTOMERS:
+        case LIST_TRANSACTIONS:
             return { ...state, data };
 
         default:

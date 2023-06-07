@@ -19,15 +19,12 @@ const CustomerForm = () => {
 
     // Note: data: filteredCustomers is not object key value pair
     // data: filteredCustomers <-- here  filteredCustomers is alias of data
-    const { data: filteredCustomers } = useSelector(state => state.customersFilterationReducer);
+    // const { data: filteredCustomers } = useSelector(state => state.customersFilterationReducer);
 
-    // Find customer where id matches
-    const customer = filteredCustomers?.find((customer) => customer._id == id);
-
-    const customerList = useSelector(state => state.customersReducer).data;
+    const customersList = useSelector(state => state.customersListReducer)?.data;
     // To count Names those already exist in database
     const countName = (name) => {
-        const names = customerList.filter((customer) => {
+        const names = customersList.filter((customer) => {
             return customer.CustName == name
         });
 
@@ -110,6 +107,9 @@ const CustomerForm = () => {
             navigate("/customers");
     }
 
+    // Find customer where id matches
+    const customer = customersList?.find((customer) => customer._id == id);
+    
     return (
         <Form ref={customerForm} onSubmit={handleSubmit}>
             <div className="d-lg-flex  gap-3 mx-sm-3">
@@ -144,9 +144,9 @@ const CustomerForm = () => {
             </div>
 
             <div className="d-flex justify-content-around my-4">
-                <Button className="my-4"
+                {/* <Button className="my-4"
                     onClick={() => navigate("/customers")}
-                >Back</Button>
+                >Back</Button> */}
 
                 {customer &&
                     <Button variant="danger" className="my-4"

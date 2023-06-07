@@ -7,14 +7,25 @@ import {
 } from "./users";
 
 import {
-    customersReducer,
+    customersListReducer,
     customersFilterationReducer
 } from "./customers";
+
+import {
+    transactionsListReducer,
+    transactionsSummaryReducer,
+    transactionsFilterationReducer
+} from "./transactions";
 
 export const rootReducer = combineReducers({
     scrutinyReducer,
     usersReducer,
     filterUsersReducer,
-    customersReducer,
-    customersFilterationReducer
+
+    customersListReducer,
+    customersFilterationReducer,
+
+    transactionsListReducer,
+    transactionsSummaryReducer,
+    transactionsFilterationReducer
 });
