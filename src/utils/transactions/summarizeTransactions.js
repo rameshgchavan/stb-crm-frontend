@@ -3,7 +3,7 @@ import { DateTime } from "luxon";
 
 const summarizeTransactions = async (collectionName, scrutiny, customersList) => {
     const transactionsList = (await axios(`/transactions/${collectionName}`, {
-        method: "get",
+        method: "post",
         headers: { authorization: `bearer ${scrutiny.token}` }
     }))?.data;
 

@@ -16,7 +16,6 @@ const TransactionCard = ({ transaction, srNo }) => {
     const id = transaction?.Customer?._id;
     const name = transaction?.Customer?.CustName;
     const area = transaction?.Customer?.Area;
-    const address = transaction?.Customer?.Address;
     const mobile = transaction?.Customer?.MobNo;
     const areaPerson = transaction?.Customer?.AreaPerson;
     const areaManager = transaction?.Customer?.AreaManager;
@@ -34,7 +33,9 @@ const TransactionCard = ({ transaction, srNo }) => {
                 <Form.Label className="d-block text-truncate">{area}<br /> {mobile ? mobile : "NA"}</Form.Label>
 
                 <div className="d-flex justify-content-between">
-                    <Button variant="danger">₹{bill}</Button>
+                    <Button variant="danger"
+                        onClick={() => { navigate(`/package/${acNo}/${DateTime.fromISO(rechargeDate).toISODate()}`) }}
+                    >₹{bill}</Button>
                     <Button size="sm" className="align-self-end"
                         onClick={() => { navigate(`/customer/${id}`) }}
                     >more...</Button>

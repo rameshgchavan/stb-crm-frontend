@@ -1,5 +1,6 @@
 import { Button, Form } from "react-bootstrap"
 import { useNavigate } from "react-router-dom";
+import { DateTime } from "luxon";
 
 const CustomerCard = ({ customer, srNo }) => {
     const navigate = useNavigate();
@@ -17,8 +18,8 @@ const CustomerCard = ({ customer, srNo }) => {
         VC_NDS_MAC_ID: vcNdsMacId,
         AcNo: acNo,
         LCOCode: lcoCode,
-        AreaManager:areaManager,
-        AreaPerson:areaPerson,
+        AreaManager: areaManager,
+        AreaPerson: areaPerson,
     } = customer;
 
     return (
@@ -40,7 +41,9 @@ const CustomerCard = ({ customer, srNo }) => {
                 </Form.Label>
 
                 <div className="d-flex justify-content-between">
-                    <Button variant="warning" size="sm">Pack</Button>
+                    <Button variant="warning" size="sm"
+                        onClick={() => { navigate(`/package/${acNo}/${DateTime.now().minus({ months: 1 }).toFormat("LLL-yyyy")}`) }}
+                    >Pack</Button>
                     <Button size="sm"
                         onClick={() => { navigate(`/customer/${id}`) }}
                     >more...</Button>
