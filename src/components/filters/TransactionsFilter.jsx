@@ -3,7 +3,11 @@ import { useEffect, useRef, useState } from "react";
 import { DateTime } from "luxon";
 
 import { useDispatch, useSelector } from "react-redux";
-import { filterTransactionsAction, summarizeTransactionsAction } from "../../redux/actions";
+import {
+    summarizeTransactionsAction,
+    filterSummarizedTransactionsAction,
+    sliceFilteredTransactionsAction
+} from "../../redux/actions";
 
 import summarizeTransactions from "../../utils/transactions/summarizeTransactions";
 
@@ -32,11 +36,10 @@ const TransactionsFilter = () => {
 
     const searchedName = useRef("");
 
-    const [filteredTransactions, setFilteredTransactions] = useState();
-
     const scrutiny = useSelector(state => state.scrutinyReducer); // to get token
-    const transacionsSummary = useSelector(state => state.transactionsSummaryReducer)?.data;
     const customersList = useSelector(state => state.customersListReducer)?.data;
+    const transacionsSummary = useSelector(state => state.transactionsSummaryReducer)?.data;
+    const filteredSummarizedTtransactions = useSelector(state => state.summarizedTransactionsFilterationReducer)?.data;
 
     useEffect(() => {
         filterTransactions();
@@ -78,9 +81,7 @@ const TransactionsFilter = () => {
     };
 
     const filterTransactions = () => {
-        let filteredData;
-
-        filteredData = transacionsSummary
+        const filteredData = transacionsSummary
             ?.filter((transaction, index) => {
                 return areaManager.current !== "All"
                     ? transaction.Customer?.AreaManager === areaManager.current
@@ -101,7 +102,8 @@ const TransactionsFilter = () => {
                     || transaction.Customer?.STB_SN.toLowerCase().includes(searchedName.current.toLowerCase());
             });
 
-        setFilteredTransactions(filteredData);
+        dispatch(filterSummarizedTransactionsAction(filteredData));
+
         setCurrentPage(1);
 
         sliceTransactions(filteredData);
@@ -113,7 +115,7 @@ const TransactionsFilter = () => {
         lastPage.current = Math.ceil(filteredData?.length / cardsPerPage.current)
 
         dispatch(
-            filterTransactionsAction(
+            sliceFilteredTransactionsAction(
                 filteredData?.slice(firtCardIndex.current, lastCardIndex.current),
                 firtCardIndex.current
             )
@@ -121,7 +123,7 @@ const TransactionsFilter = () => {
     }
 
     const handlePagination = (pageNo) => {
-        sliceTransactions(filteredTransactions, pageNo);
+        sliceTransactions(filteredSummarizedTtransactions, pageNo);
         setCurrentPage(pageNo);
     }
 
@@ -193,7 +195,7 @@ const TransactionsFilter = () => {
                     </FormGroup>
                 </div>
 
-                {filteredTransactions?.length > cardsPerPage.current &&
+                {filteredSummarizedTtransactions?.length > cardsPerPage.current &&
                     <FormGroup className="mt-2 d-flex justify-content-center align-items-start">
                         {currentPage > 1 && <ButtonGroup size="sm">
                             <Button variant="dark" className="fw-bold text-light"
@@ -207,17 +209,17 @@ const TransactionsFilter = () => {
 
                         <Form.Label className="text-light mx-2">
                             {
-                                firtCardIndex.current + 1 == filteredTransactions?.length // if first index equal to no of records
+                                firtCardIndex.current + 1 == filteredSummarizedTtransactions?.length // if first index equal to no of records
                                     ? ""
                                     : firtCardIndex.current + 1 + "-"
                             }
                             {
-                                lastCardIndex.current > filteredTransactions?.length // if last index is greater than no of records
-                                    ? filteredTransactions?.length
+                                lastCardIndex.current > filteredSummarizedTtransactions?.length // if last index is greater than no of records
+                                    ? filteredSummarizedTtransactions?.length
                                     : lastCardIndex.current
                             }
                             {
-                                " of " + filteredTransactions?.length
+                                " of " + filteredSummarizedTtransactions?.length
                             }
                         </Form.Label>
 
