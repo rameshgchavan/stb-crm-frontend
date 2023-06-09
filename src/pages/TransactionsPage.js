@@ -30,59 +30,6 @@ const TransactionsPage = () => {
         );
     }
 
-    // const summarizeTransactions = async () => {
-    //     const transactionsList = (await axios("/transactions", {
-    //         method: "get",
-    //         headers: { authorization: `bearer ${scrutiny.token}` }
-    //     }))?.data;
-
-    //     // Get unique transactions by AcNo and Date
-    //     const uniqueTransactions = transactionsList?.filter((transaction, index, array) => {
-    //         return array.findIndex(object =>
-    //             object.AcNo === transaction.AcNo &&
-    //             DateTime.fromISO(object.TransactionDateTime).toISODate()
-    //             === DateTime.fromISO(transaction.TransactionDateTime).toISODate()
-    //         ) === index
-    //     })
-
-    //     const summarizedTransactions = uniqueTransactions?.map((uniqueTransaction) => {
-    //         let totalLCOPrice = 0;
-    //         let totalBasePrice = 0;
-    //         let totalNCF = 0;
-    //         let Bill = 0;
-
-    //         transactionsList.filter(transaction =>
-    //             transaction.AcNo === uniqueTransaction.AcNo &&
-    //             DateTime.fromISO(transaction.TransactionDateTime).toISODate()
-    //             === DateTime.fromISO(uniqueTransaction.TransactionDateTime).toISODate()
-    //         ).map((transaction) => {
-    //             totalLCOPrice += transaction.LCOPrice;
-    //             totalBasePrice += transaction.BasePrice;
-    //             totalNCF += transaction.NCF;
-    //         });
-
-    //         totalNCF = (totalNCF / 25) | 0; //|0 for taking integer value for NCF count
-    //         totalNCF = totalNCF * 23.6;
-
-    //         Bill = totalBasePrice + totalNCF;
-
-    //         //Populated customer for transactions 
-    //         let customerIndex = customersList.findIndex((customer) => customer.AcNo === uniqueTransaction.AcNo)
-    //         // uniqueTransactions[uniqueIndex]['Customer'] = customersList[customerIndex];
-
-    //         return {
-    //             ...uniqueTransaction,
-    //             Customer: customersList[customerIndex],
-    //             LCOPrice: totalLCOPrice.toFixed(2),
-    //             BasePrice: totalBasePrice.toFixed(2),
-    //             NCF: totalNCF.toFixed(2),
-    //             Bill: Bill.toFixed(2)
-    //         };
-    //     });
-
-    //     dispatch(summarizeTransactionsAction(summarizedTransactions));
-    // }
-
     // Note: data: filteredCustomers is not object key value pair
     // data: filteredCustomers <-- here  filteredCustomers is alias of data
     const { data: filteredTransactions, firtCardIndex } =

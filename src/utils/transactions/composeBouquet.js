@@ -39,8 +39,8 @@ const composeBouquet = (transactionsList, trasactionDate) => {
         totalLCOPrice += transaction.LCOPrice
         totalBasePrice += transaction.BasePrice
 
-        array.filter(plann =>
-            plann.PlanName === transaction.PlanName
+        array.filter(plan =>
+            plan.PlanName === transaction.PlanName
         ).map((planName, index) => {
             if (planName.TransactionType !== "Cancellation") {
                 ncf += planName.NCF
@@ -48,7 +48,7 @@ const composeBouquet = (transactionsList, trasactionDate) => {
             else if (planName.TransactionType === "Cancellation") {
                 if (index != 0) { ncf -= planName.NCF }
             }
-        })
+        });
     });
 
     return (
