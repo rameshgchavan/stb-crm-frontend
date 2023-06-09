@@ -14,7 +14,8 @@ import {
 import {
     transactionsListReducer,
     transactionsSummaryReducer,
-    transactionsFilterationReducer
+    summarizedTransactionsFilterationReducer,
+    filteredTransactionsSliceReducer
 } from "./transactions";
 
 export const rootReducer = combineReducers({
@@ -27,5 +28,6 @@ export const rootReducer = combineReducers({
 
     transactionsListReducer,
     transactionsSummaryReducer,
-    transactionsFilterationReducer
+    summarizedTransactionsFilterationReducer,
+    filteredTransactionsSliceReducer
 });

@@ -1,9 +1,11 @@
 import { transactionsListReducer } from "./transactionsList";
 import { transactionsSummaryReducer } from "./transactionsSummary";
-import { transactionsFilterationReducer } from "./transactionsFilteration";
+import { summarizedTransactionsFilterationReducer } from "./summarizedTtransactionsFilteration";
+import { filteredTransactionsSliceReducer } from "./filteredTransactionsSlice";
 
 export {
     transactionsListReducer,
     transactionsSummaryReducer,
-    transactionsFilterationReducer
+    summarizedTransactionsFilterationReducer,
+    filteredTransactionsSliceReducer
 };

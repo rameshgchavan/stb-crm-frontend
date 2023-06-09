@@ -1,5 +1,5 @@
 import {
-    LIST_TRANSACTIONS, FILTER_TRANSACTIONS, SUMMARIZE_TRANSACTIONS
+    LIST_TRANSACTIONS, SUMMARIZE_TRANSACTIONS, FILTER_SUMMARIZED_TRANSACTIONS, SLICE_FILTERED_TRANSACTIONS,
 } from "../constants/transactions"
 
 
@@ -8,16 +8,6 @@ const listTransactionsAction = (data) => {
         {
             type: LIST_TRANSACTIONS,
             data
-        }
-    )
-};
-
-const filterTransactionsAction = (data, firtCardIndex) => {
-    return (
-        {
-            type: FILTER_TRANSACTIONS,
-            data,
-            firtCardIndex
         }
     )
 };
@@ -31,6 +21,26 @@ const summarizeTransactionsAction = (data) => {
     )
 };
 
+const filterSummarizedTransactionsAction = (data) => {
+    return (
+        {
+            type: FILTER_SUMMARIZED_TRANSACTIONS,
+            data
+        }
+    )
+};
+
+const sliceFilteredTransactionsAction = (data, firtCardIndex) => {
+    return (
+        {
+            type: SLICE_FILTERED_TRANSACTIONS,
+            data,
+            firtCardIndex
+        }
+    )
+};
+
 export {
-    listTransactionsAction, filterTransactionsAction, summarizeTransactionsAction
+    listTransactionsAction, summarizeTransactionsAction,
+    filterSummarizedTransactionsAction, sliceFilteredTransactionsAction,
 };

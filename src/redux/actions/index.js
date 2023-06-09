@@ -12,8 +12,9 @@ import {
 
 import {
     listTransactionsAction,
-    filterTransactionsAction,
     summarizeTransactionsAction,
+    filterSummarizedTransactionsAction,
+    sliceFilteredTransactionsAction
 } from "./transactios";
 
 export {
@@ -26,6 +27,7 @@ export {
     filterCustomersAction,
 
     listTransactionsAction,
-    filterTransactionsAction,
-    summarizeTransactionsAction
+    summarizeTransactionsAction,
+    filterSummarizedTransactionsAction,
+    sliceFilteredTransactionsAction
 };
