@@ -60,7 +60,7 @@ const STBSection = ({ stb }) => {
                 </div>
             }
 
-            <div className="d-flex justify-content-evenly mt-3">
+            <div className="d-flex justify-content-evenly">
                 <Form.Floating className="col-5 mb-3">
                     <Form.Select name="type" placeholder="STB Type"
                         onChange={(e) => { setSelectedType(e.target.value) }}

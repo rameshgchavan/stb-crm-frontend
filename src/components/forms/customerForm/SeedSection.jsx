@@ -12,7 +12,7 @@ const SeedSection = ({ seed }) => {
         <FormGroup className="col border shadow rounded p-3">
             <span className="fw-bold text-secondary">Seed Info</span>
 
-            <Form.Floating className="mb-3">
+            <Form.Floating className="my-3">
                 <Form.Control name="origin" placeholder="Origin"
                     defaultValue={origin} required
                     list="originList" />
