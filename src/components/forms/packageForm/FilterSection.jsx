@@ -1,16 +1,25 @@
-import { useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Form } from "react-bootstrap";
 import { DateTime } from "luxon";
+import axios from "axios";
+
+import { useSelector } from "react-redux";
+
+import composeBouquet from "../../../utils/transactions/composeBouquet";
 
 const FilterSection = ({ requiredTools }) => {
     const {
-        transactions, listTransactions,
-        composeBouquet, transactionDate,
-        dateOptions, setBouquet
+        acNo,
+        transactionDate,
+        setBouquet
     } = requiredTools;
+
+    const [dateOptions, setDateOptions] = useState();
+    const [transactions, setTransactions] = useState();
 
     const monthOptions = useRef(DateTime.now().minus({ months: 1 }).toFormat("LLL"));
     const yearOptions = useRef(DateTime.now().toFormat("yyyy"));
+    const selectDate = useRef("Select")
 
     const monthsList = [
         "Jan", "Feb", "Mar", "Apr",
@@ -20,10 +29,45 @@ const FilterSection = ({ requiredTools }) => {
 
     const yearsList = [];
 
-    for (let year = DateTime.now().year; year >= 2021; year--) {
+    for (let year = DateTime.now().year; year >= 2022; year--) {
         yearsList.push(year);
     }
-    console.warn(transactionDate);
+
+    const scrutiny = useSelector(state => state.scrutinyReducer); // to get token
+
+    useEffect(() => {
+        const collectionName = transactionDate.length == 8
+            ? transactionDate
+            : DateTime.fromISO(transactionDate).toFormat("LLL-yyyy")
+
+        listTransactions(collectionName, transactionDate);
+    }, [])
+
+    const listTransactions = async (collectionName, transactionDate) => {
+        const acNoTransactionsList = (await axios(`/transactions/${collectionName}`,
+            {
+                method: "post",
+                headers: { authorization: `bearer ${scrutiny.token}` },
+                data: { acNo }
+            }
+        ))?.data
+
+        setTransactions(acNoTransactionsList);
+
+        setDateOptions(
+            acNoTransactionsList?.filter((transaction, index, array) => {
+                return array.findIndex(object =>
+                    DateTime.fromISO(object.TransactionDateTime).toISODate()
+                    === DateTime.fromISO(transaction.TransactionDateTime).toISODate()
+                ) === index
+            })
+        );
+
+        transactionDate && setBouquet(
+            composeBouquet(acNoTransactionsList, DateTime.fromISO(transactionDate).toISODate())
+        );
+    };
+
     return (
         <div className="d-sm-flex col-lg-6 justify-content-center">
             {transactionDate?.length == 8 && <Form.Select name="year" defaultValue={yearOptions.current}
@@ -57,11 +101,10 @@ const FilterSection = ({ requiredTools }) => {
                 </Form.Select>
 
                 : transactionDate?.length == 8 &&
-                <Form.Select name="date"
+                <Form.Select name="date" value={selectDate.current}
                     onChange={(e) => {
-                        setBouquet(
-                            composeBouquet(transactions, e.target.value)
-                        );
+                        selectDate.current = e.target.value;
+                        setBouquet(composeBouquet(transactions, e.target.value));
                     }}
                 >
                     <option>Select</option>
