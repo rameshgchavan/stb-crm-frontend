@@ -36,6 +36,18 @@ const TransactionsFilter = () => {
 
     const searchedName = useRef("");
 
+    const monthsList = [
+        "Jan", "Feb", "Mar", "Apr",
+        "May", "Jun", "Jul", "Aug",
+        "Sep", "Oct", "Nov", "Dec"
+    ];
+
+    const yearsList = [];
+
+    for (let year = DateTime.now().year; year >= 2022; year--) {
+        yearsList.push(year);
+    }
+
     const scrutiny = useSelector(state => state.scrutinyReducer); // to get token
     const customersList = useSelector(state => state.customersListReducer)?.data;
     const transacionsSummary = useSelector(state => state.transactionsSummaryReducer)?.data;
@@ -138,11 +150,9 @@ const TransactionsFilter = () => {
                                 getCollection();
                             }}
                         >
-                            <option value="2030">2030</option><option value="2029">2029</option>
-                            <option value="2028">2028</option><option value="20327">2027</option>
-                            <option value="2026">2026</option><option value="2025">2025</option>
-                            <option value="2024">2024</option><option value="2023">2023</option>
-                            <option value="2022">2022</option><option value="2021">2021</option>
+                            {yearsList.map(year =>
+                                <option value={year}>{year}</option>
+                            )}
                         </Form.Select>
                         <Form.Select name="month" defaultValue={selectedMonth.current}
                             onChange={(e) => {
@@ -150,12 +160,9 @@ const TransactionsFilter = () => {
                                 getCollection();
                             }}
                         >
-                            <option value="Dec">Dec</option><option value="Nov">Nov</option>
-                            <option value="Oct">Oct</option><option value="Sep">Sep</option>
-                            <option value="Aug">Aug</option><option value="Jul">Jul</option>
-                            <option value="Jun">Jun</option><option value="May">May</option>
-                            <option value="Apr">Apr</option><option value="Mar">Mar</option>
-                            <option value="Feb">Feb</option><option value="Jan">Jan</option>
+                            {monthsList.map(month =>
+                                <option value={month}>{month}</option>
+                            )}
                         </Form.Select>
                     </FormGroup>
 
@@ -185,7 +192,7 @@ const TransactionsFilter = () => {
                         </Form.Select>
                     </FormGroup>
 
-                    <FormGroup size="sm" className="d-flex mt-xl-0 mt-1 align-items-start">
+                    <FormGroup size="sm" className="d-flex mt-lg-0 mt-1 align-items-start">
                         <Form.Control type="text"
                             placeholder="Type and search"
                             onChange={(e) => { searchedName.current = e.target.value }} />
