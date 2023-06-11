@@ -1,28 +1,28 @@
 import { DateTime } from "luxon";
 
-const composeBouquet = (transactionsList, trasactionDate) => {
-    const ftaBouquet = transactionsList?.filter(transaction =>
+const composeBouquet = (acNoTransactionsList, trasactionDate) => {
+    const ftaBouquet = acNoTransactionsList?.filter(transaction =>
         transaction.Priority === 1 &&
         DateTime.fromISO(transaction.TransactionDateTime).toISODate()
         === trasactionDate
     );
 
-    const msoBouquet = transactionsList.filter(transaction =>
+    const msoBouquet = acNoTransactionsList.filter(transaction =>
         transaction.Priority == 2 &&
         DateTime.fromISO(transaction.TransactionDateTime).toISODate()
         == trasactionDate
     );
-    const broadcasterBouquet = transactionsList.filter(transaction =>
+    const broadcasterBouquet = acNoTransactionsList.filter(transaction =>
         transaction.Priority == 3 &&
         DateTime.fromISO(transaction.TransactionDateTime).toISODate()
         == trasactionDate
     );
-    const aLaCarte = transactionsList.filter(transaction =>
+    const aLaCarte = acNoTransactionsList.filter(transaction =>
         transaction.Priority == 4 &&
         DateTime.fromISO(transaction.TransactionDateTime).toISODate()
         == trasactionDate
     );
-    const unknown = transactionsList.filter(transaction =>
+    const unknown = acNoTransactionsList.filter(transaction =>
         transaction.Priority < 1 &&
         DateTime.fromISO(transaction.TransactionDateTime).toISODate()
         == trasactionDate
@@ -32,7 +32,7 @@ const composeBouquet = (transactionsList, trasactionDate) => {
     let totalLCOPrice = 0;
     let totalBasePrice = 0;
 
-    transactionsList.filter(transaction =>
+    acNoTransactionsList.filter(transaction =>
         DateTime.fromISO(transaction.TransactionDateTime).toISODate()
         == trasactionDate
     ).map((transaction, index, array) => {
