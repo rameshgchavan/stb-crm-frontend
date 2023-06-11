@@ -9,7 +9,7 @@ import {
     sliceFilteredTransactionsAction
 } from "../../redux/actions";
 
-import summarizeTransactions from "../../utils/transactions/summarizeTransactions";
+import summarizeTransactions from "../../functions/transactions/summarizeTransactions";
 
 const TransactionsFilter = () => {
     const dispatch = useDispatch();

@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 import TransactionCard from "../components/cards/TransactionCard";
 
-import summarizeTransactions from "../utils/transactions/summarizeTransactions";
+import summarizeTransactions from "../functions/transactions/summarizeTransactions";
 
 import { summarizeTransactionsAction } from "../redux/actions";
 import { Button } from "react-bootstrap";

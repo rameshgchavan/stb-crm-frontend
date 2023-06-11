@@ -5,7 +5,7 @@ import axios from "axios";
 
 import { useSelector } from "react-redux";
 
-import composeBouquet from "../../../utils/transactions/composeBouquet";
+import composeBouquet from "../../../functions/transactions/composeBouquet";
 
 const FilterSection = ({ requiredTools }) => {
     const {
