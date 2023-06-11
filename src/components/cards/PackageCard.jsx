@@ -2,7 +2,7 @@ import { DateTime } from "luxon";
 
 const PackageCard = ({ bouquet }) => {
     return (
-        <div name="bouquet" className="d-lg-flex justify-content-between rounded-top p-2 mb-1 text-lg-start">
+        <div name="bouquet" className="d-lg-flex justify-content-between p-2 mb-1 text-lg-start">
             <div className="fw-bold col-lg-3">{bouquet.PlanName}</div>
 
             <div className="d-flex gap-3 justify-content-between">
@@ -20,7 +20,7 @@ const PackageCard = ({ bouquet }) => {
                     <div> {bouquet.TransactionType}</div>
 
                     <div className="fw-bold">
-                        : {DateTime.fromISO(bouquet.TransactionDateTime).toFormat("dd-LLL-yyyy hh:mm:ss a")}
+                        : {DateTime.fromISO(bouquet.TransactionDateTime).toFormat("dd-LLL-yyyy hh:mma")}
                     </div>
                 </div>
                 <div className="d-sm-flex">
