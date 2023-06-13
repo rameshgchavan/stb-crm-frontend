@@ -94,10 +94,12 @@ const ForgotPassword = () => {
                     <Form.Text className="text-muted">
                         We'll never share your email with anyone else.
                     </Form.Text>
-                    <Form.Control name="user_email" type="email" placeholder="Enter email" required
-                        disabled={disabled}
-                        onChange={(e) => { emailID.current = e.target.value }} />
-
+                    <Form.Floating>
+                        <Form.Control name="user_email" type="email" placeholder="Enter email" required
+                            disabled={disabled}
+                            onChange={(e) => { emailID.current = e.target.value }} />
+                        <Form.Label className="text-primary fw-bold">Enter email</Form.Label>
+                    </Form.Floating>
                     <input name="email_otp" defaultValue={emailOTP.current} hidden />
 
                     <Button variant="success" type="submit" size='sm' className='mt-2'
@@ -112,20 +114,27 @@ const ForgotPassword = () => {
                     <Form.Text className="text-muted">
                         Check your email for OTP
                     </Form.Text>
-                    <Form.Control type="text" placeholder="Enter OTP" required
-                        onChange={(e) => userOTP.current = e.target.value} />
+                    <Form.Floating>
+                        <Form.Control type="text" placeholder="Enter OTP" required
+                            onChange={(e) => userOTP.current = e.target.value} />
+                        <Form.Label className="text-primary fw-bold">Enter OTP</Form.Label>
+                    </Form.Floating>
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicNewPassword">
-                    <Form.Label>Enter password</Form.Label>
-                    <Form.Control type="password" placeholder="Enter new password" required
-                        onChange={(e) => newPassword.current = e.target.value} />
+                    <Form.Floating>
+                        <Form.Control type="password" placeholder="Enter new password" required
+                            onChange={(e) => newPassword.current = e.target.value} />
+                        <Form.Label className="text-primary fw-bold">Enter new password</Form.Label>
+                    </Form.Floating>
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicConfirmPassword">
-                    <Form.Label>Confirm password</Form.Label>
-                    <Form.Control type="password" placeholder="Confirm password" required
-                        onChange={(e) => confirmPassword.current = e.target.value} />
+                    <Form.Floating>
+                        <Form.Control type="password" placeholder="Confirm password" required
+                            onChange={(e) => confirmPassword.current = e.target.value} />
+                        <Form.Label className="text-primary fw-bold">Confirm password</Form.Label>
+                    </Form.Floating>
                 </Form.Group>
 
                 <Button variant="primary" type="submit" >
