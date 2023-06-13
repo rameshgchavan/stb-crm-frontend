@@ -101,9 +101,9 @@ const STBSection = ({ stb }) => {
                         <Form.Label className="text-primary fw-bold">STBs</Form.Label>
                     </Form.Floating>
                 }
-                
+
                 <Form.Floating className="col-8 mb-3">
-                    <Form.Control name="acNo" placeholder="A/c No" defaultValue={acNo}
+                    <Form.Control name="acNo" placeholder="A/c No" defaultValue={acNo?.trim()}
                         required maxLength={10} minLength={10} autocomplete="off" />
                     <Form.Label className="text-primary fw-bold">A/c No</Form.Label>
                 </Form.Floating>
