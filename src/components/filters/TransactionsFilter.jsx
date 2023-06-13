@@ -6,7 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import {
     summarizeTransactionsAction,
     filterSummarizedTransactionsAction,
-    sliceFilteredTransactionsAction
+    sliceFilteredTransactionsAction,
+    loadingAction, loadedAction
 } from "../../redux/actions";
 
 import summarizeTransactions from "../../functions/transactions/summarizeTransactions";
@@ -20,26 +21,39 @@ const TransactionsFilter = () => {
     const firtCardIndex = useRef(0);
     const lastCardIndex = useRef(cardsPerPage.current);
 
+    const selectedDay = useRef("All");
+
     const selectedMonth = useRef(
-        DateTime.now()
-            .minus({ month: 1 })
-            .toFormat("LLL")
+        DateTime.now().minus({ months: 1 }).toFormat("LL")
     );
 
     const selectedYear = useRef(
-        DateTime.now()
-            .toFormat("yyyy")
+        DateTime.now().toFormat("yyyy")
     );
+
+    const selectedType = useRef("Recharge");
 
     const areaManager = useRef("All");
     const areaPerson = useRef("All");
 
     const searchedName = useRef("");
 
+    const dayList = [];
+
+    for (let day = 1; day <= 31; day++) {
+        if (day < 10) {
+            dayList.push('0' + day);
+        }
+        else dayList.push(day);
+    }
+
     const monthsList = [
-        "Jan", "Feb", "Mar", "Apr",
-        "May", "Jun", "Jul", "Aug",
-        "Sep", "Oct", "Nov", "Dec"
+        { MMM: "Jan", MM: "01" }, { MMM: "Feb", MM: "02" },
+        { MMM: "Mar", MM: "03" }, { MMM: "Apr", MM: "04" },
+        { MMM: "May", MM: "05" }, { MMM: "Jun", MM: "06" },
+        { MMM: "Jul", MM: "07" }, { MMM: "Aug", MM: "08" },
+        { MMM: "Sep", MM: "09" }, { MMM: "Oct", MM: "10" },
+        { MMM: "Nov", MM: "11" }, { MMM: "Dec", MM: "12" }
     ];
 
     const yearsList = [];
@@ -58,13 +72,38 @@ const TransactionsFilter = () => {
     }, [transacionsSummary])
 
     const getCollection = async () => {
-        const collectionName = selectedMonth.current + "-" + selectedYear.current;
+        const preCollectionName = DateTime.fromISO(`${selectedYear.current}-${selectedMonth.current}-01`).minus({ months: 1 }).toFormat("LLL-yyyy");
+        const curCollectionName = DateTime.fromISO(`${selectedYear.current}-${selectedMonth.current}-01`).toFormat("LLL-yyyy");
 
-        dispatch(
-            summarizeTransactionsAction(
-                await summarizeTransactions(collectionName, scrutiny, customersList)
-            )
-        );
+        dispatch(loadingAction());
+
+        const preSummarizedTrasaction = await summarizeTransactions(preCollectionName, scrutiny, customersList);
+        const curSummarizedTrasaction = await summarizeTransactions(curCollectionName, scrutiny, customersList);
+
+        if (selectedType.current == "Expiry") {
+            const filteredPreSummarizedTrasaction = await preSummarizedTrasaction.filter(preTransacions =>
+                DateTime.fromISO(preTransacions.ExpiryDate).toFormat("LLL-yyyy")
+                === curCollectionName);
+
+            const filteredCurSummarizedTrasaction = await curSummarizedTrasaction.filter(curTransacions =>
+                DateTime.fromISO(curTransacions.ExpiryDate).toFormat("LLL-yyyy")
+                === curCollectionName);
+
+            const mergedPreCurSummarizedTasaction = [...filteredCurSummarizedTrasaction, ...filteredPreSummarizedTrasaction];
+
+            dispatch(
+                summarizeTransactionsAction(
+                    mergedPreCurSummarizedTasaction.sort((a, b) => DateTime.fromISO(a.ExpiryDate) - DateTime.fromISO(b.ExpiryDate))
+                )
+            );
+        }
+        else {
+            dispatch(
+                summarizeTransactionsAction(curSummarizedTrasaction)
+            );
+        }
+
+        dispatch(loadedAction())
     }
 
     const listAreaManagers = () => {
@@ -95,19 +134,31 @@ const TransactionsFilter = () => {
     const filterTransactions = () => {
         const filteredData = transacionsSummary
             ?.filter((transaction, index) => {
+                // console.warn(DateTime.fromRFC2822(`${selectedDay.current} ${selectedMonth.current} ${selectedYear.current} 00:00 Z`).plus({ months: 1 }).toISODate());
+                return selectedDay.current !== "All"
+                    ? selectedType.current == "Expiry"
+                        ? DateTime.fromISO(transaction?.ExpiryDate).toISODate() ===
+                        DateTime.fromISO(`${selectedYear.current}-${selectedMonth.current}-${selectedDay.current}`).toISODate()
+                        : DateTime.fromISO(transaction?.TransactionDateTime).toISODate() ===
+                        DateTime.fromISO(`${selectedYear.current}-${selectedMonth.current}-${selectedDay.current}`).toISODate()
+                    : transaction
+            })
+            ?.filter((transaction, index) => {
                 return areaManager.current !== "All"
                     ? transaction.Customer?.AreaManager === areaManager.current
-                    : transaction.Customer?.AreaManager
+                    : transaction
             })
             ?.filter((transaction, index) => {
                 return areaPerson.current !== "All"
                     ? transaction.Customer?.AreaPerson === areaPerson.current
-                    : transaction.Customer?.AreaPerson
+                    : transaction
             })
             ?.filter((transaction) => {
                 return transaction.AcNo.toLowerCase().includes(searchedName.current.toLowerCase())
                     || transaction.Bill.toLowerCase().includes(searchedName.current.toLowerCase())
                     || transaction.Customer?.CustName.toLowerCase().includes(searchedName.current.toLowerCase())
+                    || transaction.Customer?.Area.toLowerCase().includes(searchedName.current.toLowerCase())
+                    || transaction.Customer?.Address.toLowerCase().includes(searchedName.current.toLowerCase())
                     || transaction.Customer?.MobNo.toLowerCase().includes(searchedName.current.toLowerCase())
                     || transaction.Customer?.VC_NDS_MAC_ID.toLowerCase().includes(searchedName.current.toLowerCase())
                     || transaction.Customer?.NDS_No.toLowerCase().includes(searchedName.current.toLowerCase())
@@ -143,30 +194,54 @@ const TransactionsFilter = () => {
         <Container className="bg-secondary shadow rounded-bottom">
             <Form className="py-1">
                 <div className="d-lg-flex justify-content-between align-items-start">
-                    <FormGroup className="d-flex col-lg-3">
+                    <FormGroup className="d-flex col-lg-4">
                         <Form.Select name="year" defaultValue={selectedYear.current}
+                            style={{ width: "10rem" }}
                             onChange={(e) => {
                                 selectedYear.current = e.target.value;
                                 getCollection();
                             }}
                         >
-                            {yearsList.map(year =>
-                                <option value={year}>{year}</option>
+                            {yearsList.map((year, index) =>
+                                <option key={index} value={year}>{year}</option>
                             )}
                         </Form.Select>
                         <Form.Select name="month" defaultValue={selectedMonth.current}
+                            style={{ width: "8rem" }}
                             onChange={(e) => {
                                 selectedMonth.current = e.target.value;
                                 getCollection();
                             }}
                         >
-                            {monthsList.map(month =>
-                                <option value={month}>{month}</option>
+                            {monthsList.map((month, index) =>
+                                <option key={index} value={month.MM}>{month.MMM}</option>
                             )}
+                        </Form.Select>
+                        <Form.Select name="day" defaultValue={selectedDay.current}
+                            style={{ width: "5rem" }}
+                            onChange={(e) => {
+                                selectedDay.current = e.target.value;
+                                filterTransactions();
+                            }}
+                        >
+                            <option value="All">All</option>
+                            {dayList.map((day, index) =>
+                                <option key={index} value={day}>{day}</option>
+                            )}
+                        </Form.Select>
+
+                        <Form.Select name="type" defaultValue={selectedType.current}
+                            onChange={(e) => {
+                                selectedType.current = e.target.value;
+                                getCollection();
+                            }}
+                        >
+                            <option value="Expiry">Expiry</option>
+                            <option value="Recharge">Recharge</option>
                         </Form.Select>
                     </FormGroup>
 
-                    <FormGroup className="d-flex align-items-start col-lg-5">
+                    <FormGroup className="d-flex align-items-start col-lg-4">
                         <Form.Select name="areaManager"
                             onChange={(e) => {
                                 areaManager.current = e.target.value;
@@ -174,8 +249,8 @@ const TransactionsFilter = () => {
                             }}
                         >
                             <option>All</option>
-                            {listAreaManagers()?.map((manager) => {
-                                return <option>{manager.AreaManager}</option>
+                            {listAreaManagers()?.map((manager, index) => {
+                                return <option key={index}>{manager.AreaManager}</option>
                             })}
                         </Form.Select>
 
@@ -186,8 +261,8 @@ const TransactionsFilter = () => {
                             }}
                         >
                             <option>All</option>
-                            {listAreaPersons()?.map((areaPerson) => {
-                                return <option className="text-truncate">{areaPerson.AreaPerson}</option>
+                            {listAreaPersons()?.map((areaPerson, index) => {
+                                return <option key={index} className="text-truncate">{areaPerson.AreaPerson}</option>
                             })}
                         </Form.Select>
                     </FormGroup>
