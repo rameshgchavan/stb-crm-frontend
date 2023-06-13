@@ -25,7 +25,7 @@ const CustomersFilter = () => {
 
     useEffect(() => {
         filterCustomers();
-    }, [customersList])
+    }, [customersList == undefined])
 
     const listAreaManagers = () => {
         const areaManagers = customersList?.filter((customer, index, array) => {
@@ -75,6 +75,8 @@ const CustomersFilter = () => {
                 })
                 .filter((customer) => {
                     return customer.CustName.toLowerCase().includes(searchedName.current.toLowerCase())
+                        || customer.Area.toLowerCase().includes(searchedName.current.toLowerCase())
+                        || customer.Address.toLowerCase().includes(searchedName.current.toLowerCase())
                         || customer.MobNo.toLowerCase().includes(searchedName.current.toLowerCase())
                         || customer.AcNo.toLowerCase().includes(searchedName.current.toLowerCase())
                         || customer.VC_NDS_MAC_ID.toLowerCase().includes(searchedName.current.toLowerCase())
@@ -102,6 +104,8 @@ const CustomersFilter = () => {
                 })
                 .filter((customer) => {
                     return customer.CustName.toLowerCase().includes(searchedName.current.toLowerCase())
+                        || customer.Area.toLowerCase().includes(searchedName.current.toLowerCase())
+                        || customer.Address.toLowerCase().includes(searchedName.current.toLowerCase())
                         || customer.MobNo.toLowerCase().includes(searchedName.current.toLowerCase())
                         || customer.AcNo.toLowerCase().includes(searchedName.current.toLowerCase())
                         || customer.VC_NDS_MAC_ID.toLowerCase().includes(searchedName.current.toLowerCase())
@@ -126,6 +130,8 @@ const CustomersFilter = () => {
                 })
                 .filter((customer) => {
                     return customer.CustName.toLowerCase().includes(searchedName.current.toLowerCase())
+                        || customer.Area.toLowerCase().includes(searchedName.current.toLowerCase())
+                        || customer.Address.toLowerCase().includes(searchedName.current.toLowerCase())
                         || customer.MobNo.toLowerCase().includes(searchedName.current.toLowerCase())
                         || customer.AcNo.toLowerCase().includes(searchedName.current.toLowerCase())
                         || customer.VC_NDS_MAC_ID.toLowerCase().includes(searchedName.current.toLowerCase())
@@ -192,8 +198,8 @@ const CustomersFilter = () => {
                             }}
                         >
                             <option>All</option>
-                            {listAreaManagers()?.map((manager) => {
-                                return <option>{manager.AreaManager}</option>
+                            {listAreaManagers()?.map((manager, index) => {
+                                return <option key={index}>{manager.AreaManager}</option>
                             })}
                         </Form.Select>
 
@@ -204,8 +210,8 @@ const CustomersFilter = () => {
                             }}
                         >
                             <option>All</option>
-                            {listAreaPersons()?.map((areaPerson) => {
-                                return <option className="text-truncate">{areaPerson.AreaPerson}</option>
+                            {listAreaPersons()?.map((areaPerson, index) => {
+                                return <option key={index} className="text-truncate">{areaPerson.AreaPerson}</option>
                             })}
                         </Form.Select>
                     </FormGroup>
