@@ -17,6 +17,8 @@ import {
     sliceFilteredTransactionsAction
 } from "./transactios";
 
+import { loadingAction, loadedAction } from "./loading"
+
 export {
     authenticateUserAction,
     listUsersAction,
@@ -29,5 +31,7 @@ export {
     listTransactionsAction,
     summarizeTransactionsAction,
     filterSummarizedTransactionsAction,
-    sliceFilteredTransactionsAction
+    sliceFilteredTransactionsAction,
+
+    loadingAction, loadedAction
 };

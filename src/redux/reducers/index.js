@@ -18,6 +18,8 @@ import {
     filteredTransactionsSliceReducer
 } from "./transactions";
 
+import {isLoadingReducer} from "./loading"
+
 export const rootReducer = combineReducers({
     scrutinyReducer,
     usersReducer,
@@ -29,5 +31,7 @@ export const rootReducer = combineReducers({
     transactionsListReducer,
     transactionsSummaryReducer,
     summarizedTransactionsFilterationReducer,
-    filteredTransactionsSliceReducer
+    filteredTransactionsSliceReducer,
+
+    isLoadingReducer
 });
