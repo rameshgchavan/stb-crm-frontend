@@ -27,12 +27,11 @@ const NavBar = () => {
                         <Nav className="me-auto">
                             {/* Comman Links (Admin and User both can access) */}
                             <Nav.Link as={Link} to="/customers">Customers</Nav.Link>
-                            <Nav.Link as={Link} to="/expiry">Expiry</Nav.Link>
+                            <Nav.Link as={Link} to="/transactions">Trasactions</Nav.Link>
 
                             {/* Admin Links (Only Admin can access) */}
                             {user.Admin &&
                                 <Nav>
-                                    <Nav.Link as={Link} to="/transactions">Trasactions</Nav.Link>
                                     <Nav.Link as={Link} to="/users">Users</Nav.Link>
                                 </Nav>
                             }
