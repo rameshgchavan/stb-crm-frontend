@@ -2,6 +2,11 @@ import { Button, Form, FormGroup } from "react-bootstrap"
 import { useNavigate } from "react-router-dom";
 import { DateTime } from "luxon";
 
+import { CopyToClipboard } from "react-copy-to-clipboard";
+import { FaWhatsappSquare } from "react-icons/fa"
+import { MdReadMore } from "react-icons/md"
+import { RiCheckboxMultipleLine } from "react-icons/ri"
+
 const TransactionCard = ({ transaction, srNo }) => {
     const navigate = useNavigate();
 
@@ -9,6 +14,7 @@ const TransactionCard = ({ transaction, srNo }) => {
     // Its not an object of key value pair.
     const {
         TransactionDateTime: rechargeDate,
+        ExpiryDate: lastDate,
         Bill: bill,
         AcNo: acNo
     } = transaction;
@@ -17,38 +23,67 @@ const TransactionCard = ({ transaction, srNo }) => {
     const name = transaction?.Customer?.CustName;
     const area = transaction?.Customer?.Area;
     const mobile = transaction?.Customer?.MobNo;
+    const lcoCode = transaction?.Customer?.LCOCode;
+    const vcNdsMacId = transaction?.Customer?.VC_NDS_MAC_ID;
     const areaPerson = transaction?.Customer?.AreaPerson;
     const areaManager = transaction?.Customer?.AreaManager;
+
+    const copyToShare = `*Name:* ${name}
+*Area:* ${area}
+*Mobile:* ${mobile}
+*Area||Person:* ${areaPerson}
+*A/c:* ${acNo}
+*LCO:* ${lcoCode}
+*ID:* ${vcNdsMacId}`;
 
     return (
         <Form >
             <FormGroup className="border rounded shadow px-3 py-2 mb-3" style={{ width: "20rem" }}>
                 <Form.Label className="d-flex justify-content-between fw-bold">
-                    <div className="fs-6 fw-bold text-start">{srNo}.</div>
-                    <div className="fs-6 fw-bold text-danger">{DateTime.fromISO(rechargeDate).toFormat("dd-LLL-yy")}</div>
-                    <div className="fs-6 fw-bold">A/c:{acNo}</div>
+                    <div className="text-start">{srNo}.</div>
+                    <div style={{ fontSize: "0.8rem" }} className="text-success text-nowrap">{DateTime.fromISO(rechargeDate).toFormat("dd-LLL-yy")}</div>
+                    <div style={{ fontSize: "0.8rem" }} className="text-danger text-nowrap">{DateTime.fromISO(lastDate).toFormat("dd-LLL-yy")}</div>
+                    <div>Ac:{acNo}</div>
                 </Form.Label>
 
-                <Form.Label className="d-block text-uppercase fw-bold text-primary text-truncate">{name ? name : "NA"}</Form.Label>
-                <Form.Label className="d-block text-truncate">{area}<br /> {mobile ? mobile : "NA"}</Form.Label>
+                <Form.Label className="d-block text-uppercase fw-bold text-primary text-truncate">{name ? name : "N/A"}</Form.Label>
+                <Form.Label className="d-block text-truncate">{area}<br /> {mobile ? mobile : "N/A"}</Form.Label>
+
+                <Form.Label className="d-flex fw-bold justify-content-between">
+                    <div>LCO:{lcoCode ? lcoCode : "N/A"}</div>
+                    <div className="text-primary">ID:{vcNdsMacId ? vcNdsMacId : "N/A"}</div>
+
+                    <CopyToClipboard text={vcNdsMacId}>
+                        <RiCheckboxMultipleLine size={18} className="text-secondary"
+                            onClick={() => alert("ID copied.")}
+                        />
+                    </CopyToClipboard>
+                </Form.Label>
 
                 <div className="d-flex justify-content-between">
-                    <Button variant="danger"
+                    <Button variant="warning"
                         onClick={() => { navigate(`/package/${acNo}/${DateTime.fromISO(rechargeDate).toISODate()}`) }}
                     >₹{bill}</Button>
-                    <Button size="sm" className="align-self-end"
+
+                    <CopyToClipboard text={copyToShare}>
+                        <FaWhatsappSquare size={30} className="text-success"
+                            onClick={() => alert("Copied to share on whatsapp")}
+                        />
+                    </CopyToClipboard>
+
+                    <MdReadMore size={35} className="text-primary"
                         onClick={() => { navigate(`/customer/${id}`) }}
-                    >more...</Button>
+                    />
                 </div>
 
                 <hr />
                 <Form.Label className="d-flex justify-content-between text-truncate" >
                     <div className="me-3 lh-1">
                         <span style={{ fontSize: "x-small" }}>
-                            {areaManager ? "Manager" : "NA"}
+                            {areaManager ? "Manager" : "N/A"}
                         </span><br />
                         <span style={{ fontSize: "smaller", fontWeight: "bold" }}>
-                            {areaManager ? areaManager : "NA"}
+                            {areaManager ? areaManager : "N/A"}
                         </span>
                     </div>
 
