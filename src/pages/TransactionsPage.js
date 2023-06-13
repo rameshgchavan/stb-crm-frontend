@@ -1,21 +1,23 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { DateTime } from "luxon";
-import { useNavigate } from "react-router-dom";
+
+import { Button } from "react-bootstrap";
 
 import TransactionCard from "../components/cards/TransactionCard";
+import TrasactionsPrint from "../components/prints/TrasactionsPrint";
 
 import summarizeTransactions from "../functions/transactions/summarizeTransactions";
 
-import { summarizeTransactionsAction } from "../redux/actions";
-import { Button } from "react-bootstrap";
+import { summarizeTransactionsAction, loadingAction, loadedAction } from "../redux/actions";
 
 const TransactionsPage = () => {
+    const [showPreview, setShowPreview] = useState(false);
     const dispatch = useDispatch();
-    const navigate = useNavigate();
 
     const scrutiny = useSelector(state => state.scrutinyReducer); // to get token
     const customersList = useSelector(state => state.customersListReducer)?.data;
+    const isLoading = useSelector(state => state.isLoadingReducer);
 
     useEffect(() => {
         getCollection();
@@ -26,11 +28,15 @@ const TransactionsPage = () => {
             .minus({ months: 1 })
             .toFormat("LLL-yyyy");
 
+        dispatch(loadingAction());
+
         dispatch(
             summarizeTransactionsAction(
                 await summarizeTransactions(collectionName, scrutiny, customersList)
             )
         );
+
+        dispatch(loadedAction());
     }
 
     // Note: data: filteredCustomers is not object key value pair
@@ -41,22 +47,35 @@ const TransactionsPage = () => {
     return (
         <>
             <div className="d-flex flex-wrap justify-content-evenly">
-                {!filteredTransactionsSlice || filteredTransactionsSlice?.length == 0 ? <h3>Oops... no record found.</h3> : ""}
-
-                {
-                    filteredTransactionsSlice?.map((transaction, index) => {
-                        return <TransactionCard
-                            key={transaction._id}
-                            srNo={(index + 1) + firtCardIndex}
-                            transaction={transaction}
-                        />
-                    })
+                {!isLoading
+                    ? <h3>Loading...</h3>
+                    : filteredTransactionsSlice?.length == 0
+                        ? <h3>Oops... no record found.</h3>
+                        : !showPreview && filteredTransactionsSlice?.map((transaction, index) => {
+                            return <TransactionCard
+                                key={transaction._id}
+                                srNo={(index + 1) + firtCardIndex}
+                                transaction={transaction}
+                            />
+                        })
                 }
             </div>
 
-            <Button variant="success" size="sm" className="my-4"
-                onClick={() => navigate("/transactions/preview", "_blank")}
-            >Preview</Button>
+            {isLoading && filteredTransactionsSlice?.length != 0 && !showPreview &&
+                <Button variant="success" size="sm" className="my-2"
+                    onClick={() => { setShowPreview(true) }}
+                >Show Print Preview</Button>
+            }
+
+            {isLoading && filteredTransactionsSlice?.length != 0 && showPreview &&
+                <Button variant="danger" size="sm" className="my-2"
+                    onClick={() => { setShowPreview(false) }}
+                >Hide Print Preview</Button>
+            }
+
+            {showPreview &&
+                <TrasactionsPrint />
+            }
         </>
     )
 }
