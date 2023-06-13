@@ -5,7 +5,6 @@ import PrivateRoute from './PrivateRoute';
 import PublicRoutes from './PublicRoutes';
 import { PageRoutesAdmin, PageRoutes } from './PageRoutes';
 import FromRoutes from './FormRoutes';
-import PrintRoutes from './PrintRoutes';
 
 const AllRoutes = () => {
     const user = useSelector(state => state.scrutinyReducer);
@@ -27,7 +26,6 @@ const AllRoutes = () => {
                     <Route>
                         {PageRoutes}
                         {FromRoutes}
-                        {PrintRoutes}
                     </Route>
                 </Route>
 
