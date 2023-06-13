@@ -5,28 +5,28 @@ const composeBouquet = (acNoTransactionsList, trasactionDate) => {
         transaction.Priority === 1 &&
         DateTime.fromISO(transaction.TransactionDateTime).toISODate()
         === trasactionDate
-    );
+    ).sort((a, b) => DateTime.fromISO(a.TransactionDateTime) - DateTime.fromISO(b.TransactionDateTime));
 
     const msoBouquet = acNoTransactionsList.filter(transaction =>
         transaction.Priority == 2 &&
         DateTime.fromISO(transaction.TransactionDateTime).toISODate()
         == trasactionDate
-    );
+    ).sort((a, b) => DateTime.fromISO(a.TransactionDateTime) - DateTime.fromISO(b.TransactionDateTime));
     const broadcasterBouquet = acNoTransactionsList.filter(transaction =>
         transaction.Priority == 3 &&
         DateTime.fromISO(transaction.TransactionDateTime).toISODate()
         == trasactionDate
-    );
+    ).sort((a, b) => DateTime.fromISO(a.TransactionDateTime) - DateTime.fromISO(b.TransactionDateTime));
     const aLaCarte = acNoTransactionsList.filter(transaction =>
         transaction.Priority == 4 &&
         DateTime.fromISO(transaction.TransactionDateTime).toISODate()
         == trasactionDate
-    );
+    ).sort((a, b) => DateTime.fromISO(a.TransactionDateTime) - DateTime.fromISO(b.TransactionDateTime));
     const unknown = acNoTransactionsList.filter(transaction =>
         transaction.Priority < 1 &&
         DateTime.fromISO(transaction.TransactionDateTime).toISODate()
         == trasactionDate
-    );
+    ).sort((a, b) => DateTime.fromISO(a.TransactionDateTime) - DateTime.fromISO(b.TransactionDateTime));
 
     let ncf = 0;
     let totalLCOPrice = 0;
@@ -35,21 +35,25 @@ const composeBouquet = (acNoTransactionsList, trasactionDate) => {
     acNoTransactionsList.filter(transaction =>
         DateTime.fromISO(transaction.TransactionDateTime).toISODate()
         == trasactionDate
-    ).map((transaction, index, array) => {
-        totalLCOPrice += transaction.LCOPrice
-        totalBasePrice += transaction.BasePrice
+    )
+        .sort((a, b) => DateTime.fromISO(a.TransactionDateTime) - DateTime.fromISO(b.TransactionDateTime))
+        .map((transaction, index, array) => {
+            totalLCOPrice += transaction.LCOPrice
+            totalBasePrice += transaction.BasePrice
 
-        array.filter(plan =>
-            plan.PlanName === transaction.PlanName
-        ).map((planName, index) => {
-            if (planName.TransactionType !== "Cancellation") {
-                ncf += planName.NCF
-            }
-            else if (planName.TransactionType === "Cancellation") {
-                if (index != 0) { ncf -= planName.NCF }
-            }
+            array.filter(plan =>
+                plan.PlanName === transaction.PlanName
+            )
+
+                .map((planName, index) => {
+                    if (planName.TransactionType !== "Cancellation") {
+                        ncf += planName.NCF
+                    }
+                    else if (planName.TransactionType === "Cancellation") {
+                        if (index != 0) { ncf -= planName.NCF }
+                    }
+                });
         });
-    });
 
     return (
         {

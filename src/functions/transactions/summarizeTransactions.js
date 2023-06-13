@@ -26,21 +26,23 @@ const summarizeTransactions = async (collectionName, scrutiny, customersList) =>
             transaction.AcNo === uniqueTransaction.AcNo &&
             DateTime.fromISO(transaction.TransactionDateTime).toISODate()
             === DateTime.fromISO(uniqueTransaction.TransactionDateTime).toISODate()
-        ).map((transaction, index, array) => {
-            totalLCOPrice += transaction.LCOPrice;
-            totalBasePrice += transaction.BasePrice;
+        )
+            .sort((a, b) => DateTime.fromISO(a.TransactionDateTime) - DateTime.fromISO(b.TransactionDateTime))
+            .map((transaction, index, array) => {
+                totalLCOPrice += transaction.LCOPrice;
+                totalBasePrice += transaction.BasePrice;
 
-            array.filter(plan =>
-                plan.PlanName === transaction.PlanName
-            ).map((planName, index) => {
-                if (planName.TransactionType !== "Cancellation") {
-                    totalNCF += planName.NCF
-                }
-                else if (planName.TransactionType === "Cancellation") {
-                    if (index != 0) { totalNCF -= planName.NCF }
-                }
+                array.filter(plan =>
+                    plan.PlanName === transaction.PlanName
+                ).map((planName, index) => {
+                    if (planName.TransactionType !== "Cancellation") {
+                        totalNCF += planName.NCF
+                    }
+                    else if (planName.TransactionType === "Cancellation") {
+                        if (index != 0) { totalNCF -= planName.NCF }
+                    }
+                });
             });
-        });
 
         totalNCF = (totalNCF / 25) | 0; //|0 for taking integer value for NCF count
         totalNCF = totalNCF * 23.6;
@@ -48,7 +50,7 @@ const summarizeTransactions = async (collectionName, scrutiny, customersList) =>
         Bill = totalBasePrice + totalNCF;
 
         //Populated customer for transactions 
-        let customerIndex = customersList.findIndex((customer) => customer.AcNo === uniqueTransaction.AcNo)
+        let customerIndex = customersList.findIndex((customer) => customer.AcNo.trim() === uniqueTransaction.AcNo)
         // uniqueTransactions[uniqueIndex]['Customer'] = customersList[customerIndex];
 
         return {
