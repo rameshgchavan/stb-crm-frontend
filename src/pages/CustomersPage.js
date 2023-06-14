@@ -20,7 +20,7 @@ const CustomersPage = () => {
     }, [])
 
     const listCustomers = async () => {
-        const customers = await axios("/customers", {
+        const customers = await axios(`/customers/stb-crm`, {
             method: "get",
             headers: { authorization: `bearer ${scrutiny.token}` }
         });

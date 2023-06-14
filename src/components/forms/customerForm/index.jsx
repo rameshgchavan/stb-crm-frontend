@@ -78,7 +78,7 @@ const CustomerForm = () => {
         const response = await axios("/customers/save", {
             method: "post",
             headers: { authorization: `bearer ${scrutiny.token}` },
-            data: customerData
+            data: { dbName: "stb-crm", customerData }
         });
 
         response.data.code === 201
@@ -96,7 +96,7 @@ const CustomerForm = () => {
         const response = await axios(`/customers/update/${id}`, {
             method: "put",
             headers: { authorization: `bearer ${scrutiny.token}` },
-            data: customerData
+            data: { dbName: "stb-crm", customerData }
         });
 
         response.data.code === 202
@@ -109,7 +109,7 @@ const CustomerForm = () => {
 
     // Find customer where id matches
     const customer = customersList?.find((customer) => customer._id == id);
-    
+
     return (
         <Form ref={customerForm} onSubmit={handleSubmit}>
             <div className="d-lg-flex  gap-3 mx-sm-3">
