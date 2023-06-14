@@ -2,9 +2,10 @@ import axios from "axios";
 import { DateTime } from "luxon";
 
 const summarizeTransactions = async (collectionName, scrutiny, customersList) => {
-    const transactionsList = (await axios(`/transactions/${collectionName}`, {
+    const transactionsList = (await axios(`/transactions`, {
         method: "post",
-        headers: { authorization: `bearer ${scrutiny.token}` }
+        headers: { authorization: `bearer ${scrutiny.token}` },
+        data: { dbName: "stb-crm", collectionName }
     }))?.data;
 
     // Get unique transactions by AcNo and Date
