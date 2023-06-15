@@ -7,27 +7,30 @@ import axios from "axios";
 import CustomerCard from "../components/cards/CustomerCard";
 
 import { listCustomersAction } from "../redux/actions";
+import checkAdminGetDbName from "../functions/checkAdminGetDbName";
 
 const CustomersPage = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const scrutiny = useSelector(state => state.scrutinyReducer); // to get token
+    const scrutinizedUser = useSelector(state => state.scrutinyUserReducer); // to get token
     const customersList = useSelector(state => state.customersListReducer)?.data;
+
+    const { isAdmin, dbName } = checkAdminGetDbName(scrutinizedUser);
 
     useEffect(() => {
         listCustomers();
     }, [])
 
     const listCustomers = async () => {
-        const customers = await axios(`/customers/stb-crm`, {
+        const customers = await axios(`/customers/${dbName}`, {
             method: "get",
-            headers: { authorization: `bearer ${scrutiny.token}` }
+            headers: { authorization: `bearer ${scrutinizedUser.token}` }
         });
 
         dispatch(listCustomersAction(customers?.data));
     }
-   
+
     // Note: data: filteredCustomers is not object key value pair
     // data: filteredCustomers <-- here  filteredCustomers is alias of data
     const { data: filteredCustomers, firtCardIndex } =
