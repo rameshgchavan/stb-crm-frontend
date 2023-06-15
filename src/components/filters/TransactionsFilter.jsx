@@ -33,9 +33,6 @@ const TransactionsFilter = () => {
 
     const selectedType = useRef("Recharge");
 
-    const areaManager = useRef("All");
-    const areaPerson = useRef("All");
-
     const searchedName = useRef("");
 
     const dayList = [];
@@ -62,7 +59,14 @@ const TransactionsFilter = () => {
         yearsList.push(year);
     }
 
-    const scrutiny = useSelector(state => state.scrutinyReducer); // to get token
+    const scrutinizedUser = useSelector(state => state.scrutinyUserReducer);
+
+    const { Admin, Name: userName } = scrutinizedUser;
+    const isAdmin = Admin == "self" || Admin == "stb-crm" ? true : false;
+
+    const areaManager = useRef(isAdmin ? "All" : userName);
+    const areaPerson = useRef("All");
+
     const customersList = useSelector(state => state.customersListReducer)?.data;
     const transacionsSummary = useSelector(state => state.transactionsSummaryReducer)?.data;
     const filteredSummarizedTtransactions = useSelector(state => state.summarizedTransactionsFilterationReducer)?.data;
@@ -77,8 +81,8 @@ const TransactionsFilter = () => {
 
         dispatch(loadingAction());
 
-        const preSummarizedTrasaction = await summarizeTransactions(preCollectionName, scrutiny, customersList);
-        const curSummarizedTrasaction = await summarizeTransactions(curCollectionName, scrutiny, customersList);
+        const preSummarizedTrasaction = await summarizeTransactions(preCollectionName, scrutinizedUser, customersList);
+        const curSummarizedTrasaction = await summarizeTransactions(curCollectionName, scrutinizedUser, customersList);
 
         if (selectedType.current == "Expiry") {
             const filteredPreSummarizedTrasaction = await preSummarizedTrasaction.filter(preTransacions =>
@@ -241,19 +245,20 @@ const TransactionsFilter = () => {
                         </Form.Select>
                     </FormGroup>
 
-                    <FormGroup className="d-flex align-items-start col-lg-4">
-                        <Form.Select name="areaManager"
-                            onChange={(e) => {
-                                areaManager.current = e.target.value;
-                                filterTransactions();
-                            }}
-                        >
-                            <option>All</option>
-                            {listAreaManagers()?.map((manager, index) => {
-                                return <option key={index}>{manager.AreaManager}</option>
-                            })}
-                        </Form.Select>
-
+                    <FormGroup className={`d-flex align-items-start ${isAdmin ? "col-lg-4" : "col-lg-3"}`}>
+                        {isAdmin &&
+                            <Form.Select name="areaManager"
+                                onChange={(e) => {
+                                    areaManager.current = e.target.value;
+                                    filterTransactions();
+                                }}
+                            >
+                                <option>All</option>
+                                {listAreaManagers()?.map((manager, index) => {
+                                    return <option key={index}>{manager.AreaManager}</option>
+                                })}
+                            </Form.Select>
+                        }
                         <Form.Select name="areaPerosn"
                             onChange={(e) => {
                                 areaPerson.current = e.target.value;

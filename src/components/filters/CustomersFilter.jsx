@@ -16,12 +16,16 @@ const CustomersFilter = () => {
     const searchedName = useRef("");
     const location = useRef("INLINE");
 
-    const areaManager = useRef("All");
-    const areaPerson = useRef("All");
-
     const [filteredCustomres, setFilteredCutomers] = useState();
 
     const customersList = useSelector(state => state.customersListReducer)?.data;
+    const scrutinizedUser = useSelector(state => state.scrutinyUserReducer);
+
+    const { Admin, Name: userName } = scrutinizedUser;
+    const isAdmin = Admin == "self" || Admin == "stb-crm" ? true : false;
+
+    const areaManager = useRef(isAdmin ? "All" : userName);
+    const areaPerson = useRef("All");
 
     useEffect(() => {
         filterCustomers();
@@ -190,19 +194,20 @@ const CustomersFilter = () => {
                         />
                     </FormGroup>
 
-                    <FormGroup className="d-flex align-items-start col-lg-4">
-                        <Form.Select name="areaManager"
-                            onChange={(e) => {
-                                areaManager.current = e.target.value;
-                                filterCustomers();
-                            }}
-                        >
-                            <option>All</option>
-                            {listAreaManagers()?.map((manager, index) => {
-                                return <option key={index}>{manager.AreaManager}</option>
-                            })}
-                        </Form.Select>
-
+                    <FormGroup className={`d-flex align-items-start ${isAdmin ? "col-lg-4" : "col-lg-3"}`}>
+                        {isAdmin &&
+                            <Form.Select name="areaManager"
+                                onChange={(e) => {
+                                    areaManager.current = e.target.value;
+                                    filterCustomers();
+                                }}
+                            >
+                                {<option>All</option>}
+                                {listAreaManagers()?.map((manager, index) => {
+                                    return <option key={index}>{manager.AreaManager}</option>
+                                })}
+                            </Form.Select>
+                        }
                         <Form.Select name="areaPerosn"
                             onChange={(e) => {
                                 areaPerson.current = e.target.value;
@@ -211,7 +216,7 @@ const CustomersFilter = () => {
                         >
                             <option>All</option>
                             {listAreaPersons()?.map((areaPerson, index) => {
-                                return <option key={index} className="text-truncate">{areaPerson.AreaPerson}</option>
+                                return <option key={index}>{areaPerson.AreaPerson}</option>
                             })}
                         </Form.Select>
                     </FormGroup>
