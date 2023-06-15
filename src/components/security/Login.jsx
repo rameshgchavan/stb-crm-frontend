@@ -48,6 +48,11 @@ const Login = () => {
             return
         }
 
+        if (user.data.code == 401) {
+            alert("You have been blocked.")
+            return
+        }
+
         dispatch(authenticateUserAction(user.data))
         navigate("/customers")
 
