@@ -5,7 +5,7 @@ import { AUTHENTICATE_USER } from "../../constants/users";
 const initialState = {};
 
 // Create and export Ruducers
-export const scrutinyReducer = (state = initialState, action) => {
+export const scrutinyUserReducer = (state = initialState, action) => {
     // Destruct action
     const { type, data } = action;
 
