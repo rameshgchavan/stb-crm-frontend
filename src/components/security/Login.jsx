@@ -51,15 +51,6 @@ const Login = () => {
         dispatch(authenticateUserAction(user.data))
         navigate("/customers")
 
-        // await axios("/users/login", {
-        //     method: "post",
-        //     data: crediantials
-        // }).then(res => {
-        //     // Call actions with data
-        //     dispatch(authenticateUser(res.data))
-        // }).catch(err => {
-        //     console.warn(err);
-        // });
     }
 
     return (
