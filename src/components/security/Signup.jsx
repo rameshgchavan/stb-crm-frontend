@@ -16,10 +16,13 @@ const Signup = () => {
     const randomNumber = Math.floor(Math.random() * (1000000 - 1)).toString();
     const emailOTP = useRef(randomNumber);
     const userOTP = useRef(null)
+    const adminEmail = useRef("");
     const userName = useRef(null);
     const emailID = useRef(null);
     const password = useRef(null);
     const confirmPassword = useRef(null);
+
+    const [isAdmin, setIsAdmin] = useState(false);
 
     const navigate = useNavigate();
 
@@ -28,30 +31,36 @@ const Signup = () => {
 
         // const email = otpForm.current["user_email"].value.trim();
 
-        const isEmail = await axios("/users/isemail", {
+        const isAdminEmail = await axios("/users/isemail", {
+            method: "post",
+            data: { Email: adminEmail.current?.trim() }
+        });
+
+        const isUserEmail = await axios("/users/isemail", {
             method: "post",
             data: { Email: emailID.current.trim() }
         });
 
-        if (isEmail.data.code == 200) {
+        if (!isAdmin && isAdminEmail.data.code == 404) {
+            alert(`${adminEmail.current} not found.`)
+        }
+        else if (isUserEmail.data.code == 200) {
             alert(`${emailID.current} is already in use, try another one.`)
         }
+        else if ((isAdmin && isUserEmail.data.code == 404) || (!isAdmin && isUserEmail.data.code == 404 && isAdminEmail.data.code == 200)) {
+            console.warn(emailOTP);
 
-        else if (isEmail.data.code == 404) {
-            // console.warn(emailOTP);
-
-            emailjs.sendForm('service_6bhhezj', 'template_svo2tbq', otpForm.current, 'llSBBJFE7skawlOYO')
-                .then((result) => {
-                    console.warn(result.text);
-                }, (error) => {
-                    console.warn(error.text);
-                });
+            // emailjs.sendForm('service_6bhhezj', 'template_svo2tbq', otpForm.current, 'llSBBJFE7skawlOYO')
+            //     .then((result) => {
+            //         console.warn(result.text);
+            //     }, (error) => {
+            //         console.warn(error.text);
+            //     });
 
             setDidsabled(true);
             setHidden(false);
         }
-
-        else { alert(isEmail) }
+        else { alert(isUserEmail) }
     };
 
     const handleSinup = async (e) => {
@@ -68,10 +77,9 @@ const Signup = () => {
         }
 
         const userDetails = {
-            Admin: false,
-            Approved: false,
+            Admin: isAdmin ? "self" : adminEmail.current.trim().replace(".", "-"),
+            Status: "pending",
             Name: userName.current,
-            AreaManager: userName.current,
             Email: emailID.current.trim(),
             Password: password.current.trim(),
             LastLogin: ""
@@ -91,7 +99,6 @@ const Signup = () => {
         user.data.code === 201
             ? navigate("/")
             : navigate("/signup")
-
     }
 
     return (
@@ -104,6 +111,32 @@ const Signup = () => {
             </div>
             <hr />
             <Form ref={otpForm} onSubmit={sendEmail}>
+                <Form.Group className="d-flex flex-wrap gap-2 text-start">
+                    <Form.Check type="radio" name="admin" label="User"
+                        className="me-sm-3 mb-3 text-danger fw-bold" defaultChecked
+                        onClick={() => { setIsAdmin(false) }}
+                    />
+
+                    <Form.Check type="radio" name="admin" label="Admin"
+                        className="me-sm-3 text-danger fw-bold"
+                        onClick={() => setIsAdmin(true)}
+                    />
+                </Form.Group>
+
+                {!isAdmin &&
+                    <Form.Group className="mb-3" controlId="formAdminEmail">
+                        <Form.Text className="text-muted">
+                            We'll never share your email with anyone else.
+                        </Form.Text>
+                        <Form.Floating>
+                            <Form.Control name="admin_email" type="text" placeholder="Enter admin email" required
+                                disabled={disabled}
+                                onChange={(e) => { adminEmail.current = e.target.value }} />
+                            <Form.Label className="text-primary fw-bold">Enter admin email</Form.Label>
+                        </Form.Floating>
+                    </Form.Group>
+                }
+
                 <Form.Group className="mb-3" controlId="formBasicUserName">
                     <Form.Floating>
                         <Form.Control name="user_name" type="text" placeholder="Enter user name" required
