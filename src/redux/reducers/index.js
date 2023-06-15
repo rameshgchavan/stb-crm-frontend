@@ -1,8 +1,8 @@
 import { combineReducers } from "redux";
 
 import {
-    scrutinyReducer,
-    usersReducer,
+    scrutinyUserReducer,
+    usersListReducer,
     filterUsersReducer
 } from "./users";
 
@@ -21,8 +21,8 @@ import {
 import {isLoadingReducer} from "./loading"
 
 export const rootReducer = combineReducers({
-    scrutinyReducer,
-    usersReducer,
+    scrutinyUserReducer,
+    usersListReducer,
     filterUsersReducer,
 
     customersListReducer,

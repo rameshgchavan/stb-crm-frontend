@@ -7,8 +7,8 @@ import { PageRoutesAdmin, PageRoutes } from './PageRoutes';
 import FromRoutes from './FormRoutes';
 
 const AllRoutes = () => {
-    const user = useSelector(state => state.scrutinyReducer);
-    JSON.stringify(user);
+    const scrutinizedUser = useSelector(state => state.scrutinyUserReducer);
+    JSON.stringify(scrutinizedUser);
 
     return (
         <div className='mt-3'>
@@ -16,7 +16,7 @@ const AllRoutes = () => {
                 {/* Private Routes */}
                 <Route path="/" element={<PrivateRoute />}>
                     {/* Admin Routes (Only Admin can access) */}
-                    {user.Admin &&
+                    {scrutinizedUser.Admin &&
                         <Route>
                             {PageRoutesAdmin}
                         </Route>

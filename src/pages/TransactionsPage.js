@@ -15,7 +15,7 @@ const TransactionsPage = () => {
     const [showPreview, setShowPreview] = useState(false);
     const dispatch = useDispatch();
 
-    const scrutiny = useSelector(state => state.scrutinyReducer); // to get token
+    const scrutinizedUser = useSelector(state => state.scrutinyUserReducer); // to get token
     const customersList = useSelector(state => state.customersListReducer)?.data;
     const isLoading = useSelector(state => state.isLoadingReducer);
 
@@ -32,7 +32,7 @@ const TransactionsPage = () => {
 
         dispatch(
             summarizeTransactionsAction(
-                await summarizeTransactions(collectionName, scrutiny, customersList)
+                await summarizeTransactions(collectionName, scrutinizedUser, customersList)
             )
         );
 

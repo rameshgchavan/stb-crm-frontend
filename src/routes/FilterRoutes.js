@@ -6,13 +6,13 @@ import TransactionsFilter from '../components/filters/TransactionsFilter';
 import UsersFilter from '../components/filters/UsersFilter';
 
 const FilterRoutes = () => {
-    const user = useSelector(state => state.scrutinyReducer);
-    JSON.stringify(user);
+    const scrutinizedUser = useSelector(state => state.scrutinyUserReducer);
+    JSON.stringify(scrutinizedUser);
 
     return (
         <Routes >
             {
-                user.Admin &&
+                scrutinizedUser.Admin &&
                 <Route>
                     <Route path="/users" element={<UsersFilter />} />
                 </Route>

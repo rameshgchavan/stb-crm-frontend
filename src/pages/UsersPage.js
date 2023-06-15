@@ -7,11 +7,11 @@ import { useEffect } from "react";
 
 const UsersPage = () => {
     const dispatch = useDispatch();
-    const scrutiny = useSelector(state => state.scrutinyReducer);
+    const scrutinizedUser = useSelector(state => state.scrutinyUserReducer);
 
     const { userStatus, userName } = useSelector(state => state.filterUsersReducer);
-   
-    const usersList = useSelector(state => state.usersReducer)
+
+    const usersList = useSelector(state => state.usersListReducer)
         ?.data?.filter((user, index) => user.Status == userStatus)
         .filter((user, index) => { return user.Name.toLowerCase().includes(userName.toLowerCase()) });
 
@@ -22,8 +22,8 @@ const UsersPage = () => {
     const listUsers = async () => {
         const users = await axios("/users", {
             method: "post",
-            headers: { authorization: `bearer ${scrutiny.token}` },
-            data: { Admin: true }
+            headers: { authorization: `bearer ${scrutinizedUser.token}` },
+            data: { user: scrutinizedUser }
         });
 
         dispatch(listUsersAction(users.data));
@@ -32,7 +32,7 @@ const UsersPage = () => {
     const updateStatus = async (id, object) => {
         const users = await axios("/users/update", {
             method: "put",
-            headers: { authorization: `bearer ${scrutiny.token}` },
+            headers: { authorization: `bearer ${scrutinizedUser.token}` },
             data: { id, object } // here object is key Name or Status 
         });
 

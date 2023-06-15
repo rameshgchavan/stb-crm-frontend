@@ -2,11 +2,11 @@ import { Outlet, Navigate } from "react-router-dom"
 import { useSelector } from 'react-redux';
 
 const PrivateRoute = () => {
-    const user = useSelector(state => state.scrutinyReducer);
-    JSON.stringify(user);
+    const scrutinizedUser = useSelector(state => state.scrutinyUserReducer);
+    JSON.stringify(scrutinizedUser);
     return (
         <div>
-            {user.token ? <Outlet /> : <Navigate to="/login" />}
+            {scrutinizedUser.token ? <Outlet /> : <Navigate to="/login" />}
         </div>
     )
 }

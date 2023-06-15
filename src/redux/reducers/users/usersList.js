@@ -3,7 +3,7 @@ import { LIST_USERS } from "../../constants/users"
 const initialState = {}
 
 // Create and export Ruducers
-export const usersReducer = (state = initialState, action) => {
+export const usersListReducer = (state = initialState, action) => {
     // Destruct action
     const { type, data } = action;
 
