@@ -12,7 +12,7 @@ const PackageSection = ({ acNo, transactionDate }) => {
 
             {transactionDate.length == 8 && <hr />}
 
-            {bouquet?.ftaBouquet?.map(ftaBouquet => {
+            {bouquet?.ftaBouquet?.map((ftaBouquet, index) => {
                 return <div name="ftaBouquet"
                     className={
                         `${ftaBouquet.TransactionType == "Cancellation"
@@ -20,11 +20,11 @@ const PackageSection = ({ acNo, transactionDate }) => {
                             : "bg-success text-light"} rounded-top`
                     }
                 >
-                    <PackageCard bouquet={ftaBouquet} />
+                    <PackageCard key={index} bouquet={ftaBouquet} />
                 </div>
             })}
 
-            {bouquet?.msoBouquet?.map(msoBouquet => {
+            {bouquet?.msoBouquet?.map((msoBouquet, index) => {
                 return <div name="msoBouquet"
                     className={
                         `${msoBouquet.TransactionType == "Cancellation"
@@ -32,11 +32,11 @@ const PackageSection = ({ acNo, transactionDate }) => {
                             : "bg-success text-light"} rounded-top`
                     }
                 >
-                    <PackageCard bouquet={msoBouquet} />
+                    <PackageCard key={index} bouquet={msoBouquet} />
                 </div>
             })}
 
-            {bouquet?.broadcasterBouquet?.map(broadcasterBouquet => {
+            {bouquet?.broadcasterBouquet?.map((broadcasterBouquet, index) => {
                 return <div name="broadcasterPack"
                     className={
                         `${broadcasterBouquet.TransactionType == "Cancellation"
@@ -44,11 +44,11 @@ const PackageSection = ({ acNo, transactionDate }) => {
                             : "bg-warning"}`
                     }
                 >
-                    <PackageCard bouquet={broadcasterBouquet} />
+                    <PackageCard key={index} bouquet={broadcasterBouquet} />
                 </div>
             })}
 
-            {bouquet?.aLaCarte?.map(aLaCarte => {
+            {bouquet?.aLaCarte?.map((aLaCarte, index) => {
                 return <div name="aLaCarte"
                     className={
                         `${aLaCarte.TransactionType == "Cancellation"
@@ -56,11 +56,11 @@ const PackageSection = ({ acNo, transactionDate }) => {
                             : "bg-info text-light"}`
                     }
                 >
-                    <PackageCard bouquet={aLaCarte} />
+                    <PackageCard key={index} bouquet={aLaCarte} />
                 </div>
             })}
 
-            {bouquet?.unknown?.map(unknown => {
+            {bouquet?.unknown?.map((unknown, index) => {
                 return <div name="unknown"
                     className={
                         `${unknown.TransactionType == "Cancellation"
@@ -68,7 +68,7 @@ const PackageSection = ({ acNo, transactionDate }) => {
                             : "bg-seondary text-light"}`
                     }
                 >
-                    <PackageCard bouquet={unknown} />
+                    <PackageCard key={index} bouquet={unknown} />
                 </div>
             })}
 
