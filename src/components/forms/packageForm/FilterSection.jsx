@@ -6,6 +6,7 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 
 import composeBouquet from "../../../functions/transactions/composeBouquet";
+import checkAdminGetDbName from "../../../functions/checkAdminGetDbName";
 
 const FilterSection = ({ requiredTools }) => {
     const {
@@ -33,7 +34,9 @@ const FilterSection = ({ requiredTools }) => {
         yearsList.push(year);
     }
 
-    const scrutiny = useSelector(state => state.scrutinyReducer); // to get token
+    const scrutinizedUser = useSelector(state => state.scrutinyUserReducer); // to get token
+
+    const { isAdmin, dbName } = checkAdminGetDbName(scrutinizedUser);
 
     useEffect(() => {
         const collectionName = transactionDate.length == 8
@@ -44,11 +47,11 @@ const FilterSection = ({ requiredTools }) => {
     }, [])
 
     const listTransactions = async (collectionName, transactionDate) => {
-        const acNoTransactionsList = (await axios(`/transactions/${collectionName}`,
+        const acNoTransactionsList = (await axios(`/transactions`,
             {
                 method: "post",
-                headers: { authorization: `bearer ${scrutiny.token}` },
-                data: { acNo }
+                headers: { authorization: `bearer ${scrutinizedUser.token}` },
+                data: { dbName, collectionName, acNo }
             }
         ))?.data
 
@@ -76,8 +79,8 @@ const FilterSection = ({ requiredTools }) => {
                     listTransactions(monthOptions.current + "-" + e.target.value);
                 }}
             >
-                {yearsList.map(year =>
-                    <option value={year}>{year}</option>
+                {yearsList.map((year, index) =>
+                    <option key={index} value={year}>{year}</option>
                 )}
             </Form.Select>
             }
@@ -88,8 +91,8 @@ const FilterSection = ({ requiredTools }) => {
                     listTransactions(e.target.value + "-" + yearOptions.current);
                 }}
             >
-                {monthsList.map(month =>
-                    <option value={month}>{month}</option>
+                {monthsList.map((month, index) =>
+                    <option key={index} value={month}>{month}</option>
                 )}
             </Form.Select>
             }
@@ -107,9 +110,9 @@ const FilterSection = ({ requiredTools }) => {
                         setBouquet(composeBouquet(transactions, e.target.value));
                     }}
                 >
-                    <option>Select</option>
-                    {dateOptions?.map(dates =>
-                        <option value={DateTime.fromISO(dates.TransactionDateTime).toISODate()}>
+                    <option key={0}>Select</option>
+                    {dateOptions?.map((dates, index) =>
+                        <option key={index + 1} value={DateTime.fromISO(dates.TransactionDateTime).toISODate()}>
                             {DateTime.fromISO(dates.TransactionDateTime).toFormat("dd-LLL-yyyy")}
                         </option>
                     )}

@@ -8,6 +8,8 @@ import CustomerSection from "./CustomerSection";
 import STBSection from "./STBSection";
 import SeedSection from "./SeedSection";
 
+import checkAdminGetDbName from "../../../functions/checkAdminGetDbName"
+
 const CustomerForm = () => {
     const { id } = useParams();
     const navigate = useNavigate();
@@ -15,7 +17,9 @@ const CustomerForm = () => {
     const action = useRef("Save");
 
     // to get token
-    const scrutiny = useSelector(state => state.scrutinyReducer);
+    const scrutinizedUser = useSelector(state => state.scrutinyUserReducer);
+
+    const { isAdmin, dbName } = checkAdminGetDbName(scrutinizedUser);
 
     // Note: data: filteredCustomers is not object key value pair
     // data: filteredCustomers <-- here  filteredCustomers is alias of data
@@ -77,8 +81,8 @@ const CustomerForm = () => {
         // HTTP request to save data
         const response = await axios("/customers/save", {
             method: "post",
-            headers: { authorization: `bearer ${scrutiny.token}` },
-            data: { dbName: "stb-crm", customerData }
+            headers: { authorization: `bearer ${scrutinizedUser.token}` },
+            data: { dbName, customerData }
         });
 
         response.data.code === 201
@@ -95,8 +99,8 @@ const CustomerForm = () => {
         // HTTP request to update data
         const response = await axios(`/customers/update/${id}`, {
             method: "put",
-            headers: { authorization: `bearer ${scrutiny.token}` },
-            data: { dbName: "stb-crm", customerData }
+            headers: { authorization: `bearer ${scrutinizedUser.token}` },
+            data: { dbName, customerData }
         });
 
         response.data.code === 202
@@ -148,18 +152,18 @@ const CustomerForm = () => {
                     onClick={() => navigate("/customers")}
                 >Back</Button> */}
 
-                {customer &&
+                {customer && isAdmin &&
                     <Button variant="danger" className="my-4"
                     >Delete</Button>
                 }
 
-                {customer &&
+                {customer && isAdmin &&
                     <Button type="submit" variant="warning" className="my-4"
                         onClick={() => { action.current = "Update" }}
                     >Update</Button>
                 }
 
-                {!customer &&
+                {!customer && isAdmin &&
                     <Button type="submit" variant="success" className="my-4"
                         onClick={() => { action.current = "Save" }}
                     >Save</Button>

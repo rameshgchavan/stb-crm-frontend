@@ -6,9 +6,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { authenticateUserAction } from "../redux/actions"
 
 const NavBar = () => {
-    const user = useSelector(reducers => reducers.scrutinyReducer);
+    const scrutinizedUser = useSelector(reducers => reducers.scrutinyUserReducer);
 
-    JSON.stringify(user);
+    // JSON.stringify(scrutinizedUser);
 
     const dispatch = useDispatch();
 
@@ -19,18 +19,22 @@ const NavBar = () => {
     return (
         <Navbar collapseOnSelect expand="sm" bg="primary" variant="dark" style={{ textAlign: "left" }}>
             {/* Navbar on Login */}
-            {user.token ?
+            {scrutinizedUser.token ?
                 <Container className="d-inline-flex">
                     <Navbar.Brand >STB CRM</Navbar.Brand>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="me-auto">
-                            {/* Comman Links (Admin and User both can access) */}
-                            <Nav.Link as={Link} to="/customers">Customers</Nav.Link>
-                            <Nav.Link as={Link} to="/transactions">Trasactions</Nav.Link>
+                            {/* Comman Links (self Admin and User both can access) */}
+                            {scrutinizedUser.Admin != "stb-crm" &&
+                                < Nav.Link as={Link} to="/customers">Customers</Nav.Link>
+                            }
+                            {scrutinizedUser.Admin != "stb-crm" &&
+                                <Nav.Link as={Link} to="/transactions">Trasactions</Nav.Link>
+                            }
 
                             {/* Admin Links (Only Admin can access) */}
-                            {user.Admin &&
+                            {(scrutinizedUser.Admin == "stb-crm" || scrutinizedUser.Admin == "self") &&
                                 <Nav>
                                     <Nav.Link as={Link} to="/users">Users</Nav.Link>
                                 </Nav>
@@ -53,7 +57,7 @@ const NavBar = () => {
                     </Navbar.Collapse>
                 </Container>
             }
-        </Navbar>
+        </Navbar >
     )
 }
 
