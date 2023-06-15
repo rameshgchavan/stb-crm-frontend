@@ -44,13 +44,15 @@ const UsersPage = () => {
     return (
         <div>
             {
-                usersList?.map((user, index) => {
-                    return (
-                        <div key={user._id} className="mb-3">
-                            <UserCard userInfo={{ user, userStatus, updateStatus }} />
-                        </div>
-                    )
-                })
+                usersList?.filter(user => user.Admin !== "stb-crm")
+                    .map((user, index) => {
+                        console.warn(user);
+                        return (
+                            <div key={user._id} className="mb-3">
+                                <UserCard userInfo={{ user, userStatus, updateStatus }} />
+                            </div>
+                        )
+                    })
 
             }
 
