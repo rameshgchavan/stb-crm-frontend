@@ -52,7 +52,7 @@ const TrasactionsPrint = () => {
             </div>
 
 
-            <Table ref={tableRef} style={{ width: "100%" }}
+            <Table ref={tableRef} style={{ minWidth: "100%" }}
                 className="fs-5 table-striped table-bordered align-top text-start">
                 <thead >
                     <tr>
@@ -60,7 +60,6 @@ const TrasactionsPrint = () => {
                         {rcDate && <th>Date & Time</th>}
                         {lastDate && <th>Last Date</th>}
                         <th >A/c No. & ID</th>
-                        <th>Area||Person.</th>
                         <th>Customer Details</th>
                         {lcoPrice && <th>LCO Price</th>}
                         <th>Bill</th>
@@ -76,41 +75,45 @@ const TrasactionsPrint = () => {
 
 
                         return <tr key={index} >
-                            <td style={{ width: "5%" }} className="text-end">{index + 1}.</td>
+                            <td style={{ minWidth: "5%", width: "5%" }} className="text-end">{index + 1}.</td>
                             {rcDate &&
-                                <td style={{ width: "8%" }} className="text-nowrap">
+                                <td style={{ minWidth: "8%", width: "8%" }} className="text-nowrap">
                                     {DateTime.fromISO(trasactions.TransactionDateTime).toFormat("dd-LLL-yy")}<br />
                                     {DateTime.fromISO(trasactions.TransactionDateTime).toFormat("hh:mm a")}
                                 </td>
                             }
 
                             {lastDate &&
-                                <td style={{ width: "8%" }} className="text-nowrap">
+                                <td style={{ minWidth: "8%", width: "8%" }} className="text-nowrap">
                                     {DateTime.fromISO(trasactions.ExpiryDate).toFormat("dd-LLL-yy")}
                                 </td>
                             }
-                            <td style={{ width: "12%", wordBreak: "break-word" }}>
-                                Ac:{trasactions.AcNo}<br />
-                                ID:{trasactions.Customer?.VC_NDS_MAC_ID || "N/A"}
+                            <td style={{ minWidth: "9%", width: "9%" }} className="text-nowrap">
+                                Ac:{trasactions.AcNo?.slice(0, 4)}<br />
+                                {trasactions.AcNo?.slice(4, 10)}<br />
+                                ID:{trasactions.Customer?.VC_NDS_MAC_ID?.slice(0, 5) || "N/A"}<br />
+                                {trasactions.Customer?.VC_NDS_MAC_ID?.slice(5, 12)}
                             </td>
 
-                            <td style={{ width: "8%" }}>
-                                {trasactions.Customer?.AreaPerson || "Area||Person N/A"}
-                            </td>
-
-                            <td style={{ width: "25%" }}>
-                                {trasactions.Customer?.CustName || "Name N/A"} <br />
-                                {trasactions.Customer?.Area || "Area N/A"}<br />
-                                {trasactions.Customer?.MobNo || "Mobile N/A"}
+                            <td style={{ width: "auto" }} className="text-nowrap">
+                                {trasactions.Customer?.CustName?.slice(0, 30) || "Name N/A"} <br />
+                                {trasactions.Customer?.CustName?.slice(30, 60)}<br />
+                                {/* {
+                                    trasactions.Customer?.CustName?.slice(30, 60).length == 0 ? ""
+                                        : <br />
+                                } */}
+                                {trasactions.Customer?.Area?.slice(0, 18) + ", " || "Area N/A"}
+                                {trasactions.Customer?.MobNo?.slice(0, 10) || "Mobile N/A"}<br />
+                                {trasactions.Customer?.AreaPerson?.slice(0, 30) || "Area||Person N/A"}
                             </td>
 
                             {lcoPrice &&
-                                <td style={{ width: "7%" }}>₹{trasactions.LCOPrice}</td>
+                                <td style={{ minWidth: "7%", width: "7%" }}>₹{trasactions.LCOPrice}</td>
                             }
-                            <td style={{ width: "7%" }}>₹{trasactions.Bill}</td>
+                            <td style={{ minWidth: "7%", width: "7%" }}>₹{trasactions.Bill}</td>
 
                             {(!rcDate || !lastDate || !lcoPrice) &&
-                                <td style={{ width: "33%" }} />
+                                <td style={{ width: "50%" }} />
                             }
                         </tr>
                     }
@@ -121,7 +124,7 @@ const TrasactionsPrint = () => {
                     <td />
                     {rcDate && <td />}
                     {lastDate && <td />}
-                    <td /> <td />
+                    <td />
                     <td className="fs-5 text-end">Total:</td>
                     {lcoPrice &&
                         <td className="fs-5">₹{totalLCOPrice.toFixed(2)}</td>
