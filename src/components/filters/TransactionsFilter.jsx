@@ -240,8 +240,8 @@ const TransactionsFilter = () => {
                                 getCollection();
                             }}
                         >
-                            <option value="Expiry">Expiry</option>
                             <option value="Recharge">Recharge</option>
+                            <option value="Expiry">Expiry</option>
                         </Form.Select>
                     </FormGroup>
 
