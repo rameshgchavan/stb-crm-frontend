@@ -1,8 +1,19 @@
+import axios from "axios";
 import { DateTime } from "luxon";
 
-const summarizeTransactions = async (transactions, customersList) => {
+import checkAdminGetDbName from "../checkAdminGetDbName";
+
+const summarizeTransactions = async (collectionName, scrutinizedUser, customersList) => {
+    const { isAdmin, dbName } = checkAdminGetDbName(scrutinizedUser);
+
+    const transactionsList = (await axios(`/transactions`, {
+        method: "post",
+        headers: { authorization: `bearer ${scrutinizedUser.token}` },
+        data: { dbName, collectionName }
+    }))?.data;
+
     // Get unique transactions by AcNo and Date
-    const uniqueTransactions = transactions?.filter((transaction, index, array) => {
+    const uniqueTransactions = transactionsList?.filter((transaction, index, array) => {
         return array.findIndex(object =>
             object.AcNo === transaction.AcNo &&
             DateTime.fromISO(object.TransactionDateTime).toISODate()
@@ -16,7 +27,7 @@ const summarizeTransactions = async (transactions, customersList) => {
         let totalNCF = 0;
         let Bill = 0;
 
-        transactions.filter(transaction =>
+        transactionsList.filter(transaction =>
             transaction.AcNo === uniqueTransaction.AcNo &&
             DateTime.fromISO(transaction.TransactionDateTime).toISODate()
             === DateTime.fromISO(uniqueTransaction.TransactionDateTime).toISODate()

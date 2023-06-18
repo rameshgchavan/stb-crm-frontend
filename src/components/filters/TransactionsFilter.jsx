@@ -10,7 +10,7 @@ import {
     loadingAction, loadedAction
 } from "../../redux/actions";
 
-import summarizeTransactions from "../../functions/transactions/summarizeTransactions";
+import getSummarizedTrasactionsByType from "../../functions/transactions/getSummarizedTrasactionsByType";
 
 const TransactionsFilter = () => {
     const dispatch = useDispatch();
@@ -22,21 +22,17 @@ const TransactionsFilter = () => {
     const lastCardIndex = useRef(cardsPerPage.current);
 
     const selectedDay = useRef("All");
-
     const selectedMonth = useRef(
-        DateTime.now().minus({ months: 1 }).toFormat("LL")
+        DateTime.now().toFormat("LL")
     );
-
     const selectedYear = useRef(
         DateTime.now().toFormat("yyyy")
     );
 
-    const selectedType = useRef("Recharge");
-
+    const selectedType = useRef("Expiry");
     const searchedName = useRef("");
 
     const dayList = [];
-
     for (let day = 1; day <= 31; day++) {
         if (day < 10) {
             dayList.push('0' + day);
@@ -54,11 +50,14 @@ const TransactionsFilter = () => {
     ];
 
     const yearsList = [];
-
     for (let year = DateTime.now().year; year >= 2022; year--) {
         yearsList.push(year);
     }
 
+
+    const customersList = useSelector(state => state.customersListReducer)?.data;
+    const transacionsSummary = useSelector(state => state.transactionsSummaryReducer)?.data;
+    const filteredSummarizedTtransactions = useSelector(state => state.summarizedTransactionsFilterationReducer)?.data;
     const scrutinizedUser = useSelector(state => state.scrutinyUserReducer);
 
     const { Admin, Name: userName } = scrutinizedUser;
@@ -67,48 +66,9 @@ const TransactionsFilter = () => {
     const areaManager = useRef(isAdmin ? "All" : userName);
     const areaPerson = useRef("All");
 
-    const customersList = useSelector(state => state.customersListReducer)?.data;
-    const transacionsSummary = useSelector(state => state.transactionsSummaryReducer)?.data;
-    const filteredSummarizedTtransactions = useSelector(state => state.summarizedTransactionsFilterationReducer)?.data;
-
     useEffect(() => {
         filterTransactions();
-    }, [transacionsSummary])
-
-    const getCollection = async () => {
-        const preCollectionName = DateTime.fromISO(`${selectedYear.current}-${selectedMonth.current}-01`).minus({ months: 1 }).toFormat("LLL-yyyy");
-        const curCollectionName = DateTime.fromISO(`${selectedYear.current}-${selectedMonth.current}-01`).toFormat("LLL-yyyy");
-
-        dispatch(loadingAction());
-
-        const preSummarizedTrasaction = await summarizeTransactions(preCollectionName, scrutinizedUser, customersList);
-        const curSummarizedTrasaction = await summarizeTransactions(curCollectionName, scrutinizedUser, customersList);
-
-        if (selectedType.current == "Expiry") {
-            const filteredPreSummarizedTrasaction = await preSummarizedTrasaction.filter(preTransacions =>
-                DateTime.fromISO(preTransacions.ExpiryDate).toFormat("LLL-yyyy")
-                === curCollectionName);
-
-            const filteredCurSummarizedTrasaction = await curSummarizedTrasaction.filter(curTransacions =>
-                DateTime.fromISO(curTransacions.ExpiryDate).toFormat("LLL-yyyy")
-                === curCollectionName);
-
-            const mergedPreCurSummarizedTasaction = [...filteredCurSummarizedTrasaction, ...filteredPreSummarizedTrasaction];
-
-            dispatch(
-                summarizeTransactionsAction(
-                    mergedPreCurSummarizedTasaction.sort((a, b) => DateTime.fromISO(a.ExpiryDate) - DateTime.fromISO(b.ExpiryDate))
-                )
-            );
-        }
-        else {
-            dispatch(
-                summarizeTransactionsAction(curSummarizedTrasaction)
-            );
-        }
-
-        dispatch(loadedAction())
-    }
+    }, [])
 
     const listAreaManagers = () => {
         const areaManagers = customersList?.filter((customer, index, array) => {
@@ -135,8 +95,28 @@ const TransactionsFilter = () => {
         return areaPersons
     };
 
-    const filterTransactions = () => {
-        const filteredData = transacionsSummary
+    const getSummarizedTrasactions = async () => {
+        const yearMonth = `${selectedYear.current}-${selectedMonth.current}`;
+
+        dispatch(loadingAction());
+
+        const summarizedTrasactionsByType = await getSummarizedTrasactionsByType(scrutinizedUser, customersList, yearMonth, selectedType.current);
+
+        dispatch(
+            summarizeTransactionsAction(summarizedTrasactionsByType)
+        )
+
+        dispatch(loadedAction());
+
+        return summarizedTrasactionsByType;
+    }
+
+    const filterTransactions = async (transactions = false) => {
+        const summarizedTrasactions = !transactions
+            ? await getSummarizedTrasactions()
+            : transacionsSummary;
+
+        const filteredData = summarizedTrasactions
             ?.filter((transaction, index) => {
                 // console.warn(DateTime.fromRFC2822(`${selectedDay.current} ${selectedMonth.current} ${selectedYear.current} 00:00 Z`).plus({ months: 1 }).toISODate());
                 return selectedDay.current !== "All"
@@ -203,7 +183,7 @@ const TransactionsFilter = () => {
                             style={{ width: "10rem" }}
                             onChange={(e) => {
                                 selectedYear.current = e.target.value;
-                                getCollection();
+                                filterTransactions();
                             }}
                         >
                             {yearsList.map((year, index) =>
@@ -214,7 +194,7 @@ const TransactionsFilter = () => {
                             style={{ width: "8rem" }}
                             onChange={(e) => {
                                 selectedMonth.current = e.target.value;
-                                getCollection();
+                                filterTransactions();
                             }}
                         >
                             {monthsList.map((month, index) =>
@@ -225,7 +205,7 @@ const TransactionsFilter = () => {
                             style={{ width: "5rem" }}
                             onChange={(e) => {
                                 selectedDay.current = e.target.value;
-                                filterTransactions();
+                                filterTransactions(true);
                             }}
                         >
                             <option value="All">All</option>
@@ -237,11 +217,11 @@ const TransactionsFilter = () => {
                         <Form.Select name="type" defaultValue={selectedType.current}
                             onChange={(e) => {
                                 selectedType.current = e.target.value;
-                                getCollection();
+                                filterTransactions();
                             }}
                         >
-                            <option value="Recharge">Recharge</option>
                             <option value="Expiry">Expiry</option>
+                            <option value="Recharge">Recharge</option>
                         </Form.Select>
                     </FormGroup>
 
