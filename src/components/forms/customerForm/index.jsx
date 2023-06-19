@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { Form, Button } from "react-bootstrap";
 import { useRef } from "react";
 import axios from "axios";
+import { DateTime } from "luxon";
 
 import CustomerSection from "./CustomerSection";
 import STBSection from "./STBSection";
@@ -118,7 +119,7 @@ const CustomerForm = () => {
         <Form ref={customerForm} onSubmit={handleSubmit}>
             <div className="d-lg-flex  gap-3 mx-sm-3">
                 <CustomerSection customer={{
-                    date: customer?.CustDate,
+                    date: DateTime.fromISO(customer?.CustDate).toISODate(),
                     name: customer?.CustName,
                     area: customer?.Area,
                     address: customer?.Address,
