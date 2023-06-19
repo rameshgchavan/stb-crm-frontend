@@ -140,12 +140,14 @@ const CustomerForm = () => {
                     lcoCode: customer?.LCOCode
                 }} />
 
-                <SeedSection seed={{
-                    origin: customer?.Origin,
-                    areaPerson: customer?.AreaPerson,
-                    areaManager: customer?.AreaManager,
-                    remark: customer?.Remark
-                }} />
+                <SeedSection customersList={customersList}
+                    seed={{
+                        origin: customer?.Origin,
+                        areaPerson: customer?.AreaPerson,
+                        areaManager: customer?.AreaManager,
+                        remark: customer?.Remark
+                    }}
+                />
             </div>
 
             <div className="d-flex justify-content-around my-4">
