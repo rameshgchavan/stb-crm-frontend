@@ -1,12 +1,21 @@
 import { Form, FormGroup } from "react-bootstrap";
+import { object } from "yup";
 
-const SeedSection = ({ seed }) => {
+const SeedSection = ({ customersList, seed }) => {
     const {
         origin,
         areaPerson,
         areaManager,
         remark
     } = seed;
+
+    const uniqueAreaPersons = customersList.filter((customers, index, array) => {
+        return array.findIndex(object => object.AreaPerson == customers.AreaPerson) == index
+    });
+
+    const uniqueAreaManagers = customersList.filter((customers, index, array) => {
+        return array.findIndex(object => object.AreaManager === customers.AreaManager) === index
+    });
 
     return (
         <FormGroup className="col border shadow rounded p-3">
@@ -25,38 +34,26 @@ const SeedSection = ({ seed }) => {
             </Form.Floating>
 
             <Form.Floating className="mb-3">
-                <Form.Select name="areaPerson" placeholder="Area || Person" defaultValue={areaPerson} required>
-                    <option></option>
-                    <option>Ajam Colony</option>
-                    <option>Balu Chakke</option>
-                    <option>Khwaja Mohammadiya Colony, Shivraj Nagar</option>
-                    <option>Hingoli Office Staff</option>
-                    <option>Madhav Bangar</option>
-                    <option>N P Colony</option>
-                    <option>Naik Nagar, NTC</option>
-                    <option>Nandalal Sahu</option>
-                    <option>Rajesh Chavan</option>
-                    <option>Risala</option>
-                    <option>Sanjay Ghawad</option>
-                    <option>Santosh Afune</option>
-                    <option>Sharad Jogdand</option>
-                    <option>SRPF Quarter</option>
-                    <option>Tofkhana</option>
-                </Form.Select>
+                <Form.Control name="areaPerson" placeholder="Area || Person" defaultValue={areaPerson} required
+                    list="areaPeronsList" />
+                <datalist id="areaPeronsList">
+                    {uniqueAreaPersons.map((customers, index) => {
+                        return <option key={index} value={customers.AreaPerson}>{customers.AreaPerson}</option>
+                    })}
+                </datalist>
+
                 <Form.Label className="text-primary fw-bold">Area || Person</Form.Label>
             </Form.Floating>
 
             <Form.Floating className="mb-3">
-                <Form.Select name="areaManager" placeholder="Area Manager" defaultValue={areaManager} required>
-                    <option></option>
-                    <option>Balu Chakke</option>
-                    <option>Madhav Bangar</option>
-                    <option>Prakash Mujmule</option>
-                    <option>Rajesh Chavan</option>
-                    <option>Sanjay Ghawad</option>
-                    <option>Santosh Afune</option>
-                    <option>Sharad Jogdand</option>
-                </Form.Select>
+                <Form.Control name="areaManager" placeholder="Area Manager" defaultValue={areaManager} required
+                    list="areaManagerList" />
+                <datalist id="areaManagerList">
+                    {uniqueAreaManagers.map((customers, index) => {
+                        return <option key={index} value={customers.AreaManager}>{customers.AreaManager}</option>
+                    })}
+                </datalist>
+
                 <Form.Label className="text-primary fw-bold">Area Manager</Form.Label>
             </Form.Floating>
 
