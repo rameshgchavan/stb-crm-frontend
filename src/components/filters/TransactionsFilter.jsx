@@ -182,7 +182,6 @@ const TransactionsFilter = () => {
                         <Form.Select name="type" defaultValue={selectedType.current}
                             onChange={(e) => {
                                 selectedType.current = e.target.value;
-                                filterTransactions();
                             }}
                         >
                             <option value="Expiry">Expiry</option>
@@ -193,7 +192,6 @@ const TransactionsFilter = () => {
                             style={{ width: "10rem" }}
                             onChange={(e) => {
                                 selectedYear.current = e.target.value;
-                                filterTransactions();
                             }}
                         >
                             {yearsList.map((year, index) =>
@@ -204,13 +202,20 @@ const TransactionsFilter = () => {
                             style={{ width: "8rem" }}
                             onChange={(e) => {
                                 selectedMonth.current = e.target.value;
-                                filterTransactions();
                             }}
                         >
                             {monthsList.map((month, index) =>
                                 <option key={index} value={month.MM}>{month.MMM}</option>
                             )}
                         </Form.Select>
+                        <Button variant="success" className="border ms-2"
+                            onClick={() => { filterTransactions(); }}>
+                            Go
+                        </Button>
+
+                    </FormGroup>
+
+                    <FormGroup className={`d-flex align-items-start ${isAdmin ? "col-lg-4" : "col-lg-3"}`}>
                         <Form.Select name="day" defaultValue={selectedDay.current}
                             style={{ width: "5rem" }}
                             onChange={(e) => {
@@ -223,9 +228,7 @@ const TransactionsFilter = () => {
                                 <option key={index} value={day}>{day}</option>
                             )}
                         </Form.Select>
-                    </FormGroup>
 
-                    <FormGroup className={`d-flex align-items-start ${isAdmin ? "col-lg-4" : "col-lg-3"}`}>
                         {isAdmin &&
                             <Form.Select name="areaManager"
                                 onChange={(e) => {
@@ -242,7 +245,7 @@ const TransactionsFilter = () => {
                         <Form.Select name="areaPerosn"
                             onChange={(e) => {
                                 areaPerson.current = e.target.value;
-                               filterTransactions(true);
+                                filterTransactions(true);
                             }}
                         >
                             <option>All</option>
@@ -257,7 +260,7 @@ const TransactionsFilter = () => {
                             placeholder="Type and search"
                             onChange={(e) => { searchedName.current = e.target.value }} />
                         <Button className="ms-2"
-                            onClick={() => {filterTransactions(true); }}
+                            onClick={() => { filterTransactions(true); }}
                         >Search</Button>
                     </FormGroup>
                 </div>
