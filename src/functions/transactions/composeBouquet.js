@@ -8,24 +8,24 @@ const composeBouquet = (acNoTransactionsList, trasactionDate) => {
     ).sort((a, b) => DateTime.fromISO(a.TransactionDateTime) - DateTime.fromISO(b.TransactionDateTime));
 
     const msoBouquet = acNoTransactionsList.filter(transaction =>
-        transaction.Priority == 2 &&
+        transaction.Priority === 2 &&
         DateTime.fromISO(transaction.TransactionDateTime).toISODate()
-        == trasactionDate
+        === trasactionDate
     ).sort((a, b) => DateTime.fromISO(a.TransactionDateTime) - DateTime.fromISO(b.TransactionDateTime));
     const broadcasterBouquet = acNoTransactionsList.filter(transaction =>
-        transaction.Priority == 3 &&
+        transaction.Priority === 3 &&
         DateTime.fromISO(transaction.TransactionDateTime).toISODate()
-        == trasactionDate
+        === trasactionDate
     ).sort((a, b) => DateTime.fromISO(a.TransactionDateTime) - DateTime.fromISO(b.TransactionDateTime));
     const aLaCarte = acNoTransactionsList.filter(transaction =>
-        transaction.Priority == 4 &&
+        transaction.Priority === 4 &&
         DateTime.fromISO(transaction.TransactionDateTime).toISODate()
-        == trasactionDate
+        === trasactionDate
     ).sort((a, b) => DateTime.fromISO(a.TransactionDateTime) - DateTime.fromISO(b.TransactionDateTime));
     const unknown = acNoTransactionsList.filter(transaction =>
         transaction.Priority < 1 &&
         DateTime.fromISO(transaction.TransactionDateTime).toISODate()
-        == trasactionDate
+        === trasactionDate
     ).sort((a, b) => DateTime.fromISO(a.TransactionDateTime) - DateTime.fromISO(b.TransactionDateTime));
 
     let ncf = 0;
@@ -34,7 +34,7 @@ const composeBouquet = (acNoTransactionsList, trasactionDate) => {
 
     acNoTransactionsList.filter(transaction =>
         DateTime.fromISO(transaction.TransactionDateTime).toISODate()
-        == trasactionDate
+        === trasactionDate
     )
         .sort((a, b) => DateTime.fromISO(a.TransactionDateTime) - DateTime.fromISO(b.TransactionDateTime))
         .map((transaction, index, array) => {
@@ -50,7 +50,7 @@ const composeBouquet = (acNoTransactionsList, trasactionDate) => {
                         ncf += planName.NCF
                     }
                     else if (planName.TransactionType === "Cancellation") {
-                        if (index != 0) { ncf -= planName.NCF }
+                        if (index !== 0) { ncf -= planName.NCF }
                     }
                 });
         });
