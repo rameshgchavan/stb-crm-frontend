@@ -21,15 +21,23 @@ const TransactionsFilter = () => {
     const firtCardIndex = useRef(0);
     const lastCardIndex = useRef(cardsPerPage.current);
 
+    const filerSetting = JSON.parse(localStorage.getItem("FiterSetting"));
+
     const selectedDay = useRef("All");
     const selectedMonth = useRef(
+        filerSetting?.transMonth ||
         DateTime.now().toFormat("LL")
     );
     const selectedYear = useRef(
+        filerSetting?.transYear ||
         DateTime.now().toFormat("yyyy")
     );
 
-    const selectedType = useRef("Expiry");
+    const selectedType = useRef(
+        filerSetting?.transType ||
+        "Expiry"
+    );
+
     const searchedName = useRef("");
 
     const dayList = [];
@@ -182,6 +190,11 @@ const TransactionsFilter = () => {
                         <Form.Select name="type" defaultValue={selectedType.current}
                             onChange={(e) => {
                                 selectedType.current = e.target.value;
+                                localStorage.setItem("FiterSetting", JSON.stringify({
+                                    transType: e.target.value,
+                                    transYear: selectedYear.current,
+                                    transMonth: selectedMonth.current
+                                }));
                             }}
                         >
                             <option value="Expiry">Expiry</option>
@@ -192,6 +205,11 @@ const TransactionsFilter = () => {
                             style={{ width: "10rem" }}
                             onChange={(e) => {
                                 selectedYear.current = e.target.value;
+                                localStorage.setItem("FiterSetting", JSON.stringify({
+                                    transType: selectedType.current,
+                                    transYear: e.target.value,
+                                    transMonth: selectedMonth.current
+                                }));
                             }}
                         >
                             {yearsList.map((year, index) =>
@@ -202,6 +220,11 @@ const TransactionsFilter = () => {
                             style={{ width: "8rem" }}
                             onChange={(e) => {
                                 selectedMonth.current = e.target.value;
+                                localStorage.setItem("FiterSetting", JSON.stringify({
+                                    transType: selectedType.current,
+                                    transYear: selectedYear.current,
+                                    transMonth: e.target.value
+                                }));
                             }}
                         >
                             {monthsList.map((month, index) =>
