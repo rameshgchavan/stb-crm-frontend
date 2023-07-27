@@ -14,7 +14,6 @@ const CustomersFilter = () => {
     const lastCardIndex = useRef(cardsPerPage.current);
 
     const searchedName = useRef("");
-    const location = useRef("INLINE");
 
     const [filteredCustomres, setFilteredCutomers] = useState();
 
@@ -26,6 +25,10 @@ const CustomersFilter = () => {
 
     const [filterSetting, setFilterSetting] = useState(JSON.parse(localStorage.getItem("FiterSetting")));
 
+    const location = useRef(
+        filterSetting?.custLocation ||
+        "INLINE"
+    );
     const areaManager = useRef(
         isAdmin
             ? filterSetting?.custAreaManager || "All"
@@ -183,23 +186,79 @@ const CustomersFilter = () => {
                 <div className="d-lg-flex justify-content-between align-items-start">
                     <FormGroup className="d-flex flex-wrap gap-2 text-start">
                         <Form.Check variant="outline-success" type="radio" name="stbs" label="INLINE"
-                            className="me-sm-3 text-warning fw-bold" defaultChecked
-                            onClick={() => { location.current = "INLINE"; filterCustomers(); }}
+                            className="me-sm-3 text-warning fw-bold"
+                            defaultChecked={location.current === "INLINE"}
+
+                            onClick={() => {
+                                location.current = "INLINE"; filterCustomers();
+
+                                setFilterSetting({
+                                    ...filterSetting,
+                                    custLocation: "INLINE"
+                                });
+
+                                localStorage.setItem("FiterSetting", JSON.stringify({
+                                    ...filterSetting,
+                                    custLocation: "INLINE"
+                                }));
+                            }}
                         />
 
                         <Form.Check variant="outline-warning" type="radio" name="stbs" label="LEFTOUT"
                             className="me-sm-3 text-warning fw-bold"
-                            onClick={() => { location.current = "LEFTOUT"; filterCustomers(); }}
+                            defaultChecked={location.current === "LEFTOUT"}
+
+                            onClick={() => {
+                                location.current = "LEFTOUT"; filterCustomers();
+
+                                setFilterSetting({
+                                    ...filterSetting,
+                                    custLocation: "LEFTOUT"
+                                });
+
+                                localStorage.setItem("FiterSetting", JSON.stringify({
+                                    ...filterSetting,
+                                    custLocation: "LEFTOUT"
+                                }));
+                            }}
                         />
 
                         <Form.Check variant="outline-danger" type="radio" name="stbs" label="OUTGONE"
                             className="me-sm-3 text-warning fw-bold"
-                            onClick={() => { location.current = "OUTGONE"; filterCustomers(); }}
+                            defaultChecked={location.current === "OUTGONE"}
+
+                            onClick={() => {
+                                location.current = "OUTGONE"; filterCustomers();
+
+                                setFilterSetting({
+                                    ...filterSetting,
+                                    custLocation: "OUTGONE"
+                                });
+
+                                localStorage.setItem("FiterSetting", JSON.stringify({
+                                    ...filterSetting,
+                                    custLocation: "OUTGONE"
+                                }));
+                            }}
                         />
 
                         <Form.Check variant="outline-primary" type="radio" name="stbs" label="OTHER"
                             className="text-warning fw-bold"
-                            onClick={() => { location.current = "OTHER"; filterCustomers(); }}
+                            defaultChecked={location.current === "OTHER"}
+
+                            onClick={() => {
+                                location.current = "OTHER"; filterCustomers();
+
+                                setFilterSetting({
+                                    ...filterSetting,
+                                    custLocation: "OTHER"
+                                });
+
+                                localStorage.setItem("FiterSetting", JSON.stringify({
+                                    ...filterSetting,
+                                    custLocation: "OTHER"
+                                }));
+                            }}
                         />
                     </FormGroup>
 
