@@ -21,20 +21,23 @@ const TransactionsFilter = () => {
     const firtCardIndex = useRef(0);
     const lastCardIndex = useRef(cardsPerPage.current);
 
-    const filerSetting = JSON.parse(localStorage.getItem("FiterSetting"));
+    const [filterSetting, setFilterSetting] = useState(JSON.parse(localStorage.getItem("FiterSetting")));
 
-    const selectedDay = useRef("All");
+    const selectedDay = useRef(
+        filterSetting?.transDay ||
+        "All"
+    );
     const selectedMonth = useRef(
-        filerSetting?.transMonth ||
+        filterSetting?.transMonth ||
         DateTime.now().toFormat("LL")
     );
     const selectedYear = useRef(
-        filerSetting?.transYear ||
+        filterSetting?.transYear ||
         DateTime.now().toFormat("yyyy")
     );
 
     const selectedType = useRef(
-        filerSetting?.transType ||
+        filterSetting?.transType ||
         "Expiry"
     );
 
@@ -62,7 +65,6 @@ const TransactionsFilter = () => {
         yearsList.push(year);
     }
 
-
     const customersList = useSelector(state => state.customersListReducer)?.data;
     const transacionsSummary = useSelector(state => state.transactionsSummaryReducer)?.data;
     const filteredSummarizedTtransactions = useSelector(state => state.summarizedTransactionsFilterationReducer)?.data;
@@ -71,11 +73,18 @@ const TransactionsFilter = () => {
     const { Admin, Name: userName } = scrutinizedUser;
     const isAdmin = Admin == "self" || Admin == "stb-crm" ? true : false;
 
-    const areaManager = useRef(isAdmin ? "All" : userName);
-    const areaPerson = useRef("All");
+    const areaManager = useRef(
+        isAdmin
+            ? filterSetting?.transAreaManager || "All"
+            : userName
+    );
+    const areaPerson = useRef(
+        filterSetting?.transAreaPerson ||
+        "All"
+    );
 
     useEffect(() => {
-        filterTransactions();
+        filterTransactions(true);
     }, [])
 
     const listAreaManagers = () => {
@@ -190,10 +199,15 @@ const TransactionsFilter = () => {
                         <Form.Select name="type" defaultValue={selectedType.current}
                             onChange={(e) => {
                                 selectedType.current = e.target.value;
+
+                                setFilterSetting({
+                                    ...filterSetting,
+                                    transType: e.target.value
+                                });
+
                                 localStorage.setItem("FiterSetting", JSON.stringify({
-                                    transType: e.target.value,
-                                    transYear: selectedYear.current,
-                                    transMonth: selectedMonth.current
+                                    ...filterSetting,
+                                    transType: e.target.value
                                 }));
                             }}
                         >
@@ -205,10 +219,15 @@ const TransactionsFilter = () => {
                             style={{ width: "10rem" }}
                             onChange={(e) => {
                                 selectedYear.current = e.target.value;
+
+                                setFilterSetting({
+                                    ...filterSetting,
+                                    transYear: e.target.value
+                                });
+
                                 localStorage.setItem("FiterSetting", JSON.stringify({
-                                    transType: selectedType.current,
-                                    transYear: e.target.value,
-                                    transMonth: selectedMonth.current
+                                    ...filterSetting,
+                                    transYear: e.target.value
                                 }));
                             }}
                         >
@@ -220,9 +239,14 @@ const TransactionsFilter = () => {
                             style={{ width: "8rem" }}
                             onChange={(e) => {
                                 selectedMonth.current = e.target.value;
+
+                                setFilterSetting({
+                                    ...filterSetting,
+                                    transMonth: e.target.value
+                                });
+
                                 localStorage.setItem("FiterSetting", JSON.stringify({
-                                    transType: selectedType.current,
-                                    transYear: selectedYear.current,
+                                    ...filterSetting,
                                     transMonth: e.target.value
                                 }));
                             }}
@@ -243,6 +267,17 @@ const TransactionsFilter = () => {
                             style={{ width: "5rem" }}
                             onChange={(e) => {
                                 selectedDay.current = e.target.value;
+
+                                setFilterSetting({
+                                    ...filterSetting,
+                                    transDay: e.target.value
+                                });
+
+                                localStorage.setItem("FiterSetting", JSON.stringify({
+                                    ...filterSetting,
+                                    transDay: e.target.value
+                                }));
+
                                 filterTransactions(true);
                             }}
                         >
@@ -253,9 +288,20 @@ const TransactionsFilter = () => {
                         </Form.Select>
 
                         {isAdmin &&
-                            <Form.Select name="areaManager"
+                            <Form.Select name="areaManager" defaultValue={areaManager.current}
                                 onChange={(e) => {
                                     areaManager.current = e.target.value;
+
+                                    setFilterSetting({
+                                        ...filterSetting,
+                                        transAreaManager: e.target.value
+                                    });
+
+                                    localStorage.setItem("FiterSetting", JSON.stringify({
+                                        ...filterSetting,
+                                        transAreaManager: e.target.value
+                                    }));
+
                                     filterTransactions(true);
                                 }}
                             >
@@ -265,9 +311,20 @@ const TransactionsFilter = () => {
                                 })}
                             </Form.Select>
                         }
-                        <Form.Select name="areaPerosn"
+                        <Form.Select name="areaPerosn" defaultValue={areaPerson.current}
                             onChange={(e) => {
                                 areaPerson.current = e.target.value;
+
+                                setFilterSetting({
+                                    ...filterSetting,
+                                    transAreaPerson: e.target.value
+                                });
+
+                                localStorage.setItem("FiterSetting", JSON.stringify({
+                                    ...filterSetting,
+                                    transAreaPerson: e.target.value
+                                }));
+
                                 filterTransactions(true);
                             }}
                         >

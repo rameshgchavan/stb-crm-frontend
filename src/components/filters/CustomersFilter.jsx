@@ -24,8 +24,17 @@ const CustomersFilter = () => {
     const { Admin, Name: userName } = scrutinizedUser;
     const isAdmin = Admin == "self" || Admin == "stb-crm" ? true : false;
 
-    const areaManager = useRef(isAdmin ? "All" : userName);
-    const areaPerson = useRef("All");
+    const [filterSetting, setFilterSetting] = useState(JSON.parse(localStorage.getItem("FiterSetting")));
+
+    const areaManager = useRef(
+        isAdmin
+            ? filterSetting?.custAreaManager || "All"
+            : userName
+    );
+    const areaPerson = useRef(
+        filterSetting?.custAreaPerson ||
+        "All"
+    );
 
     useEffect(() => {
         filterCustomers();
@@ -196,9 +205,20 @@ const CustomersFilter = () => {
 
                     <FormGroup className={`d-flex align-items-start ${isAdmin ? "col-lg-4" : "col-lg-3"}`}>
                         {isAdmin &&
-                            <Form.Select name="areaManager"
+                            <Form.Select name="areaManager" defaultValue={areaManager.current}
                                 onChange={(e) => {
                                     areaManager.current = e.target.value;
+
+                                    setFilterSetting({
+                                        ...filterSetting,
+                                        custAreaManager: e.target.value
+                                    });
+
+                                    localStorage.setItem("FiterSetting", JSON.stringify({
+                                        ...filterSetting,
+                                        custAreaManager: e.target.value
+                                    }));
+
                                     filterCustomers();
                                 }}
                             >
@@ -208,9 +228,20 @@ const CustomersFilter = () => {
                                 })}
                             </Form.Select>
                         }
-                        <Form.Select name="areaPerosn"
+                        <Form.Select name="areaPerosn" defaultValue={areaPerson.current}
                             onChange={(e) => {
                                 areaPerson.current = e.target.value;
+
+                                setFilterSetting({
+                                    ...filterSetting,
+                                    custAreaPerson: e.target.value
+                                });
+
+                                localStorage.setItem("FiterSetting", JSON.stringify({
+                                    ...filterSetting,
+                                    custAreaPerson: e.target.value
+                                }));
+
                                 filterCustomers();
                             }}
                         >
