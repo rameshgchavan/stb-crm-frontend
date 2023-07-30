@@ -71,7 +71,7 @@ const TransactionsFilter = () => {
     const scrutinizedUser = useSelector(state => state.scrutinyUserReducer);
 
     const { Admin, Name: userName } = scrutinizedUser;
-    const isAdmin = Admin == "self" || Admin == "stb-crm" ? true : false;
+    const isAdmin = Admin === "self" || Admin === "stb-crm" ? true : false;
 
     const areaManager = useRef(
         isAdmin
@@ -137,7 +137,7 @@ const TransactionsFilter = () => {
             ?.filter((transaction, index) => {
                 // console.warn(DateTime.fromRFC2822(`${selectedDay.current} ${selectedMonth.current} ${selectedYear.current} 00:00 Z`).plus({ months: 1 }).toISODate());
                 return selectedDay.current !== "All"
-                    ? selectedType.current == "Expiry"
+                    ? selectedType.current === "Expiry"
                         ? DateTime.fromISO(transaction?.ExpiryDate).toISODate() ===
                         DateTime.fromISO(`${selectedYear.current}-${selectedMonth.current}-${selectedDay.current}`).toISODate()
                         : DateTime.fromISO(transaction?.TransactionDateTime).toISODate() ===
@@ -359,7 +359,7 @@ const TransactionsFilter = () => {
 
                         <Form.Label className="text-light mx-2">
                             {
-                                firtCardIndex.current + 1 == filteredSummarizedTtransactions?.length // if first index equal to no of records
+                                firtCardIndex.current + 1 === filteredSummarizedTtransactions?.length // if first index equal to no of records
                                     ? ""
                                     : firtCardIndex.current + 1 + "-"
                             }

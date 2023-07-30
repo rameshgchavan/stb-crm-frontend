@@ -21,7 +21,7 @@ const TransactionsPage = () => {
             <div className="d-flex flex-wrap justify-content-evenly">
                 {!isLoading
                     ? <h3>Loading...</h3>
-                    : filteredTransactionsSlice?.length == 0
+                    : filteredTransactionsSlice?.length === 0
                         ? <h3>Oops... no record found.</h3>
                         : !showPreview && filteredTransactionsSlice?.map((transaction, index) => {
                             return <TransactionCard

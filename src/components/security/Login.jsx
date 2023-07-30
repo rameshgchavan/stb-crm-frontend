@@ -33,22 +33,22 @@ const Login = () => {
             data: crediantials
         })
 
-        if (user.data.code == 404) {
+        if (user.data.code === 404) {
             alert("Email ID not matching or not registered")
             return
         }
 
-        if (user.data.code == 403) {
+        if (user.data.code === 403) {
             alert("Password not matching, please check again.")
             return
         }
 
-        if (user.data.code == 102) {
+        if (user.data.code === 102) {
             alert("Wait for approval or contact to authority.")
             return
         }
 
-        if (user.data.code == 401) {
+        if (user.data.code === 401) {
             alert("You have been blocked.")
             return
         }
