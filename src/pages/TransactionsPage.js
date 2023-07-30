@@ -1,5 +1,5 @@
-import {  useSelector } from "react-redux";
-import {  useState } from "react";
+import { useSelector } from "react-redux";
+import { useState } from "react";
 
 import { Button } from "react-bootstrap";
 
@@ -10,12 +10,12 @@ const TransactionsPage = () => {
     const [showPreview, setShowPreview] = useState(false);
 
     const isLoading = useSelector(state => state.isLoadingReducer);
-    
+
     // Note: data: filteredCustomers is not object key value pair
     // data: filteredCustomers <-- here  filteredCustomers is alias of data
     const { data: filteredTransactionsSlice, firtCardIndex } =
         useSelector(state => state.filteredTransactionsSliceReducer);
-       
+
     return (
         <>
             <div className="d-flex flex-wrap justify-content-evenly">
@@ -33,13 +33,13 @@ const TransactionsPage = () => {
                 }
             </div>
 
-            {isLoading && filteredTransactionsSlice?.length != 0 && !showPreview &&
+            {isLoading && filteredTransactionsSlice !== undefined && !showPreview &&
                 <Button variant="success" size="sm" className="my-2"
                     onClick={() => { setShowPreview(true) }}
                 >Show Print Preview</Button>
             }
 
-            {isLoading && filteredTransactionsSlice?.length != 0 && showPreview &&
+            {isLoading && filteredTransactionsSlice !== undefined && showPreview &&
                 <Button variant="danger" size="sm" className="my-2"
                     onClick={() => { setShowPreview(false) }}
                 >Hide Print Preview</Button>
