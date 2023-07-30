@@ -21,7 +21,7 @@ const CustomersFilter = () => {
     const scrutinizedUser = useSelector(state => state.scrutinyUserReducer);
 
     const { Admin, Name: userName } = scrutinizedUser;
-    const isAdmin = Admin == "self" || Admin == "stb-crm" ? true : false;
+    const isAdmin = Admin === "self" || Admin === "stb-crm" ? true : false;
 
     const [filterSetting, setFilterSetting] = useState(JSON.parse(localStorage.getItem("FiterSetting")));
 
@@ -41,7 +41,7 @@ const CustomersFilter = () => {
 
     useEffect(() => {
         filterCustomers();
-    }, [customersList == undefined])
+    }, [customersList === undefined])
 
     const listAreaManagers = () => {
         const areaManagers = customersList?.filter((customer, index, array) => {
@@ -71,13 +71,13 @@ const CustomersFilter = () => {
     const filterCustomers = () => {
         let filteredData;
 
-        if (location.current == "INLINE") {
+        if (location.current === "INLINE") {
             filteredData = customersList
                 ?.filter((customer, index) => {
-                    return customer.STBState == "Allocated"
+                    return customer.STBState === "Allocated"
                 })
-                .filter((customer) => {
-                    return customer.STBLocation == "INLINE" || customer.STBLocation == "CAMEIN"
+                ?.filter((customer) => {
+                    return customer.STBLocation === "INLINE" || customer.STBLocation === "CAMEIN"
                 })
                 ?.filter((customer, index) => {
                     return areaManager.current !== "All"
@@ -89,7 +89,7 @@ const CustomersFilter = () => {
                         ? customer.AreaPerson === areaPerson.current
                         : customer.AreaPerson
                 })
-                .filter((customer) => {
+                ?.filter((customer) => {
                     return customer.CustName.toLowerCase().includes(searchedName.current.toLowerCase())
                         || customer.Area.toLowerCase().includes(searchedName.current.toLowerCase())
                         || customer.Address.toLowerCase().includes(searchedName.current.toLowerCase())
@@ -100,13 +100,13 @@ const CustomersFilter = () => {
                         || customer.STB_SN.toLowerCase().includes(searchedName.current.toLowerCase());
                 });
         }
-        else if (location.current == "OTHER") {
+        else if (location.current === "OTHER") {
             filteredData = customersList
-                .filter((customer, index) => {
-                    return customer.STBState != "Allocated"
+                ?.filter((customer, index) => {
+                    return customer.STBState !== "Allocated"
                 })
-                .filter((customer) => {
-                    return customer.STBLocation != "LEFTOUT" && customer.STBLocation != "OUTGONE"
+                ?.filter((customer) => {
+                    return customer.STBLocation !== "LEFTOUT" && customer.STBLocation !== "OUTGONE"
                 })
                 ?.filter((customer, index) => {
                     return areaManager.current !== "All"
@@ -118,7 +118,7 @@ const CustomersFilter = () => {
                         ? customer.AreaPerson === areaPerson.current
                         : customer.AreaPerson
                 })
-                .filter((customer) => {
+                ?.filter((customer) => {
                     return customer.CustName.toLowerCase().includes(searchedName.current.toLowerCase())
                         || customer.Area.toLowerCase().includes(searchedName.current.toLowerCase())
                         || customer.Address.toLowerCase().includes(searchedName.current.toLowerCase())
@@ -131,8 +131,8 @@ const CustomersFilter = () => {
         }
         else {
             filteredData = customersList
-                .filter((customer) => {
-                    return customer.STBLocation == location.current
+                ?.filter((customer) => {
+                    return customer.STBLocation === location.current
                 })
                 ?.filter((customer, index) => {
                     return areaManager.current !== "All"
@@ -144,7 +144,7 @@ const CustomersFilter = () => {
                         ? customer.AreaPerson === areaPerson.current
                         : customer.AreaPerson
                 })
-                .filter((customer) => {
+                ?.filter((customer) => {
                     return customer.CustName.toLowerCase().includes(searchedName.current.toLowerCase())
                         || customer.Area.toLowerCase().includes(searchedName.current.toLowerCase())
                         || customer.Address.toLowerCase().includes(searchedName.current.toLowerCase())
@@ -335,7 +335,7 @@ const CustomersFilter = () => {
 
                         <Form.Label className="text-light mx-2">
                             {
-                                firtCardIndex.current + 1 == filteredCustomres?.length // if first index equal to no of records
+                                firtCardIndex.current + 1 === filteredCustomres?.length // if first index equal to no of records
                                     ? ""
                                     : firtCardIndex.current + 1 + "-"
                             }
