@@ -23,7 +23,7 @@ const CustomersFilter = () => {
     const { Admin, Name: userName } = scrutinizedUser;
     const isAdmin = Admin === "self" || Admin === "stb-crm" ? true : false;
 
-    const [filterSetting, setFilterSetting] = useState(JSON.parse(localStorage.getItem("FiterSetting")));
+    const [filterSetting, setFilterSetting] = useState(JSON.parse(localStorage.getItem("FilterSetting")));
 
     const location = useRef(
         filterSetting?.custLocation ||
@@ -197,7 +197,7 @@ const CustomersFilter = () => {
                                     custLocation: "INLINE"
                                 });
 
-                                localStorage.setItem("FiterSetting", JSON.stringify({
+                                localStorage.setItem("FilterSetting", JSON.stringify({
                                     ...filterSetting,
                                     custLocation: "INLINE"
                                 }));
@@ -216,7 +216,7 @@ const CustomersFilter = () => {
                                     custLocation: "LEFTOUT"
                                 });
 
-                                localStorage.setItem("FiterSetting", JSON.stringify({
+                                localStorage.setItem("FilterSetting", JSON.stringify({
                                     ...filterSetting,
                                     custLocation: "LEFTOUT"
                                 }));
@@ -235,7 +235,7 @@ const CustomersFilter = () => {
                                     custLocation: "OUTGONE"
                                 });
 
-                                localStorage.setItem("FiterSetting", JSON.stringify({
+                                localStorage.setItem("FilterSetting", JSON.stringify({
                                     ...filterSetting,
                                     custLocation: "OUTGONE"
                                 }));
@@ -254,7 +254,7 @@ const CustomersFilter = () => {
                                     custLocation: "OTHER"
                                 });
 
-                                localStorage.setItem("FiterSetting", JSON.stringify({
+                                localStorage.setItem("FilterSetting", JSON.stringify({
                                     ...filterSetting,
                                     custLocation: "OTHER"
                                 }));
@@ -273,7 +273,7 @@ const CustomersFilter = () => {
                                         custAreaManager: e.target.value
                                     });
 
-                                    localStorage.setItem("FiterSetting", JSON.stringify({
+                                    localStorage.setItem("FilterSetting", JSON.stringify({
                                         ...filterSetting,
                                         custAreaManager: e.target.value
                                     }));
@@ -296,7 +296,7 @@ const CustomersFilter = () => {
                                     custAreaPerson: e.target.value
                                 });
 
-                                localStorage.setItem("FiterSetting", JSON.stringify({
+                                localStorage.setItem("FilterSetting", JSON.stringify({
                                     ...filterSetting,
                                     custAreaPerson: e.target.value
                                 }));
