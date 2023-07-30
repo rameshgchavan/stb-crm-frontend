@@ -7,7 +7,8 @@ import {
 
 import {
     listCustomersAction,
-    filterCustomersAction
+    filterCustomersAction,
+    updateCustomerAction
 } from "./customers";
 
 import {
@@ -27,6 +28,7 @@ export {
 
     listCustomersAction,
     filterCustomersAction,
+    updateCustomerAction,
 
     listTransactionsAction,
     summarizeTransactionsAction,

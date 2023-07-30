@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Form, Button } from "react-bootstrap";
 import { useRef } from "react";
 import axios from "axios";
@@ -10,12 +10,14 @@ import STBSection from "./STBSection";
 import SeedSection from "./SeedSection";
 
 import checkAdminGetDbName from "../../../functions/checkAdminGetDbName"
+import { updateCustomerAction } from "../../../redux/actions";
 
 const CustomerForm = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const customerForm = useRef();
     const action = useRef("Save");
+    const dispatch = useDispatch();
 
     // to get token
     const scrutinizedUser = useSelector(state => state.scrutinyUserReducer);
@@ -30,7 +32,7 @@ const CustomerForm = () => {
     // To count Names those already exist in database
     const countName = (name) => {
         const names = customersList.filter((customer) => {
-            return customer.CustName == name
+            return customer.CustName === name
         });
 
         return (names.length + 1);
@@ -74,8 +76,8 @@ const CustomerForm = () => {
             Remark: remark?.value
         }
 
-        action.current == "Save" && handleSave(customerData);
-        action.current == "Update" && handleUpdate(customerData);
+        action.current === "Save" && handleSave(customerData);
+        action.current === "Update" && handleUpdate(customerData);
     }
 
     const handleSave = async (customerData) => {
@@ -88,7 +90,7 @@ const CustomerForm = () => {
 
         response.data.code === 201
             ? alert(`${response.data.message}`)
-            : response.data.message.code == 11000
+            : response.data.message.code === 11000
                 ? alert(`A/c No already exsit.`)
                 : alert(`${response.data.message.code} Something went wrong.`)
 
@@ -108,12 +110,16 @@ const CustomerForm = () => {
             ? alert(`${response.data.message}`)
             : alert(`Something went wrong.`)
 
-        response.data.code === 202 &&
+        if (response.data.code === 202) {
+            delete customerData._id;
+            dispatch(updateCustomerAction({ ...customerData, _id: id }, id));
+
             navigate("/customers");
+        }
     }
 
     // Find customer where id matches
-    const customer = customersList?.find((customer) => customer._id == id);
+    const customer = customersList?.find((customer) => customer._id === id);
 
     return (
         <Form ref={customerForm} onSubmit={handleSubmit}>
@@ -166,7 +172,7 @@ const CustomerForm = () => {
                     >Update</Button>
                 }
 
-                {!customer && isAdmin &&
+                {!customer &&
                     <Button type="submit" variant="success" className="my-4"
                         onClick={() => { action.current = "Save" }}
                     >Save</Button>

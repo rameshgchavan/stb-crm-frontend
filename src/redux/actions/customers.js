@@ -1,5 +1,5 @@
 import {
-    LIST_CUSTOMERS, FILTER_CUSTOMERS
+    LIST_CUSTOMERS, FILTER_CUSTOMERS, SAVE_CUSTOMER, UPDATE_CUSTOMER
 } from "../constants/customers"
 
 
@@ -22,6 +22,18 @@ const filterCustomersAction = (data, firtCardIndex) => {
     )
 };
 
+
+const updateCustomerAction = (data, id) => {
+    return (
+        {
+            type: UPDATE_CUSTOMER,
+            data,
+            id
+        }
+    )
+};
+
 export {
-    listCustomersAction, filterCustomersAction
+    listCustomersAction, filterCustomersAction,
+    updateCustomerAction
 };
