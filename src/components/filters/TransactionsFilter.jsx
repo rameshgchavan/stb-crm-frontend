@@ -21,7 +21,7 @@ const TransactionsFilter = () => {
     const firtCardIndex = useRef(0);
     const lastCardIndex = useRef(cardsPerPage.current);
 
-    const [filterSetting, setFilterSetting] = useState(JSON.parse(localStorage.getItem("FiterSetting")));
+    const [filterSetting, setFilterSetting] = useState(JSON.parse(localStorage.getItem("FilterSetting")));
 
     const selectedDay = useRef(
         filterSetting?.transDay ||
@@ -205,7 +205,7 @@ const TransactionsFilter = () => {
                                     transType: e.target.value
                                 });
 
-                                localStorage.setItem("FiterSetting", JSON.stringify({
+                                localStorage.setItem("FilterSetting", JSON.stringify({
                                     ...filterSetting,
                                     transType: e.target.value
                                 }));
@@ -225,7 +225,7 @@ const TransactionsFilter = () => {
                                     transYear: e.target.value
                                 });
 
-                                localStorage.setItem("FiterSetting", JSON.stringify({
+                                localStorage.setItem("FilterSetting", JSON.stringify({
                                     ...filterSetting,
                                     transYear: e.target.value
                                 }));
@@ -245,7 +245,7 @@ const TransactionsFilter = () => {
                                     transMonth: e.target.value
                                 });
 
-                                localStorage.setItem("FiterSetting", JSON.stringify({
+                                localStorage.setItem("FilterSetting", JSON.stringify({
                                     ...filterSetting,
                                     transMonth: e.target.value
                                 }));
@@ -273,7 +273,7 @@ const TransactionsFilter = () => {
                                     transDay: e.target.value
                                 });
 
-                                localStorage.setItem("FiterSetting", JSON.stringify({
+                                localStorage.setItem("FilterSetting", JSON.stringify({
                                     ...filterSetting,
                                     transDay: e.target.value
                                 }));
@@ -297,7 +297,7 @@ const TransactionsFilter = () => {
                                         transAreaManager: e.target.value
                                     });
 
-                                    localStorage.setItem("FiterSetting", JSON.stringify({
+                                    localStorage.setItem("FilterSetting", JSON.stringify({
                                         ...filterSetting,
                                         transAreaManager: e.target.value
                                     }));
@@ -320,7 +320,7 @@ const TransactionsFilter = () => {
                                     transAreaPerson: e.target.value
                                 });
 
-                                localStorage.setItem("FiterSetting", JSON.stringify({
+                                localStorage.setItem("FilterSetting", JSON.stringify({
                                     ...filterSetting,
                                     transAreaPerson: e.target.value
                                 }));
