@@ -107,7 +107,7 @@ const Login = () => {
 
                 <b>Admin ID:</b><br />
                 demoadmin@gmail.com<br />
-                <b> Admin's User IDs:</b> <br />
+                <b>Admin's User IDs:</b> <br />
                 demouser1@gmail.com<br />
                 demouser2@gmail.com<br />
                 <br />
