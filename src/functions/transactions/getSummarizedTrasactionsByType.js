@@ -35,8 +35,9 @@ const getSummarizedTrasactionsByType = async (scrutinizedUser, customersList, ye
         const mergedPreCurTasactions = [...filteredCurTrasactions, ...filteredPreTrasactions];
 
         const summarizedPreCurTasactions = await summarizeTransactions(mergedPreCurTasactions, customersList);
-        
-        return summarizedPreCurTasactions.sort((a, b) => DateTime.fromISO(a.ExpiryDate) - DateTime.fromISO(b.ExpiryDate))
+
+        return summarizedPreCurTasactions
+            .sort((a, b) => DateTime.fromISO(a.ExpiryDate) - DateTime.fromISO(b.ExpiryDate));
 
     }
     else {
@@ -46,7 +47,8 @@ const getSummarizedTrasactionsByType = async (scrutinizedUser, customersList, ye
 
         const summarizedCurTrasaction = await summarizeTransactions(curTrasactions, customersList);
 
-        return summarizedCurTrasaction;
+        return summarizedCurTrasaction
+            .sort((a, b) => DateTime.fromISO(a.TransactionDateTime) - DateTime.fromISO(b.TransactionDateTime));
     }
 }
 
