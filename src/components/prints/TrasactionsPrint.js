@@ -24,11 +24,6 @@ const TrasactionsPrint = () => {
 
     return (
         <Container>
-            {/* <div>Set printer setting to
-                Custome Margines: Left:3.5mm, Right:3.5mm, Top:3.5mm, Bottom:10mm
-                and Customized Scale: 70
-            </div> */}
-
             <div className="d-flex justify-content-around align-items-center text-start border rounded">
                 <Form.Group className="d-flex justify-content-start align-items-center">
                     <Form.Check variant="outline-primary" type="checkbox" name="rcDate" label="Rechage Date"
