@@ -37,12 +37,7 @@ const getSummarizedTrasactionsByType = async (scrutinizedUser, customersList, ye
         const summarizedPreCurTasactions = await summarizeTransactions(mergedPreCurTasactions, customersList);
 
         return summarizedPreCurTasactions
-            .sort((a, b) => DateTime.fromISO(a.ExpiryDate) - DateTime.fromISO(b.ExpiryDate))
-            .sort((a, b) => {
-                if (a.AreaPerson?.toUpperCase() > b.AreaPerson?.toUpperCase()) return 1
-                if (a.AreaPerson?.toUpperCase() < b.AreaPerson?.toUpperCase()) return -1
-                return 0
-            });
+            .sort((a, b) => DateTime.fromISO(a.ExpiryDate) - DateTime.fromISO(b.ExpiryDate));
     }
     else {
         const curCollectionName = DateTime.fromISO(`${yearMonth}-01`).toFormat("LLL-yyyy");
@@ -52,12 +47,7 @@ const getSummarizedTrasactionsByType = async (scrutinizedUser, customersList, ye
         const summarizedCurTrasaction = await summarizeTransactions(curTrasactions, customersList);
 
         return summarizedCurTrasaction
-            .sort((a, b) => DateTime.fromISO(a.TransactionDateTime) - DateTime.fromISO(b.TransactionDateTime))
-            .sort((a, b) => {
-                if (a.AreaPerson?.toUpperCase() > b.AreaPerson?.toUpperCase()) return 1
-                if (a.AreaPerson?.toUpperCase() < b.AreaPerson?.toUpperCase()) return -1
-                return 0
-            });
+            .sort((a, b) => DateTime.fromISO(a.TransactionDateTime) - DateTime.fromISO(b.TransactionDateTime));
     }
 }
 
