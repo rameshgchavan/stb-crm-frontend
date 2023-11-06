@@ -7,3 +7,12 @@
     display: none;
   }
 }
+
+/* Printer page margin setup */
+@page {
+  size: auto;
+  margin-top: 5mm;
+  margin-bottom: 5mm;
+  margin-left: 5mm;
+  margin-right: 1mm;
+}
