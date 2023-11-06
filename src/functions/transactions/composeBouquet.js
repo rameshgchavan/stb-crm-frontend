@@ -44,7 +44,6 @@ const composeBouquet = (acNoTransactionsList, trasactionDate) => {
             array.filter(plan =>
                 plan.PlanName === transaction.PlanName
             )
-
                 .map((planName, index) => {
                     if (planName.TransactionType !== "Cancellation") {
                         ncf += planName.NCF
