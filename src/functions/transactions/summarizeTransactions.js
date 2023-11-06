@@ -1,5 +1,29 @@
 import { DateTime } from "luxon";
 
+// If customer not found
+const naCustomer = {
+    AcNo: "AcNo N/A",
+    Address: "Address N/A",
+    Area: "Area N/A",
+    AreaManager: "Area manager N/A",
+    AreaPerson: "Area|Person N/A",
+    CustDate: "CustDate N/A",
+    CustName: "Name N/A",
+    LCOCode: "LCO Code N/A",
+    MobNo: "Mob N/A",
+    NDS_No: "NDS N/A",
+    Origin: "Origin N/A",
+    Remark: "",
+    SD_HD: "SD/HD N/A",
+    STBLocation: "STBLocation N/A",
+    STBState: "STB State N/A",
+    STBStatus: "STB Status N/A",
+    STB_SN: "STB SN N/A",
+    STBs: "STBs N/A",
+    SeedType: "Seed type N/A",
+    VC_NDS_MAC_ID: "N/A"
+}
+
 const summarizeTransactions = async (transactions, customersList) => {
     // Get unique transactions by AcNo and Date
     const uniqueTransactions = transactions?.filter((transaction, index, array) => {
@@ -49,7 +73,7 @@ const summarizeTransactions = async (transactions, customersList) => {
 
         return {
             ...uniqueTransaction,
-            Customer: customersList[customerIndex],
+            Customer: customerIndex == -1 ? naCustomer : customersList[customerIndex],
             LCOPrice: totalLCOPrice.toFixed(2),
             BasePrice: totalBasePrice.toFixed(2),
             NCF: totalNCF.toFixed(2),
