@@ -87,7 +87,7 @@ const TrasactionsPrint = () => {
                                 </div>}
 
                                 <div style={{ fontSize: "12px", lineHeight: "15px" }} className='text-wrap mt-1'>
-                                    {trasactions.Customer?.AreaPerson?.slice(0, 20) || "N/A"}
+                                    {trasactions.Customer?.AreaPerson?.slice(0, 20)}
                                 </div>
                             </td>
 
@@ -97,19 +97,19 @@ const TrasactionsPrint = () => {
                                     {trasactions.AcNo?.slice(6, 10)}
                                 </div>
                                 <div>
-                                    ID:{trasactions.Customer?.VC_NDS_MAC_ID?.slice(0, 5) || "N/A"}<br />
+                                    ID:{trasactions.Customer?.VC_NDS_MAC_ID?.slice(0, 5)}<br />
                                     {trasactions.Customer?.VC_NDS_MAC_ID?.slice(5, 12)}
                                 </div>
                             </td>
 
                             <td style={{ minWidth: "55mm", maxWidth: "55mm", width: "55mm" }} >
                                 <div className="text-wrap fw-bold" style={{ height: "45px", lineHeight: "18px" }}>
-                                    {trasactions.Customer?.CustName || "Name N/A"}
+                                    {trasactions.Customer?.CustName}
                                 </div>
 
                                 <div>
-                                    {trasactions.Customer?.Area?.slice(0, 20) || "Area N/A"}<br />
-                                    {trasactions.Customer?.MobNo?.slice(0, 10) || "Mobile N/A"}
+                                    {trasactions.Customer?.Area?.slice(0, 20)}<br />
+                                    {trasactions.Customer?.MobNo?.slice(0, 10)}
                                 </div>
                             </td>
 
