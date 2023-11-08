@@ -1,23 +1,23 @@
 import { Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
 import CustomerCard from "../components/cards/CustomerCard";
 
 import { listCustomersAction } from "../redux/actions";
 import checkAdminGetDbName from "../functions/checkAdminGetDbName";
-import CustomerForm from "../components/forms/customerForm";
+import CustomerModal from "../components/modals/CustomerModal";
 
 const CustomersPage = () => {
-    const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const scrutinizedUser = useSelector(state => state.scrutinyUserReducer); // to get token
     const customersList = useSelector(state => state.customersListReducer)?.data;
 
     const { isAdmin, dbName } = checkAdminGetDbName(scrutinizedUser);
+
+    const [customerModalShow, setCustomerModalShow] = useState(false);
 
     useEffect(() => {
         listCustomers();
@@ -56,10 +56,15 @@ const CustomersPage = () => {
 
             {customersList &&
                 <Button variant="success" size="sm" className="my-4"
-                    onClick={() => navigate("/customer")}
+                    onClick={() => setCustomerModalShow(true)}
                 >Add New</Button>
             }
-            <CustomerForm />
+
+            <CustomerModal
+                showMe={customerModalShow}
+                closeMe={setCustomerModalShow}
+                title={"New customer"}
+            />
         </>
     )
 }
