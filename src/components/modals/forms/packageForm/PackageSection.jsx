@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FormGroup } from "react-bootstrap";
 import FilterSection from "./FilterSection";
-import PackageCard from "../../cards/PackageCard";
+import PackageCard from "../../../cards/PackageCard";
 
 const PackageSection = ({ acNo, transactionDate }) => {
     const [bouquet, setBouquet] = useState();
