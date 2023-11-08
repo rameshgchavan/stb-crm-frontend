@@ -9,8 +9,8 @@ import CustomerSection from "./CustomerSection";
 import STBSection from "./STBSection";
 import SeedSection from "./SeedSection";
 
-import checkAdminGetDbName from "../../../../functions/checkAdminGetDbName"
-import { updateCustomerAction } from "../../../../redux/actions";
+import checkAdminGetDbName from "../../../functions/checkAdminGetDbName"
+import { updateCustomerAction } from "../../../redux/actions";
 
 const CustomerForm = () => {
     const { id } = useParams();

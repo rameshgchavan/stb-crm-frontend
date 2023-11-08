@@ -8,6 +8,7 @@ import CustomerCard from "../components/cards/CustomerCard";
 
 import { listCustomersAction } from "../redux/actions";
 import checkAdminGetDbName from "../functions/checkAdminGetDbName";
+import CustomerForm from "../components/forms/customerForm";
 
 const CustomersPage = () => {
     const navigate = useNavigate();
@@ -58,6 +59,7 @@ const CustomersPage = () => {
                     onClick={() => navigate("/customer")}
                 >Add New</Button>
             }
+            <CustomerForm />
         </>
     )
 }

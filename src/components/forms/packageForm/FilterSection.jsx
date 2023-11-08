@@ -5,8 +5,8 @@ import axios from "axios";
 
 import { useSelector } from "react-redux";
 
-import composeBouquet from "../../../../functions/transactions/composeBouquet";
-import checkAdminGetDbName from "../../../../functions/checkAdminGetDbName";
+import composeBouquet from "../../../functions/transactions/composeBouquet";
+import checkAdminGetDbName from "../../../functions/checkAdminGetDbName";
 
 const FilterSection = ({ requiredTools }) => {
     const {

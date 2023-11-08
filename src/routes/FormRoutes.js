@@ -1,7 +1,7 @@
 import { Route } from 'react-router-dom';
 
-import CustomerForm from '../components/modals/forms/customerForm';
-import PackageForm from '../components/modals/forms/packageForm';
+import CustomerForm from '../components/forms/customerForm';
+import PackageForm from '../components/forms/packageForm';
 
 const FromRoutes = (
     <Route>
