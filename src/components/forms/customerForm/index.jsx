@@ -1,4 +1,3 @@
-import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Form, Button } from "react-bootstrap";
 import { useRef } from "react";
@@ -12,9 +11,7 @@ import SeedSection from "./SeedSection";
 import checkAdminGetDbName from "../../../functions/checkAdminGetDbName"
 import { updateCustomerAction } from "../../../redux/actions";
 
-const CustomerForm = () => {
-    const { id } = useParams();
-    const navigate = useNavigate();
+const CustomerForm = ({ id }) => {
     const customerForm = useRef();
     const action = useRef("Save");
     const dispatch = useDispatch();
@@ -113,8 +110,6 @@ const CustomerForm = () => {
         if (response.data.code === 202) {
             delete customerData._id;
             dispatch(updateCustomerAction({ ...customerData, _id: id }, id));
-
-            navigate("/customers");
         }
     }
 
@@ -157,10 +152,6 @@ const CustomerForm = () => {
             </div>
 
             <div className="d-flex justify-content-around my-4">
-                {/* <Button className="my-4"
-                    onClick={() => navigate("/customers")}
-                >Back</Button> */}
-
                 {customer && isAdmin &&
                     <Button variant="danger" className="my-4"
                     >Delete</Button>

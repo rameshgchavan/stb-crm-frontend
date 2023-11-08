@@ -1,13 +1,9 @@
-import { useParams } from "react-router-dom";
 import { Form } from "react-bootstrap";
 
 import CustomerSection from "./CustomerSection";
 import PackageSection from "./PackageSection";
 
-const PackageForm = () => {
-    const { acNo } = useParams();
-    const { transactionDate } = useParams();
-
+const PackageForm = ({ acNo, transactionDate }) => {
     return (
         <Form >
             <div className="mx-sm-3">
