@@ -67,8 +67,11 @@ const summarizeTransactions = async (transactions, customersList) => {
 
         Bill = totalBasePrice + totalNCF;
 
+        // Converted ac no to ojbect id here 6163 ==ac. 6 is for character 3 for number
+        const transOjectID = `61633${uniqueTransaction.AcNo.split("").join("3")}`;
+
         //Populated customer for transactions 
-        let customerIndex = customersList.findIndex((customer) => customer.AcNo.trim() === uniqueTransaction.AcNo)
+        let customerIndex = customersList.findIndex((customer) => customer._id === transOjectID)
         // uniqueTransactions[uniqueIndex]['Customer'] = customersList[customerIndex];
 
         return {
