@@ -108,7 +108,7 @@ const CustomerCard = ({ customer, srNo }) => {
             <CustomerModal
                 showMe={customerModalShow}
                 closeMe={setCustomerModalShow}
-                title={"Edit customer"}
+                title={`ID: ${id}`}
                 id={id}
             />
 
