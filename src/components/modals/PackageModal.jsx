@@ -8,7 +8,7 @@ const PackageModal = ({ showMe, closeMe, title, acNo, transactionDate }) => {
         <div >
             <Modal show={showMe} fullscreen={true} onHide={() => closeMe(false)}>
                 <Modal.Header closeButton>
-                    <Modal.Title style={{ height: "16px" }}>{title}</Modal.Title>
+                    <Modal.Title style={{ height: "16px", fontSize: "16px" }}>{title}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <PackageForm acNo={acNo} transactionDate={transactionDate} />
