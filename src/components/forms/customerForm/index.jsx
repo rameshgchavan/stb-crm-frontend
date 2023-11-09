@@ -105,7 +105,9 @@ const CustomerForm = ({ id }) => {
 
         response.data.code === 202
             ? alert(`${response.data.message}`)
-            : alert(`Something went wrong.`)
+            : response.data.message.code === 11000
+                ? alert(`A/c No already exsit.`)
+                : alert(`${response.data.message.code} Something went wrong.`)
 
         if (response.data.code === 202) {
             delete customerData._id;
