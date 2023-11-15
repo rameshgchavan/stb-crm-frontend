@@ -46,7 +46,6 @@ const UsersPage = () => {
             {
                 usersList?.filter(user => user.Admin !== "stb-crm")
                     .map((user, index) => {
-                        console.warn(user);
                         return (
                             <div key={user._id} className="mb-3">
                                 <UserCard userInfo={{ user, userStatus, updateStatus }} />
