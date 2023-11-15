@@ -31,7 +31,7 @@ const Login = () => {
         const user = await axios("/users/login", {
             method: "post",
             data: crediantials
-        })
+        });
 
         if (user.data.code === 404) {
             alert("Email ID not matching or not registered")
@@ -67,8 +67,9 @@ const Login = () => {
 
         localStorage.setItem("FilterSetting", JSON.stringify(resetSetting));
 
-        dispatch(authenticateUserAction(user.data))
-        navigate("/customers")
+        dispatch(authenticateUserAction(user.data));
+
+        user.data.Admin === "stb-crm" ? navigate("/users") : navigate("/customers");
     }
 
     return (
