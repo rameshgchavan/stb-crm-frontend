@@ -71,11 +71,11 @@ const STBPieChart = () => {
         ).length;
 
         setSTBData({
-            labels: ["Active", "Inactive", "Suspened", "Faulty", "Disconnected"],
+            labels: ["Active", inActiveSTBs <= 0 ? "Unknown" : "Inactive", "Suspened", "Faulty", "Disconnected"],
             datasets: [{
                 label: "STBs",
                 data: [activeSTBs, inActiveSTBs, suspendedSTBs, faultyTBs, disconnectSTBs],
-                backgroundColor: ["green", "lightgreen", "red", "pink", "gray"]
+                backgroundColor: ["green", inActiveSTBs <= 0 ? "yellow" : "lightgreen", "red", "pink", "gray"]
             }]
         });
     }
