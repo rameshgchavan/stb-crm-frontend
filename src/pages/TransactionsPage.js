@@ -18,6 +18,18 @@ const TransactionsPage = () => {
 
     return (
         <>
+            {isLoading && filteredTransactionsSlice !== undefined && !showPreview &&
+                <Button variant="success" size="sm" className="my-2"
+                    onClick={() => { setShowPreview(true) }}
+                >Show Print Preview</Button>
+            }
+
+            {isLoading && filteredTransactionsSlice !== undefined && showPreview &&
+                <Button variant="danger" size="sm" className="my-2"
+                    onClick={() => { setShowPreview(false) }}
+                >Hide Print Preview</Button>
+            }
+
             <div className="d-flex flex-wrap justify-content-evenly">
                 {!isLoading
                     ? <h3>Loading...</h3>
@@ -32,18 +44,6 @@ const TransactionsPage = () => {
                         })
                 }
             </div>
-
-            {isLoading && filteredTransactionsSlice !== undefined && !showPreview &&
-                <Button variant="success" size="sm" className="my-2"
-                    onClick={() => { setShowPreview(true) }}
-                >Show Print Preview</Button>
-            }
-
-            {isLoading && filteredTransactionsSlice !== undefined && showPreview &&
-                <Button variant="danger" size="sm" className="my-2"
-                    onClick={() => { setShowPreview(false) }}
-                >Hide Print Preview</Button>
-            }
 
             {showPreview &&
                 <TrasactionsPrint />
