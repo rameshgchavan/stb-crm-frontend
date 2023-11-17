@@ -16,7 +16,11 @@ const UserCard = ({ userInfo }) => {
                                 onChange={(e) => { userName.current = e.target.value }}
                             />
                             <Form.Label className="text-primary fw-bold">User Name</Form.Label>
+                            {user.LastLogin &&
+                                <Form.Text className="fw-bold">Last Login: {user.LastLogin}</Form.Text>
+                            }
                         </Form.Floating>
+
 
                         {userStatus == "approved" &&
                             <Button variant="primary" className="mt-2"
