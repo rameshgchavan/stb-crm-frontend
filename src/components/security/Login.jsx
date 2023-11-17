@@ -9,6 +9,7 @@ import axios from "axios";
 
 // Import actions from redux/actions folder
 import { authenticateUserAction } from "../../redux/actions"
+import { DateTime } from 'luxon';
 
 
 const Login = () => {
@@ -20,6 +21,14 @@ const Login = () => {
     // Create object of useDispatch method
     const dispatch = useDispatch();
 
+    const updateLoginDateTime = async (user, object) => {
+        await axios("/users/update", {
+            method: "put",
+            headers: { authorization: `bearer ${user.token}` },
+            data: { id: user._id, object } // here object is key Name or Status 
+        })
+    }
+
     const handleLogin = async (e) => {
         e.preventDefault();
 
@@ -28,27 +37,27 @@ const Login = () => {
             Password: password.current.toString()
         }
 
-        const user = await axios("/users/login", {
+        const user = (await axios("/users/login", {
             method: "post",
             data: crediantials
-        });
+        })).data;
 
-        if (user.data.code === 404) {
+        if (user.code === 404) {
             alert("Email ID not matching or not registered")
             return
         }
 
-        if (user.data.code === 403) {
+        if (user.code === 403) {
             alert("Password not matching, please check again.")
             return
         }
 
-        if (user.data.code === 102) {
+        if (user.code === 102) {
             alert("Wait for approval or contact to authority.")
             return
         }
 
-        if (user.data.code === 401) {
+        if (user.code === 401) {
             alert("You have been blocked.")
             return
         }
@@ -66,10 +75,12 @@ const Login = () => {
         }
 
         localStorage.setItem("FilterSetting", JSON.stringify(resetSetting));
-
-        dispatch(authenticateUserAction(user.data));
-
-        user.data.Admin === "stb-crm" ? navigate("/users") : navigate("/customers");
+        // update user redux
+        dispatch(authenticateUserAction(user));
+        // update last login date and time in database
+        updateLoginDateTime(user, { LastLogin: DateTime.now().toFormat("dd-MMM-yyyy hh:mm:ss a") });
+        // navigate to user or customer page
+        user.Admin === "stb-crm" ? navigate("/users") : navigate("/customers");
     }
 
     return (
