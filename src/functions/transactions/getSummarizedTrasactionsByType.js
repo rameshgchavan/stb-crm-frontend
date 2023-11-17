@@ -4,7 +4,7 @@ import { DateTime } from "luxon";
 import checkAdminGetDbName from "../checkAdminGetDbName";
 import summarizeTransactions from "./summarizeTransactions"
 
-const getSummarizedTrasactionsByType = async (scrutinizedUser, customersList, yearMonth, selectedType) => {
+const getSummarizedTransactionsByType = async (scrutinizedUser, customersList, yearMonth, selectedType) => {
     const { dbName } = checkAdminGetDbName(scrutinizedUser);
 
     const getTransactions = async (dbName, collectionName) => {
@@ -21,18 +21,18 @@ const getSummarizedTrasactionsByType = async (scrutinizedUser, customersList, ye
 
         const lastDate = DateTime.fromISO(`${yearMonth}-01`).toFormat("LLL-yyyy");
 
-        const curTrasactions = await getTransactions(dbName, curCollectionName);
-        const preTrasactions = await getTransactions(dbName, preCollectionName);
+        const curTransactions = await getTransactions(dbName, curCollectionName);
+        const preTransactions = await getTransactions(dbName, preCollectionName);
 
-        const filteredCurTrasactions = await curTrasactions.filter(curTransacions =>
+        const filteredCurTransactions = await curTransactions.filter(curTransacions =>
             DateTime.fromISO(curTransacions.ExpiryDate).toFormat("LLL-yyyy")
             === lastDate);
 
-        const filteredPreTrasactions = await preTrasactions.filter(preTransacions =>
+        const filteredPreTransactions = await preTransactions.filter(preTransacions =>
             DateTime.fromISO(preTransacions.ExpiryDate).toFormat("LLL-yyyy")
             === lastDate);
 
-        const mergedPreCurTasactions = [...filteredCurTrasactions, ...filteredPreTrasactions];
+        const mergedPreCurTasactions = [...filteredCurTransactions, ...filteredPreTransactions];
 
         const summarizedPreCurTasactions = await summarizeTransactions(mergedPreCurTasactions, customersList);
 
@@ -49,9 +49,9 @@ const getSummarizedTrasactionsByType = async (scrutinizedUser, customersList, ye
     else {
         const curCollectionName = DateTime.fromISO(`${yearMonth}-01`).toFormat("LLL-yyyy");
 
-        const curTrasactions = await getTransactions(dbName, curCollectionName);
+        const curTransactions = await getTransactions(dbName, curCollectionName);
 
-        const summarizedCurTrasaction = await summarizeTransactions(curTrasactions, customersList);
+        const summarizedCurTrasaction = await summarizeTransactions(curTransactions, customersList);
 
         return summarizedCurTrasaction
             .sort((a, b) => {
@@ -66,4 +66,4 @@ const getSummarizedTrasactionsByType = async (scrutinizedUser, customersList, ye
     }
 }
 
-export default getSummarizedTrasactionsByType;
+export default getSummarizedTransactionsByType;

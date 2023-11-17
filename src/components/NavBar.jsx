@@ -31,7 +31,7 @@ const NavBar = () => {
                                 
                                 : <Nav>
                                     <Nav.Link as={Link} to="/customers">Customers</Nav.Link>
-                                    <Nav.Link as={Link} to="/transactions">Trasactions</Nav.Link>
+                                    <Nav.Link as={Link} to="/transactions">Transactions</Nav.Link>
                                 </Nav>
                             }
 

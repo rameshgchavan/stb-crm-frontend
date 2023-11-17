@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Button } from "react-bootstrap";
 
 import TransactionCard from "../components/cards/TransactionCard";
-import TrasactionsPrint from "../components/prints/TrasactionsPrint";
+import TransactionsPrint from "../components/prints/TransactionsPrint";
 
 const TransactionsPage = () => {
     const [showPreview, setShowPreview] = useState(false);
@@ -46,7 +46,7 @@ const TransactionsPage = () => {
             </div>
 
             {showPreview &&
-                <TrasactionsPrint />
+                <TransactionsPrint />
             }
         </>
     )

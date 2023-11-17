@@ -10,7 +10,7 @@ import {
     loadingAction, loadedAction
 } from "../../redux/actions";
 
-import getSummarizedTrasactionsByType from "../../functions/transactions/getSummarizedTrasactionsByType";
+import getSummarizedTransactionsByType from "../../functions/transactions/getSummarizedTransactionsByType";
 
 const TransactionsFilter = () => {
     const dispatch = useDispatch();
@@ -112,28 +112,28 @@ const TransactionsFilter = () => {
         return areaPersons
     };
 
-    const getSummarizedTrasactions = async () => {
+    const getSummarizedTransactions = async () => {
         const yearMonth = `${selectedYear.current}-${selectedMonth.current}`;
 
         dispatch(loadingAction());
 
-        const summarizedTrasactionsByType = await getSummarizedTrasactionsByType(scrutinizedUser, customersList, yearMonth, selectedType.current);
+        const summarizedTransactionsByType = await getSummarizedTransactionsByType(scrutinizedUser, customersList, yearMonth, selectedType.current);
 
         dispatch(
-            summarizeTransactionsAction(summarizedTrasactionsByType)
+            summarizeTransactionsAction(summarizedTransactionsByType)
         )
 
         dispatch(loadedAction());
 
-        return summarizedTrasactionsByType;
+        return summarizedTransactionsByType;
     }
 
     const filterTransactions = async (transactions = false) => {
-        const summarizedTrasactions = !transactions
-            ? await getSummarizedTrasactions()
+        const summarizedTransactions = !transactions
+            ? await getSummarizedTransactions()
             : transacionsSummary;
 
-        const filteredData = summarizedTrasactions
+        const filteredData = summarizedTransactions
             ?.filter((transaction, index) => {
                 // console.warn(DateTime.fromRFC2822(`${selectedDay.current} ${selectedMonth.current} ${selectedYear.current} 00:00 Z`).plus({ months: 1 }).toISODate());
                 return selectedDay.current !== "All"
