@@ -29,14 +29,14 @@ const STBRCBarChart = () => {
         paidSTBs: {
             labels: [],
             datasets: [{
-                label: "Paid STBs",
+                label: "Recharged Paid STBs",
                 data: []
             }]
         },
         freeSTBs: {
             labels: [],
             datasets: [{
-                label: "Free STBs",
+                label: "Recharged Free STBs",
                 data: []
             }]
         }
@@ -78,7 +78,7 @@ const STBRCBarChart = () => {
                 labels: monthsList,
                 datasets: [
                     {
-                        label: "Paid STBs",
+                        label: "Recharged Paid STBs",
                         data: acNoData.map((acNos, index) => { return acNos.length - freeSTBData[index].length }),
                         backgroundColor: ["blue"]
                     }
@@ -89,7 +89,7 @@ const STBRCBarChart = () => {
                 labels: monthsList,
                 datasets: [
                     {
-                        label: "Free STBs",
+                        label: "Recharged Free STBs",
                         data: freeSTBData.map((freeSTBs) => { return freeSTBs.length }),
                         backgroundColor: ["Orange"]
                     }
