@@ -124,7 +124,7 @@ const TransactionsPrint = () => {
                                 }
                             </td>
 
-                            <td />
+                            <td> {transactions.Customer?.IsFree ? `Free: ${transactions.Customer?.Remark}` : ""}</td>
                         </tr>
                     }
                     )}
