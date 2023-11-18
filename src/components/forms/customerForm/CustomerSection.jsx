@@ -5,17 +5,27 @@ const CustomerSection = ({ customer }) => {
     const customersList = useSelector(state => state.customersListReducer)?.data;
 
     const {
-        date, name, area, address, mobile
+        isFree, setIsFree, date, name, area, address, mobile
     } = customer;
 
     return (
         <FormGroup className="col border shadow rounded p-3">
             <span className="fw-bold text-secondary">Customer Details</span>
 
-            <Form.Floating className="my-3">
-                <Form.Control name="date" type="date" placeholder="Date" defaultValue={date} required />
-                <Form.Label className="text-primary fw-bold">Date</Form.Label>
-            </Form.Floating>
+            <div className="d-flex justify-content-evenly">
+                <Form.Floating className="col-4 my-3">
+                    <Form.Check type="checkbox" name="isFree" label="Free"
+                        className="me-sm-3 text-primary fw-bold"
+                        onClick={() => setIsFree(!isFree)}
+                        defaultChecked={isFree}  >
+                    </Form.Check >
+                </Form.Floating>
+
+                <Form.Floating className="my-3">
+                    <Form.Control name="date" type="date" placeholder="Date" defaultValue={date} required />
+                    <Form.Label className="text-primary fw-bold">Date</Form.Label>
+                </Form.Floating>
+            </div>
 
             <Form.Floating className="mb-3">
                 <Form.Control name="name" placeholder="Name" defaultValue={name} required

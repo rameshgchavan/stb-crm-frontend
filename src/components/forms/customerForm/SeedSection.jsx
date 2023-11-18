@@ -3,6 +3,7 @@ import { object } from "yup";
 
 const SeedSection = ({ customersList, seed }) => {
     const {
+        isFree,
         origin,
         areaPerson,
         areaManager,
@@ -58,7 +59,7 @@ const SeedSection = ({ customersList, seed }) => {
             </Form.Floating>
 
             <Form.Floating className="mb-3">
-                <Form.Control name="remark" placeholder="Remark" defaultValue={remark} />
+                <Form.Control name="remark" placeholder="Remark" defaultValue={remark} required={isFree} />
                 <Form.Label className="text-primary fw-bold">Remark</Form.Label>
             </Form.Floating>
         </FormGroup>

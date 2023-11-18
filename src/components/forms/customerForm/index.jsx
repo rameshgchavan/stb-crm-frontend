@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { Form, Button } from "react-bootstrap";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import axios from "axios";
 import { DateTime } from "luxon";
 
@@ -49,6 +49,7 @@ const CustomerForm = ({ id }) => {
         // customerData object is created to send data to database
         const customerData = {
             _id: "ac" + acNo?.value,
+            IsFree: isFree,
             CustDate: date?.value,
             CustName: name?.value,
             Area: area?.value,
@@ -118,10 +119,14 @@ const CustomerForm = ({ id }) => {
     // Find customer where id matches
     const customer = customersList?.find((customer) => customer._id === id);
 
+    const [isFree, setIsFree] = useState(customer.IsFree || false);
+
     return (
         <Form ref={customerForm} onSubmit={handleSubmit}>
             <div className="d-lg-flex  gap-3 mx-sm-3">
                 <CustomerSection customer={{
+                    isFree,
+                    setIsFree,
                     date: DateTime.fromISO(customer?.CustDate).toISODate(),
                     name: customer?.CustName,
                     area: customer?.Area,
@@ -145,6 +150,7 @@ const CustomerForm = ({ id }) => {
 
                 <SeedSection customersList={customersList}
                     seed={{
+                        isFree,
                         origin: customer?.Origin,
                         areaPerson: customer?.AreaPerson,
                         areaManager: customer?.AreaManager,
