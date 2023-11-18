@@ -119,7 +119,7 @@ const CustomerForm = ({ id }) => {
     // Find customer where id matches
     const customer = customersList?.find((customer) => customer._id === id);
 
-    const [isFree, setIsFree] = useState(customer.IsFree || false);
+    const [isFree, setIsFree] = useState(customer?.IsFree || false);
 
     return (
         <Form ref={customerForm} onSubmit={handleSubmit}>
