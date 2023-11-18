@@ -14,9 +14,8 @@ const STBPieChart = () => {
     const [stbData, setSTBData] = useState({
         labels: [],
         datasets: [{
-            label: "Recharged STBs",
-            data: [],
-            backgroundColor: ["green"]
+            label: "STBs",
+            data: []
         }]
     });
 
