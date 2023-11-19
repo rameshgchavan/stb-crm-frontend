@@ -5,7 +5,7 @@ import { DateTime } from "luxon";
 import { useSelector } from "react-redux";
 
 import composeBouquet from "../../../functions/transactions/composeBouquet";
-import { readTransactions } from "../../../crudAPIs/transactionsAPIs/readTransactionsAPIs";
+import { readTransactions } from "../../../crudAPIs/transactionsAPIs";
 
 const FilterSection = ({ requiredTools }) => {
     const {

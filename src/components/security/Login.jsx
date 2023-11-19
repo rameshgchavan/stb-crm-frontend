@@ -7,10 +7,8 @@ import { useDispatch } from 'react-redux';
 // Import actions from redux/actions folder
 import { authenticateUserAction, listCustomersAction, listUsersAction } from "../../redux/actions"
 import { DateTime } from 'luxon';
-import { readCustomers } from '../../crudAPIs/customersAPIs/readCustomersAPIs';
-import { readUsers } from '../../crudAPIs/usersAPIs/readUsersAPIs';
-import { readUser } from '../../crudAPIs/usersAPIs/readUsersAPIs';
-import { updateUser } from '../../crudAPIs/usersAPIs/updateUserAPIs';
+import { readCustomers } from '../../crudAPIs/customersAPIs';
+import { readUsers, readUser, updateUser } from '../../crudAPIs/usersAPIs';
 
 const Login = () => {
     const emailID = useRef(null);

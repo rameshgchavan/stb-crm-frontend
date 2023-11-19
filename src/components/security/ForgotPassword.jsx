@@ -4,8 +4,7 @@ import emailjs from "@emailjs/browser";
 // Import actions from redux/actions folder
 import { useNavigate } from 'react-router-dom';
 import { useRef, useState } from 'react';
-import { readUserEmail } from '../../crudAPIs/usersAPIs/readUsersAPIs';
-import { updateUserPassword } from '../../crudAPIs/usersAPIs/updateUserAPIs';
+import { readUserEmail, updateUserPassword } from '../../crudAPIs/usersAPIs';
 
 const ForgotPassword = () => {
     const [disabled, setDidsabled] = useState(false);

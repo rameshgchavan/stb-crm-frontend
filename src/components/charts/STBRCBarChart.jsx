@@ -3,7 +3,7 @@ import { Bar } from "react-chartjs-2";
 import { useSelector } from "react-redux";
 import { Form } from "react-bootstrap";
 import { DateTime } from "luxon";
-import { readTransactionsAcNosOfYear } from "../../crudAPIs/transactionsAPIs/readTransactionsAPIs";
+import { readTransactionsAcNosOfYear } from "../../crudAPIs/transactionsAPIs";
 
 const STBRCBarChart = () => {
     const customersList = useSelector(state => state.customersListReducer)?.data;

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Pie } from "react-chartjs-2";
 import { useSelector } from "react-redux";
-import { readTransactions } from "../../crudAPIs/transactionsAPIs/readTransactionsAPIs";
+import { readTransactions } from "../../crudAPIs/transactionsAPIs";
 import { DateTime } from "luxon";
 
 const STBPieChart = () => {

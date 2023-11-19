@@ -9,8 +9,7 @@ import SeedSection from "./SeedSection";
 
 import checkAdminGetDbName from "../../../functions/checkAdminGetDbName"
 import { updateCustomerAction } from "../../../redux/actions";
-import { createCustomer } from "../../../crudAPIs/customersAPIs/createCustomerAPIs";
-import { updateCustomer } from "../../../crudAPIs/customersAPIs/updateCustomerAPIs";
+import { createCustomer, updateCustomer } from "../../../crudAPIs/customersAPIs";
 
 const CustomerForm = ({ id }) => {
     const customerForm = useRef();
@@ -80,7 +79,7 @@ const CustomerForm = ({ id }) => {
     }
 
     const handleSave = async (customerData) => {
-       // Save a customer data
+        // Save a customer data
         const response = await createCustomer(scrutinizedUser, customerData);
 
         response.code === 201

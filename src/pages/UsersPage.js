@@ -1,9 +1,8 @@
 import { useDispatch, useSelector } from "react-redux"
 
 import UserCard from "../components/cards/UserCard"
-import { updateUser } from "../crudAPIs/usersAPIs/updateUserAPIs";
+import { readUsers, updateUser } from "../crudAPIs/usersAPIs";
 import { listUsersAction } from "../redux/actions";
-import { readUsers } from "../crudAPIs/usersAPIs/readUsersAPIs";
 
 const UsersPage = () => {
     const scrutinizedUser = useSelector(state => state.scrutinyUserReducer);

@@ -6,7 +6,7 @@ import { readUserEmail } from '../../crudAPIs/usersAPIs/readUsersAPIs';
 // Import actions from redux/actions folder
 import { useNavigate } from 'react-router-dom';
 import { useRef, useState } from 'react';
-import { createUser } from '../../crudAPIs/usersAPIs/createUserAPIs';
+import { createUser } from '../../crudAPIs/usersAPIs';
 
 const Signup = () => {
     const [disabled, setDidsabled] = useState(false);

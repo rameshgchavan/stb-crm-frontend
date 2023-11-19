@@ -1,7 +1,7 @@
 import { DateTime } from "luxon";
 
 import summarizeTransactions from "./summarizeTransactions";
-import { readTransactions } from "../../crudAPIs/transactionsAPIs/readTransactionsAPIs";
+import { readTransactions } from "../../crudAPIs/transactionsAPIs";
 
 const getSummarizedTransactionsByType = async (scrutinizedUser, customersList, yearMonth, selectedType) => {
     if (selectedType === "Expiry") {
