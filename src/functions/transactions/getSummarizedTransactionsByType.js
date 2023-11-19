@@ -1,28 +1,17 @@
-import axios from "axios";
 import { DateTime } from "luxon";
 
-import checkAdminGetDbName from "../checkAdminGetDbName";
-import summarizeTransactions from "./summarizeTransactions"
+import summarizeTransactions from "./summarizeTransactions";
+import { readTransactions } from "../../crudAPIs/transactionsAPIs/readTransactionsAPIs";
 
 const getSummarizedTransactionsByType = async (scrutinizedUser, customersList, yearMonth, selectedType) => {
-    const { dbName } = checkAdminGetDbName(scrutinizedUser);
-
-    const getTransactions = async (dbName, collectionName) => {
-        return (await axios(`/transactions`, {
-            method: "post",
-            headers: { authorization: `bearer ${scrutinizedUser.token}` },
-            data: { dbName, collectionName }
-        }))?.data;
-    }
-
     if (selectedType === "Expiry") {
         const curCollectionName = DateTime.fromISO(`${yearMonth}-01`).minus({ months: 1 }).toFormat("LLL-yyyy");
         const preCollectionName = DateTime.fromISO(`${yearMonth}-01`).minus({ months: 2 }).toFormat("LLL-yyyy");
 
         const lastDate = DateTime.fromISO(`${yearMonth}-01`).toFormat("LLL-yyyy");
 
-        const curTransactions = await getTransactions(dbName, curCollectionName);
-        const preTransactions = await getTransactions(dbName, preCollectionName);
+        const curTransactions = await readTransactions(scrutinizedUser, curCollectionName);
+        const preTransactions = await readTransactions(scrutinizedUser, preCollectionName);
 
         const filteredCurTransactions = await curTransactions.filter(curTransacions =>
             DateTime.fromISO(curTransacions.ExpiryDate).toFormat("LLL-yyyy")
@@ -49,7 +38,7 @@ const getSummarizedTransactionsByType = async (scrutinizedUser, customersList, y
     else {
         const curCollectionName = DateTime.fromISO(`${yearMonth}-01`).toFormat("LLL-yyyy");
 
-        const curTransactions = await getTransactions(dbName, curCollectionName);
+        const curTransactions = await readTransactions(scrutinizedUser, curCollectionName);
 
         const summarizedCurTrasaction = await summarizeTransactions(curTransactions, customersList);
 

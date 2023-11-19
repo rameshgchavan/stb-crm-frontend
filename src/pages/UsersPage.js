@@ -1,43 +1,28 @@
-import axios from "axios";
-import { useSelector, useDispatch } from "react-redux"
-import { listUsersAction } from "../redux/actions"
+import { useDispatch, useSelector } from "react-redux"
 
 import UserCard from "../components/cards/UserCard"
-import { useEffect } from "react";
+import { updateUser } from "../crudAPIs/usersAPIs/updateUserAPIs";
+import { listUsersAction } from "../redux/actions";
+import { readUsers } from "../crudAPIs/usersAPIs/readUsersAPIs";
 
 const UsersPage = () => {
-    const dispatch = useDispatch();
     const scrutinizedUser = useSelector(state => state.scrutinyUserReducer);
-
     const { userStatus, userName } = useSelector(state => state.filterUsersReducer);
 
     const usersList = useSelector(state => state.usersListReducer)
         ?.data?.filter((user, index) => user.Status == userStatus)
         .filter((user, index) => { return user.Name.toLowerCase().includes(userName.toLowerCase()) });
 
-    useEffect(() => {
-        listUsers();
-    }, [])
-
-    const listUsers = async () => {
-        const users = await axios("/users", {
-            method: "post",
-            headers: { authorization: `bearer ${scrutinizedUser.token}` },
-            data: { user: scrutinizedUser }
-        });
-
-        dispatch(listUsersAction(users.data));
-    }
+    // Create object of useDispatch method
+    const dispatch = useDispatch();
 
     const updateStatus = async (id, object) => {
-        const users = await axios("/users/update", {
-            method: "put",
-            headers: { authorization: `bearer ${scrutinizedUser.token}` },
-            data: { id, object } // here object is key Name or Status 
-        });
+        // Update a user
+        const response = await updateUser(scrutinizedUser, id, object);
 
-        if (users.data.code == 202) {
-            listUsers();
+        if (response.code == 202) {
+            // Get users and update users rudux
+            dispatch(listUsersAction(await readUsers(scrutinizedUser)))
         }
     }
 
