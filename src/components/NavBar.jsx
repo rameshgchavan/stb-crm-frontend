@@ -26,10 +26,8 @@ const NavBar = () => {
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="me-auto">
                             {/* Comman Links (self Admin and User both can access) */}
-                            {scrutinizedUser.Admin === "stb-crm"
-                                ? <Nav.Link as={Link} to="/users">Users</Nav.Link>
-                                
-                                : <Nav>
+                            {scrutinizedUser.Admin !== "stb-crm" &&
+                                <Nav>
                                     <Nav.Link as={Link} to="/customers">Customers</Nav.Link>
                                     <Nav.Link as={Link} to="/transactions">Transactions</Nav.Link>
                                 </Nav>
@@ -38,8 +36,8 @@ const NavBar = () => {
                             {/* Admin Links (Only Admin can access) */}
                             {scrutinizedUser.Admin == "self" &&
                                 <Nav>
-                                    <Nav.Link as={Link} to="/users">Users</Nav.Link>
                                     <Nav.Link as={Link} to="/statistics">Statistics</Nav.Link>
+                                    <Nav.Link as={Link} to="/users">Users</Nav.Link>
                                 </Nav>
                             }
                         </Nav>
