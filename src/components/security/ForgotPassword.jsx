@@ -1,11 +1,11 @@
 import { Container, Button, Form } from 'react-bootstrap';
 import emailjs from "@emailjs/browser";
-// Import axios
-import axios from "axios";
 
 // Import actions from redux/actions folder
 import { useNavigate } from 'react-router-dom';
 import { useRef, useState } from 'react';
+import { readUserEmail } from '../../crudAPIs/usersAPIs/readUsersAPIs';
+import { updateUserPassword } from '../../crudAPIs/usersAPIs/updateUserAPIs';
 
 const ForgotPassword = () => {
     const [disabled, setDidsabled] = useState(false);
@@ -25,12 +25,9 @@ const ForgotPassword = () => {
     const sendEmail = async (e) => {
         e.preventDefault();
 
-        const isEmail = await axios("/users/isemail", {
-            method: "post",
-            data: { Email: emailID.current.trim() }
-        });
+        const isEmail = await readUserEmail({ Email: emailID.current.trim() });
 
-        if (isEmail.data.code == 200) {
+        if (isEmail.code == 200) {
             // console.warn(emailOTP);
 
             emailjs.sendForm('service_6bhhezj', 'template_svo2tbq', otpForm.current, 'llSBBJFE7skawlOYO')
@@ -43,8 +40,8 @@ const ForgotPassword = () => {
             setDidsabled(true);
             setHidden(false);
         }
-        else if (isEmail.data.code == 404) {
-            alert(isEmail.data.message);
+        else if (isEmail.code == 404) {
+            alert(isEmail.message);
         }
         else { alert(isEmail) }
     };
@@ -67,12 +64,9 @@ const ForgotPassword = () => {
             Password: newPassword.current.trim(),
         }
 
-        const user = await axios("/users/resetpass", {
-            method: "put",
-            data: userCredentails
-        })
+        const user = await updateUserPassword(userCredentails);
 
-        if (user.data.code === 202) {
+        if (user.code === 202) {
             alert("Password changed successfully.");
             navigate("/");
         }

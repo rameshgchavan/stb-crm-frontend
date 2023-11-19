@@ -4,13 +4,13 @@ import { useRef } from 'react';
 
 import { useDispatch } from 'react-redux';
 
-// Import axios
-import axios from "axios";
-
 // Import actions from redux/actions folder
-import { authenticateUserAction } from "../../redux/actions"
+import { authenticateUserAction, listCustomersAction, listUsersAction } from "../../redux/actions"
 import { DateTime } from 'luxon';
-
+import { readCustomers } from '../../crudAPIs/customersAPIs/readCustomersAPIs';
+import { readUsers } from '../../crudAPIs/usersAPIs/readUsersAPIs';
+import { readUser } from '../../crudAPIs/usersAPIs/readUsersAPIs';
+import { updateUser } from '../../crudAPIs/usersAPIs/updateUserAPIs';
 
 const Login = () => {
     const emailID = useRef(null);
@@ -22,11 +22,8 @@ const Login = () => {
     const dispatch = useDispatch();
 
     const updateLoginDateTime = async (user, object) => {
-        await axios("/users/update", {
-            method: "put",
-            headers: { authorization: `bearer ${user.token}` },
-            data: { id: user._id, object } // here object is key Name or Status 
-        })
+        const id = user._id
+        await updateUser(user, id, object)
     }
 
     const handleLogin = async (e) => {
@@ -37,10 +34,7 @@ const Login = () => {
             Password: password.current.toString()
         }
 
-        const user = (await axios("/users/login", {
-            method: "post",
-            data: crediantials
-        })).data;
+        const user = await readUser(crediantials);
 
         if (user.code === 404) {
             alert("Email ID not matching or not registered")
@@ -75,10 +69,19 @@ const Login = () => {
         }
 
         localStorage.setItem("FilterSetting", JSON.stringify(resetSetting));
+
         // update user redux
         dispatch(authenticateUserAction(user));
+
+        // Get users and update users rudux
+        dispatch(listUsersAction(await readUsers(user)));
+
+        // Get customers and update customers rudux
+        dispatch(listCustomersAction(await readCustomers(user)));
+
         // update last login date and time in database
         updateLoginDateTime(user, { LastLogin: DateTime.now().toFormat("dd-MMM-yyyy hh:mm:ss a") });
+
         // navigate to user or customer page
         user.Admin === "stb-crm" ? navigate("/users") : navigate("/customers");
     }
@@ -115,7 +118,7 @@ const Login = () => {
 
             <hr />
             <div>
-                Use following IDs to test this application<br />
+                Following IDs are to test this application<br />
 
                 <b>Admin ID:</b><br />
                 demoadmin@gmail.com<br />

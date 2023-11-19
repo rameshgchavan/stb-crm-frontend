@@ -1,15 +1,13 @@
-import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import { Bar } from "react-chartjs-2";
 import { useSelector } from "react-redux";
-import checkAdminGetDbName from "../../functions/checkAdminGetDbName";
 import { Form } from "react-bootstrap";
 import { DateTime } from "luxon";
+import { readTransactionsAcNosOfYear } from "../../crudAPIs/transactionsAPIs/readTransactionsAPIs";
 
 const STBRCBarChart = () => {
     const customersList = useSelector(state => state.customersListReducer)?.data;
     const scrutinizedUser = useSelector(state => state.scrutinyUserReducer); // to get token
-    const { dbName } = checkAdminGetDbName(scrutinizedUser);
 
     const monthsList = [
         "Jan", "Feb", "Mar", "Apr",
@@ -47,13 +45,8 @@ const STBRCBarChart = () => {
     }, [])
 
     const listTransactions = async () => {
-        const acNoData = (await axios(`/transactions/rcstbcount`,
-            {
-                method: "post",
-                headers: { authorization: `bearer ${scrutinizedUser.token}` },
-                data: { dbName, ofYear: yearOptions.current }
-            }
-        ))?.data
+        // Get all months(Jan to Dec) transactions a/c no of given year
+        const acNoData = await readTransactionsAcNosOfYear(scrutinizedUser, yearOptions.current);
 
         const freeSTBData = await acNoData.map((acNoList) => {
             return acNoList.map((acNos) => {

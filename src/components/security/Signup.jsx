@@ -1,11 +1,12 @@
 import { Container, Button, Form } from 'react-bootstrap';
 import emailjs from "@emailjs/browser";
-// Import axios
-import axios from "axios";
+
+import { readUserEmail } from '../../crudAPIs/usersAPIs/readUsersAPIs';
 
 // Import actions from redux/actions folder
 import { useNavigate } from 'react-router-dom';
 import { useRef, useState } from 'react';
+import { createUser } from '../../crudAPIs/usersAPIs/createUserAPIs';
 
 const Signup = () => {
     const [disabled, setDidsabled] = useState(false);
@@ -29,25 +30,16 @@ const Signup = () => {
     const sendEmail = async (e) => {
         e.preventDefault();
 
-        // const email = otpForm.current["user_email"].value.trim();
+        const isAdminEmail = await readUserEmail({ Email: adminEmail.current?.trim() });
+        const isUserEmail = await readUserEmail({ Email: emailID.current?.trim() });
 
-        const isAdminEmail = await axios("/users/isemail", {
-            method: "post",
-            data: { Email: adminEmail.current?.trim() }
-        });
-
-        const isUserEmail = await axios("/users/isemail", {
-            method: "post",
-            data: { Email: emailID.current.trim() }
-        });
-
-        if (!isAdmin && isAdminEmail.data.code == 404) {
+        if (!isAdmin && isAdminEmail.code == 404) {
             alert(`${adminEmail.current} not found.`)
         }
-        else if (isUserEmail.data.code == 200) {
+        else if (isUserEmail.code == 200) {
             alert(`${emailID.current} is already in use, try another one.`)
         }
-        else if ((isAdmin && isUserEmail.data.code == 404) || (!isAdmin && isUserEmail.data.code == 404 && isAdminEmail.data.code == 200)) {
+        else if ((isAdmin && isUserEmail.code == 404) || (!isAdmin && isUserEmail.code == 404 && isAdminEmail.code == 200)) {
             // console.warn(emailOTP);
 
             emailjs.sendForm('service_6bhhezj', 'template_svo2tbq', otpForm.current, 'llSBBJFE7skawlOYO')
@@ -85,18 +77,15 @@ const Signup = () => {
             LastLogin: ""
         }
 
-        const user = await axios("/users/signup", {
-            method: "post",
-            data: userDetails
-        })
+        const user = await createUser(userDetails);
 
-        user.data.code === 201
-            ? alert(`${user.data.message} Wait for approval or contact to authority.`)
-            : user.data.code === 409
-                ? alert(`${user.data.message} Try another one.`)
-                : alert(user.data);
+        user.code === 201
+            ? alert(`${user.message} Wait for approval or contact to authority.`)
+            : user.code === 409
+                ? alert(`${user.message} Try another one.`)
+                : alert(user);
 
-        user.data.code === 201
+        user.code === 201
             ? navigate("/")
             : navigate("/signup")
     }

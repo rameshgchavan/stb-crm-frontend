@@ -1,7 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { Form, Button } from "react-bootstrap";
 import { useRef, useState } from "react";
-import axios from "axios";
 import { DateTime } from "luxon";
 
 import CustomerSection from "./CustomerSection";
@@ -10,6 +9,8 @@ import SeedSection from "./SeedSection";
 
 import checkAdminGetDbName from "../../../functions/checkAdminGetDbName"
 import { updateCustomerAction } from "../../../redux/actions";
+import { createCustomer } from "../../../crudAPIs/customersAPIs/createCustomerAPIs";
+import { updateCustomer } from "../../../crudAPIs/customersAPIs/updateCustomerAPIs";
 
 const CustomerForm = ({ id }) => {
     const customerForm = useRef();
@@ -19,7 +20,7 @@ const CustomerForm = ({ id }) => {
     // to get token
     const scrutinizedUser = useSelector(state => state.scrutinyUserReducer);
 
-    const { isAdmin, dbName } = checkAdminGetDbName(scrutinizedUser);
+    const { isAdmin } = checkAdminGetDbName(scrutinizedUser);
 
     // Note: data: filteredCustomers is not object key value pair
     // data: filteredCustomers <-- here  filteredCustomers is alias of data
@@ -79,38 +80,30 @@ const CustomerForm = ({ id }) => {
     }
 
     const handleSave = async (customerData) => {
-        // HTTP request to save data
-        const response = await axios("/customers/save", {
-            method: "post",
-            headers: { authorization: `bearer ${scrutinizedUser.token}` },
-            data: { dbName, customerData }
-        });
+       // Save a customer data
+        const response = await createCustomer(scrutinizedUser, customerData);
 
-        response.data.code === 201
-            ? alert(`${response.data.message}`)
-            : response.data.message.code === 11000
+        response.code === 201
+            ? alert(`${response.message}`)
+            : response.message.code === 11000
                 ? alert(`A/c No already exsit.`)
-                : alert(`${response.data.message.code} Something went wrong.`)
+                : alert(`${response.message.code} Something went wrong.`)
 
-        response.data.code === 201 &&
+        response.code === 201 &&
             customerForm.current.reset(); // To empty Form controls
     }
 
     const handleUpdate = async (customerData) => {
-        // HTTP request to update data
-        const response = await axios(`/customers/update/${id}`, {
-            method: "put",
-            headers: { authorization: `bearer ${scrutinizedUser.token}` },
-            data: { dbName, customerData }
-        });
+        // Update a customer data
+        const response = await updateCustomer(scrutinizedUser, customerData, id);
 
-        response.data.code === 202
-            ? alert(`${response.data.message}`)
-            : response.data.message.code === 11000
+        response.code === 202
+            ? alert(`${response.message}`)
+            : response.message.code === 11000
                 ? alert(`A/c No already exsit.`)
-                : alert(`${response.data.message.code} Something went wrong.`)
+                : alert(`${response.message.code} Something went wrong.`)
 
-        if (response.data.code === 202) {
+        if (response.code === 202) {
             delete customerData._id;
             dispatch(updateCustomerAction({ ...customerData, _id: id }, id));
         }

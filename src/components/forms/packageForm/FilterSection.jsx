@@ -1,12 +1,11 @@
 import { useState, useEffect, useRef } from "react";
 import { Form } from "react-bootstrap";
 import { DateTime } from "luxon";
-import axios from "axios";
 
 import { useSelector } from "react-redux";
 
 import composeBouquet from "../../../functions/transactions/composeBouquet";
-import checkAdminGetDbName from "../../../functions/checkAdminGetDbName";
+import { readTransactions } from "../../../crudAPIs/transactionsAPIs/readTransactionsAPIs";
 
 const FilterSection = ({ requiredTools }) => {
     const {
@@ -36,8 +35,6 @@ const FilterSection = ({ requiredTools }) => {
 
     const scrutinizedUser = useSelector(state => state.scrutinyUserReducer); // to get token
 
-    const { isAdmin, dbName } = checkAdminGetDbName(scrutinizedUser);
-
     useEffect(() => {
         const collectionName = transactionDate.length == 8
             ? transactionDate
@@ -47,13 +44,8 @@ const FilterSection = ({ requiredTools }) => {
     }, [])
 
     const listTransactions = async (collectionName, transactionDate) => {
-        const acNoTransactionsList = (await axios(`/transactions`,
-            {
-                method: "post",
-                headers: { authorization: `bearer ${scrutinizedUser.token}` },
-                data: { dbName, collectionName, acNo }
-            }
-        ))?.data
+        // Get transactions by A/c no
+        const acNoTransactionsList = await readTransactions(scrutinizedUser, collectionName, acNo);
 
         setTransactions(acNoTransactionsList);
 
