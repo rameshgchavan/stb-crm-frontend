@@ -5,7 +5,9 @@ import ForgotPassword from "../components/security/ForgotPassword";
 import Login from '../components/security/Login';
 import PageNotFound from "../pages/PageNotFound";
 
-const PublicRoutes = (
+// This routes used by pageRoutes/index.js
+// Initialized public routes and exported
+const publicRoutes = (
     <Route>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
@@ -14,4 +16,4 @@ const PublicRoutes = (
     </Route>
 )
 
-export default PublicRoutes
+export default publicRoutes

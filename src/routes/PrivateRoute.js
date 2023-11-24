@@ -1,14 +1,11 @@
 import { Outlet, Navigate } from "react-router-dom"
-import { useSelector } from 'react-redux';
 
-const PrivateRoute = () => {
-    const scrutinizedUser = useSelector(state => state.scrutinyUserReducer);
-    JSON.stringify(scrutinizedUser);
+// This function called by filterRoutes/index.js and pageRoutes/index.js
+const privateRoute = (scrutinizedUser) => {
     return (
-        <div>
-            {scrutinizedUser.token ? <Outlet /> : <Navigate to="/login" />}
-        </div>
+        // If user logged successfully then let pass routes through oulet else navigate to login route
+        scrutinizedUser.token ? <Outlet /> : <Navigate to="/login" />
     )
 }
 
-export default PrivateRoute
+export default privateRoute
