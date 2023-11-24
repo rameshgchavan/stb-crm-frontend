@@ -10,6 +10,8 @@ import { DateTime } from 'luxon';
 import { readCustomers } from '../../crudAPIs/customersAPIs';
 import { readUsers, readUser, updateUser } from '../../crudAPIs/usersAPIs';
 
+// This component used by routes/PublicRoutes
+// This component checks user credentials
 const Login = () => {
     const emailID = useRef(null);
     const password = useRef(null);
@@ -24,6 +26,7 @@ const Login = () => {
         await updateUser(user, id, object)
     }
 
+    // This function called on form's submit button (Login) clicked
     const handleLogin = async (e) => {
         e.preventDefault();
 

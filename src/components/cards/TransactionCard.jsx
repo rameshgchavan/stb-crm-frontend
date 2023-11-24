@@ -9,7 +9,9 @@ import { useState } from "react";
 import CustomerModal from "../modals/CustomerModal";
 import PackageModal from "../modals/PackageModal";
 
+// This component shows transaction details and used by pages/TrasactionsPage
 const TransactionCard = ({ transaction, srNo }) => {
+    // Initialized state varibles
     const [customerModalShow, setCustomerModalShow] = useState(false);
     const [packageModalShow, setPackageModalShow] = useState(false);
 
@@ -22,6 +24,7 @@ const TransactionCard = ({ transaction, srNo }) => {
         AcNo: acNo
     } = transaction;
 
+    //  Initialized customers data
     const id = transaction?.Customer?._id;
     const name = transaction?.Customer?.CustName;
     const area = transaction?.Customer?.Area;
@@ -31,6 +34,7 @@ const TransactionCard = ({ transaction, srNo }) => {
     const areaPerson = transaction?.Customer?.AreaPerson;
     const areaManager = transaction?.Customer?.AreaManager;
 
+    // Variable stores text to copy to clipboard
     const copyToShare = `*Name:* ${name}
 *Area:* ${area}
 *Mobile:* ${mobile}
@@ -41,6 +45,7 @@ const TransactionCard = ({ transaction, srNo }) => {
 
     return (
         <>
+            {/* Card */}
             <Form >
                 <FormGroup className="border rounded shadow px-3 py-2 mb-3" style={{ width: "20rem" }}>
                     <Form.Label className="d-flex justify-content-between fw-bold">
@@ -103,6 +108,7 @@ const TransactionCard = ({ transaction, srNo }) => {
                 </FormGroup>
             </Form>
 
+            {/* Modal */}
             <CustomerModal
                 showMe={customerModalShow}
                 closeMe={setCustomerModalShow}
@@ -110,6 +116,7 @@ const TransactionCard = ({ transaction, srNo }) => {
                 id={id}
             />
 
+            {/* Modal */}
             <PackageModal
                 showMe={packageModalShow}
                 closeMe={setPackageModalShow}

@@ -11,6 +11,8 @@ import checkAdminGetDbName from "../../../functions/checkAdminGetDbName"
 import { updateCustomerAction } from "../../../redux/actions";
 import { createCustomer, updateCustomer } from "../../../crudAPIs/customersAPIs";
 
+// This component combines customer related components
+// This index component used by modals/CustomerModal
 const CustomerForm = ({ id }) => {
     const customerForm = useRef();
     const action = useRef("Save");
@@ -21,11 +23,9 @@ const CustomerForm = ({ id }) => {
 
     const { isAdmin } = checkAdminGetDbName(scrutinizedUser);
 
-    // Note: data: filteredCustomers is not object key value pair
-    // data: filteredCustomers <-- here  filteredCustomers is alias of data
-    // const { data: filteredCustomers } = useSelector(state => state.customersFilterationReducer);
-
+    // Got customer list from redux store
     const customersList = useSelector(state => state.customersListReducer)?.data;
+
     // To count Names those already exist in database
     const countName = (name) => {
         const names = customersList.filter((customer) => {
@@ -35,7 +35,8 @@ const CustomerForm = ({ id }) => {
         return (names.length + 1);
     };
 
-    // To get data from Form Controls
+    // This function get data from Form Controls
+    // This function called by on form submit button (Save or Update) clicked
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -78,6 +79,8 @@ const CustomerForm = ({ id }) => {
         action.current === "Update" && handleUpdate(customerData);
     }
 
+    // This function saves customer's and stb's details to database
+    // This function called by handleSubmit function
     const handleSave = async (customerData) => {
         // Save a customer data
         const response = await createCustomer(scrutinizedUser, customerData);
@@ -92,6 +95,8 @@ const CustomerForm = ({ id }) => {
             customerForm.current.reset(); // To empty Form controls
     }
 
+    // This function update customer's and stb's details in database
+    // This function called by handleSubmit function
     const handleUpdate = async (customerData) => {
         // Update a customer data
         const response = await updateCustomer(scrutinizedUser, customerData, id);

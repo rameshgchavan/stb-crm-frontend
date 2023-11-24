@@ -1,6 +1,7 @@
 import CustomerForm from "../forms/customerForm";
 import { Modal } from "react-bootstrap";
 
+// This component used by pages/CustomersPage, cards/CustomerCard and cards/TransactionCard
 const CustomerModal = ({ showMe, closeMe, title, id }) => {
     if (!showMe) return null;
 

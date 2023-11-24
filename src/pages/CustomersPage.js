@@ -1,11 +1,14 @@
 import { Button } from "react-bootstrap";
-import {  useState } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 
 import CustomerCard from "../components/cards/CustomerCard";
 import CustomerModal from "../components/modals/CustomerModal";
 
+// This page used by routes/PagesRoutes
+// This page shows Customers cards
 const CustomersPage = () => {
+    // Get customer list form redux store
     const customersList = useSelector(state => state.customersListReducer)?.data;
 
     const [customerModalShow, setCustomerModalShow] = useState(false);

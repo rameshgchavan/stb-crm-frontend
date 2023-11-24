@@ -1,6 +1,7 @@
 import { Form, FormGroup } from "react-bootstrap";
-import { object } from "yup";
 
+// This component used by index.js
+// This component is part of customer form and holds seed details of STBs
 const SeedSection = ({ customersList, seed }) => {
     const {
         isFree,
@@ -10,10 +11,12 @@ const SeedSection = ({ customersList, seed }) => {
         remark
     } = seed;
 
+    // Filtered unique areas or persons form customer list
     const uniqueAreaPersons = customersList.filter((customers, index, array) => {
         return array.findIndex(object => object.AreaPerson == customers.AreaPerson) == index
     });
 
+    // Filtered unique area managers form customer list
     const uniqueAreaManagers = customersList.filter((customers, index, array) => {
         return array.findIndex(object => object.AreaManager === customers.AreaManager) === index
     });

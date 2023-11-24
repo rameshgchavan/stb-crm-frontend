@@ -4,6 +4,8 @@ import UserCard from "../components/cards/UserCard"
 import { readUsers, updateUser } from "../crudAPIs/usersAPIs";
 import { listUsersAction } from "../redux/actions";
 
+// This page used by routes/PagesRoutes
+// This page shows User cards
 const UsersPage = () => {
     const scrutinizedUser = useSelector(state => state.scrutinyUserReducer);
     const { userStatus, userName } = useSelector(state => state.filterUsersReducer);

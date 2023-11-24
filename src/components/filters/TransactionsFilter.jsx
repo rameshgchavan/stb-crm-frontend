@@ -12,17 +12,22 @@ import {
 
 import getSummarizedTransactionsByType from "../../functions/transactions/getSummarizedTransactionsByType";
 
+/*This component filters transaction data as user choice*/
+// This component is used in routes/FilterRoutes
 const TransactionsFilter = () => {
     const dispatch = useDispatch();
 
+    // Initialized pagination data
     const cardsPerPage = useRef(12);
     const [currentPage, setCurrentPage] = useState(1);
     const lastPage = useRef(1);
     const firtCardIndex = useRef(0);
     const lastCardIndex = useRef(cardsPerPage.current);
 
+    // Getting and initialized user seletion from local storage
     const [filterSetting, setFilterSetting] = useState(JSON.parse(localStorage.getItem("FilterSetting")));
 
+    // Initialized select option values
     const selectedDay = useRef(
         filterSetting?.transDay ||
         "All"
@@ -43,6 +48,7 @@ const TransactionsFilter = () => {
 
     const searchedName = useRef("");
 
+    // Initialized array of days
     const dayList = [];
     for (let day = 1; day <= 31; day++) {
         if (day < 10) {
@@ -51,6 +57,7 @@ const TransactionsFilter = () => {
         else dayList.push(day);
     }
 
+    // Initialized array of months
     const monthsList = [
         { MMM: "Jan", MM: "01" }, { MMM: "Feb", MM: "02" },
         { MMM: "Mar", MM: "03" }, { MMM: "Apr", MM: "04" },
@@ -60,19 +67,24 @@ const TransactionsFilter = () => {
         { MMM: "Nov", MM: "11" }, { MMM: "Dec", MM: "12" }
     ];
 
+    // Initialized array of years and pushed year form 2022 to current year
     const yearsList = [];
     for (let year = DateTime.now().year; year >= 2022; year--) {
         yearsList.push(year);
     }
 
+    /* Get customers list, transactions summery, filtered summerized transactions 
+    and scrutinized user from redux store*/
     const customersList = useSelector(state => state.customersListReducer)?.data;
     const transacionsSummary = useSelector(state => state.transactionsSummaryReducer)?.data;
     const filteredSummarizedTtransactions = useSelector(state => state.summarizedTransactionsFilterationReducer)?.data;
     const scrutinizedUser = useSelector(state => state.scrutinyUserReducer);
 
+    // Checked and initialized. Is user admin or not.
     const { Admin, Name: userName } = scrutinizedUser;
     const isAdmin = Admin === "self" || Admin === "stb-crm" ? true : false;
 
+    // Initialized select option valuess
     const areaManager = useRef(
         isAdmin
             ? filterSetting?.transAreaManager || "All"
@@ -87,6 +99,7 @@ const TransactionsFilter = () => {
         filterTransactions(true);
     }, [])
 
+    // This function is called in option element to list area managers
     const listAreaManagers = () => {
         const areaManagers = customersList?.filter((customer, index, array) => {
             return array.findIndex(object =>
@@ -97,6 +110,7 @@ const TransactionsFilter = () => {
         return areaManagers
     };
 
+    // This function is called in option element to list area or persons
     const listAreaPersons = () => {
         const areaPersons = customersList?.filter(customer =>
             areaManager.current !== "All"
@@ -112,27 +126,35 @@ const TransactionsFilter = () => {
         return areaPersons
     };
 
+    // This function summerizes transaction and called by filterTransactions functions
     const getSummarizedTransactions = async () => {
         const yearMonth = `${selectedYear.current}-${selectedMonth.current}`;
 
+        // Update loading value to redux store using redux action to show Loading...
         dispatch(loadingAction());
 
         const summarizedTransactionsByType = await getSummarizedTransactionsByType(scrutinizedUser, customersList, yearMonth, selectedType.current);
 
+        // Update summerized data to redux store by using redux actions
         dispatch(
             summarizeTransactionsAction(summarizedTransactionsByType)
         )
 
+        // Update loading value to redux store using redux action to hide Loading...
         dispatch(loadedAction());
 
         return summarizedTransactionsByType;
     }
 
+    // This function filters transaction data as user choice
+    // This function used by useEffect
     const filterTransactions = async (transactions = false) => {
+        // Initialized summerized transactions data
         const summarizedTransactions = !transactions
             ? await getSummarizedTransactions()
             : transacionsSummary;
 
+        // filter and return transaction data
         const filteredData = summarizedTransactions
             ?.filter((transaction, index) => {
                 // console.warn(DateTime.fromRFC2822(`${selectedDay.current} ${selectedMonth.current} ${selectedYear.current} 00:00 Z`).plus({ months: 1 }).toISODate());
@@ -166,18 +188,24 @@ const TransactionsFilter = () => {
                     || transaction.Customer?.STB_SN.toLowerCase().includes(searchedName.current.toLowerCase());
             });
 
+        // Update filtered summerized transaction to redux store using redux action
         dispatch(filterSummarizedTransactionsAction(filteredData));
 
         setCurrentPage(1);
 
+        // Send filtered transactions to slice
         sliceTransactions(filteredData);
     };
 
+    // This function slice filterd transactions data and send to redux store
+    // This function called by filterTransactions and handlePagination functions
     const sliceTransactions = (filteredData, curPage = 1) => {
+        // Set up index for pages
         lastCardIndex.current = curPage * cardsPerPage.current;
         firtCardIndex.current = lastCardIndex.current - cardsPerPage.current;
         lastPage.current = Math.ceil(filteredData?.length / cardsPerPage.current)
 
+        // Updating sliced data to redux store using redux action
         dispatch(
             sliceFilteredTransactionsAction(
                 filteredData?.slice(firtCardIndex.current, lastCardIndex.current),
@@ -186,6 +214,8 @@ const TransactionsFilter = () => {
         );
     }
 
+    // This function calls sliceTransactions and setCurrentPage functions
+    // This function used by pagination element (buttons) to move on first, last, next and pre page
     const handlePagination = (pageNo) => {
         sliceTransactions(filteredSummarizedTtransactions, pageNo);
         setCurrentPage(pageNo);
@@ -195,6 +225,7 @@ const TransactionsFilter = () => {
         <Container className="bg-secondary shadow rounded-bottom">
             <Form className="py-1">
                 <div className="d-lg-flex justify-content-between align-items-start">
+                    {/* Transaction type, year and month */}
                     <FormGroup className="d-flex col-lg-4">
                         <Form.Select name="type" defaultValue={selectedType.current}
                             onChange={(e) => {
@@ -259,9 +290,9 @@ const TransactionsFilter = () => {
                             onClick={() => { filterTransactions(); }}>
                             Go
                         </Button>
-
                     </FormGroup>
 
+                    {/* Day, Area Manager and Area or Person */}
                     <FormGroup className={`d-flex align-items-start ${isAdmin ? "col-lg-4" : "col-lg-3"}`}>
                         <Form.Select name="day" defaultValue={selectedDay.current}
                             style={{ width: "5rem" }}
@@ -335,6 +366,7 @@ const TransactionsFilter = () => {
                         </Form.Select>
                     </FormGroup>
 
+                    {/* Type and search */}
                     <FormGroup size="sm" className="d-flex mt-lg-0 mt-1 align-items-start">
                         <Form.Control type="text"
                             placeholder="Type and search"
@@ -345,6 +377,7 @@ const TransactionsFilter = () => {
                     </FormGroup>
                 </div>
 
+                {/* Page Navigation buttons */}
                 {filteredSummarizedTtransactions?.length > cardsPerPage.current &&
                     <FormGroup className="mt-2 d-flex justify-content-center align-items-start">
                         {currentPage > 1 && <ButtonGroup size="sm">

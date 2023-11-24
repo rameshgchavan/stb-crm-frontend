@@ -1,6 +1,8 @@
 import { Form, FormGroup } from "react-bootstrap";
 import { useSelector } from "react-redux";
 
+// This component used by customerForm/index.js
+// This component is part of customer form and holds customer details
 const CustomerSection = ({ customer }) => {
     const customersList = useSelector(state => state.customersListReducer)?.data;
 

@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Form, FormGroup } from "react-bootstrap";
 
+// This component used by index.js
+// This component is part of customer form and holds STBs details
 const STBSection = ({ stb }) => {
     const {
         status, state, location,
@@ -9,20 +11,24 @@ const STBSection = ({ stb }) => {
         nds_No, vc_Nds_Mac_ID, lcoCode
     } = stb;
 
+    // Initailized STB status object
     const statusOptions = {
         ACTIVE: ["", "Allocated"],
         SUSPEND: ["", "Allocated", "Faulty", "Return"],
         DISCONNECT: ["", "Faulty", "Good", "Return"],
     }
 
+    // Initailized STB type array
     const typeOptions = [
         "", "NEW", "REPAIRED", "SAME-LINE",
         "SAME-CITY", "OUT-LINE", "OUT-CITY",
         "OUT-DIST", "OUT-STATE"
     ]
 
+    // Initailized STB location array
     const locationOptions = ["LEFTOUT", "OUTGONE"]
 
+    // Defined and initailized states
     const [selectedStatus, setSelectedStatus] = useState(status);
     const [selectedType, setSelectedType] = useState(type);
     const [selectedState, setSelectedState] = useState(state || "Allocated");

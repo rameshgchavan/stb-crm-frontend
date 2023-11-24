@@ -4,6 +4,8 @@ import { useSelector } from 'react-redux';
 import { DateTime } from 'luxon';
 import { useReactToPrint } from 'react-to-print';
 
+// This component used by pages/TransactionsPage
+// This component show print preview, save as pdf or print the transactions
 const TransactionsPrint = () => {
     let totalBill = 0;
     let totalLCOPrice = 0;
@@ -13,9 +15,12 @@ const TransactionsPrint = () => {
     const [lastDate, setLastDate] = useState(false);
     const [lcoPrice, setLCOPrice] = useState(false);
 
+    // Get filtered summerized transactions from redux store
     const filteredSummarizedTransactions =
         useSelector(state => state.summarizedTransactionsFilterationReducer)?.data;
 
+    // This function called on print button clicked
+    // This function passes form data to print-to-react library
     const handlePrint = useReactToPrint({
         content: () => tableRef.current,
         documentTitle: "Transactions",
@@ -25,6 +30,7 @@ const TransactionsPrint = () => {
     return (
         <Container>
             <div className="d-flex justify-content-around align-items-center text-start border rounded">
+                {/* Check boxes */}
                 <Form.Group className="d-flex justify-content-start align-items-center">
                     <Form.Check variant="outline-primary" type="checkbox" name="rcDate" label="Rechage Date"
                         defaultChecked

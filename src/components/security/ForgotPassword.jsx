@@ -6,6 +6,8 @@ import { useNavigate } from 'react-router-dom';
 import { useRef, useState } from 'react';
 import { readUserEmail, updateUserPassword } from '../../crudAPIs/usersAPIs';
 
+// This component used by routes/PublicRoutes
+// This component reset user login password
 const ForgotPassword = () => {
     const [disabled, setDidsabled] = useState(false);
     const [hidden, setHidden] = useState(true);
@@ -21,6 +23,8 @@ const ForgotPassword = () => {
 
     const navigate = useNavigate();
 
+    // This function called on check emails and send OTP form's submit button (Send OTP) cliked
+    // This function varifies the user enterd emails id in database
     const sendEmail = async (e) => {
         e.preventDefault();
 
@@ -45,6 +49,8 @@ const ForgotPassword = () => {
         else { alert(isEmail) }
     };
 
+     // This function called on reset password form's submit button (Reset) cliked
+    // This function varifies passwords and OTPs and updated password in database
     const handleReset = async (e) => {
         e.preventDefault();
 
@@ -75,6 +81,7 @@ const ForgotPassword = () => {
 
     return (
         <Container style={{ width: "22rem" }} className='border px-4 pt-2 pb-4 shadow' >
+           {/* Close button */}
             <div className="d-flex flex-column">
                 <Button variant="danger" size='sm'
                     className="flex-direction: column align-self-end rounded"
@@ -82,6 +89,8 @@ const ForgotPassword = () => {
                 >X</Button>
             </div>
             <hr />
+
+            {/* Check Emails and send OTP */}
             <Form ref={otpForm} onSubmit={sendEmail}>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Text className="text-muted">
@@ -102,6 +111,7 @@ const ForgotPassword = () => {
                 </Form.Group>
             </Form>
 
+            {/* Reset password */}
             <Form onSubmit={handleReset} className='mt-3' hidden={hidden}>
                 <Form.Group className="my-3" controlId="formBasicOTP">
                     <Form.Text className="text-muted">

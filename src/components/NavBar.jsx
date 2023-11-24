@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { authenticateUserAction } from "../redux/actions"
 
+// This component used in components/Header.jsx
+// This component shows page navigation links
 const NavBar = () => {
     const scrutinizedUser = useSelector(reducers => reducers.scrutinyUserReducer);
 

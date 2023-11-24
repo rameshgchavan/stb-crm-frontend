@@ -1,5 +1,6 @@
 import { DateTime } from "luxon";
 
+// This component shows bouquet details and used by forms/packageForm/PackageSection 
 const PackageCard = ({ bouquet }) => {
     return (
         <div name="bouquet" className="d-lg-flex justify-content-between p-2 mb-1 text-lg-start">

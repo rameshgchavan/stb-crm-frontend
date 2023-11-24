@@ -1,6 +1,7 @@
 import PackageForm from "../forms/packageForm";
 import { Modal } from "react-bootstrap";
 
+// This component used by cards/CustomerCard and cards/TransactionCard
 const PackageModal = ({ showMe, closeMe, title, acNo, transactionDate }) => {
     if (!showMe) return null;
 

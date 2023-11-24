@@ -1,6 +1,8 @@
 import { Button } from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
 
+// This page used by routes/PagesRoutes
+// This page navigate to home route if path maltyped
 const PageNotFound = () => {
     const navigate = useNavigate();
 

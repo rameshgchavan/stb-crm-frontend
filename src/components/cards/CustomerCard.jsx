@@ -7,15 +7,16 @@ import { FaWhatsappSquare } from "react-icons/fa"
 import { MdReadMore } from "react-icons/md"
 import { SiBookstack } from "react-icons/si"
 import CustomerModal from "../modals/CustomerModal";
-import { useState } from "react";
 import PackageModal from "../modals/PackageModal";
+import { useState } from "react";
 
-
+// This component shows customer's details and used by pages/CustomersPage 
 const CustomerCard = ({ customer, srNo }) => {
+    // Initialized state varibles
     const [customerModalShow, setCustomerModalShow] = useState(false);
     const [packageModalShow, setPackageModalShow] = useState(false);
 
-    // Destructured and put aliases. Here srNo is an alias of SrNo
+    // Destructured and put aliases. Here name is an alias of CustName
     // Its not an object of key value pair.
     const {
         _id: id,
@@ -32,6 +33,7 @@ const CustomerCard = ({ customer, srNo }) => {
         AreaPerson: areaPerson,
     } = customer;
 
+    // Variable stores text to copy to clipboard
     const copyToShare = `*Name:* ${name}
 *Area:* ${area}
 *Mobile:* ${mobile}
@@ -42,6 +44,7 @@ const CustomerCard = ({ customer, srNo }) => {
 
     return (
         <>
+            {/* Card */}
             <Form >
                 <Form.Group className="border rounded shadow px-3 py-2 mb-3" style={{ width: "20rem" }}>
                     <Form.Label className="d-flex justify-content-between fw-bold">
@@ -105,13 +108,14 @@ const CustomerCard = ({ customer, srNo }) => {
                 </Form.Group>
             </Form>
 
+            {/* Modal*/}
             <CustomerModal
                 showMe={customerModalShow}
                 closeMe={setCustomerModalShow}
                 title={`ID: ${id}`}
                 id={id}
             />
-
+            {/* Modal */}
             <PackageModal
                 showMe={packageModalShow}
                 closeMe={setPackageModalShow}

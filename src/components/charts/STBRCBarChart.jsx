@@ -5,24 +5,29 @@ import { Form } from "react-bootstrap";
 import { DateTime } from "luxon";
 import { readTransactionsAcNosOfYear } from "../../crudAPIs/transactionsAPIs";
 
+// This component shows bar chart of statistics of transaction's of a year and used by pages/StatisticsPage
 const STBRCBarChart = () => {
+    // Get customer list and scrutinized user from redux store
     const customersList = useSelector(state => state.customersListReducer)?.data;
     const scrutinizedUser = useSelector(state => state.scrutinyUserReducer); // to get token
 
+    // Array to store months name
     const monthsList = [
         "Jan", "Feb", "Mar", "Apr",
         "May", "Jun", "Jul", "Aug",
         "Sep", "Oct", "Nov", "Dec"
     ];
 
+    // Initialized array and pushed years into it form 2022 to current year
     const yearsList = [];
-
     for (let year = DateTime.now().year; year >= 2022; year--) {
         yearsList.push(year);
     }
 
+    // Variable to store current year
     const yearOptions = useRef(DateTime.now().toFormat("yyyy"));
 
+    // Initialized chart data
     const [stbData, setSTBData] = useState({
         paidSTBs: {
             labels: [],
@@ -44,10 +49,14 @@ const STBRCBarChart = () => {
         listTransactions();
     }, [])
 
+    /* This function get transaction list and set length of 
+     filtered transaction data into chart data*/
+    // This function is called on component load
     const listTransactions = async () => {
-        // Get all months(Jan to Dec) transactions a/c no of given year
+        // Get all month's (Jan to Dec) transactions a/c no of given year
         const acNoData = await readTransactionsAcNosOfYear(scrutinizedUser, yearOptions.current);
 
+        // Map and filter free stb data 
         const freeSTBData = await acNoData.map((acNoList) => {
             return acNoList.map((acNos) => {
                 //Populated customer for transactions 
@@ -66,6 +75,7 @@ const STBRCBarChart = () => {
             }).filter((sorted) => sorted.IsFree === true);
         });
 
+        // Set sorted data for chart
         setSTBData({
             paidSTBs: {
                 labels: monthsList,
@@ -99,6 +109,7 @@ const STBRCBarChart = () => {
     return (
         <>
             <div style={{ position: "relative", width: "80vw", margin: "auto" }}>
+                {/* Year element */}
                 <Form.Select name="year" defaultValue={yearOptions.current} style={{ width: "100px" }}
                     onChange={(e) => {
                         yearOptions.current = e.target.value;
@@ -111,9 +122,12 @@ const STBRCBarChart = () => {
                 </Form.Select>
             </div>
 
+            {/*  Bar chart of paid STBs*/}
             <div style={{ position: "relative", height: "50vh", width: "80vw", margin: "auto" }} >
                 <Bar data={stbData.paidSTBs} options={options} />
             </div >
+
+            {/*  Bar chart of free STBs*/}
             <div style={{ position: "relative", height: "20vh", width: "80vw", margin: "auto" }} >
                 <Bar data={stbData.freeSTBs} options={options} />
             </div >

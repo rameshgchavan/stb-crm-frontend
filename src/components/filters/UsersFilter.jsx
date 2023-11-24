@@ -3,6 +3,8 @@ import { useDispatch } from "react-redux";
 import { setUserStatusAction, searchUserAction } from "../../redux/actions";
 import { useRef } from "react";
 
+/*This component filters users */
+// This component is used in routes/FilterRoutes
 const UsersFilter = () => {
     const dispatch = useDispatch();
     const userName = useRef();
@@ -10,6 +12,7 @@ const UsersFilter = () => {
     return (
         <Container className="bg-secondary shadow rounded-bottom">
             <Form className="d-md-flex justify-content-around py-1">
+                {/* Choice buttons */}
                 <ButtonGroup size="sm">
                     <Button variant="warning"
                         onClick={() => { dispatch(setUserStatusAction("pending")) }}
@@ -24,6 +27,7 @@ const UsersFilter = () => {
                     >Blocked</Button>
                 </ButtonGroup>
 
+                {/* Type and search */}
                 <FormGroup className="d-flex mt-xl-0 mt-1">
                     <Form.Control type="text"
                         onChange={(e) => { userName.current = e.target.value }}

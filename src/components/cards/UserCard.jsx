@@ -1,7 +1,9 @@
 import { useRef } from "react";
 import { Button, ButtonGroup, Container, Form } from "react-bootstrap"
 
+// This component shows user details and used by pages/UsersPage
 const UserCard = ({ userInfo }) => {
+    // Destructured userInfo
     const { user, userStatus, updateStatus } = userInfo;
     const userName = useRef(user.Name);
 
@@ -20,7 +22,6 @@ const UserCard = ({ userInfo }) => {
                                 <Form.Text className="fw-bold">Last Login: {user.LastLogin}</Form.Text>
                             }
                         </Form.Floating>
-
 
                         {userStatus == "approved" &&
                             <Button variant="primary" className="mt-2"

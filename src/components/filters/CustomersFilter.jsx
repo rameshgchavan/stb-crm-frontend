@@ -4,9 +4,12 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { filterCustomersAction } from "../../redux/actions";
 
+/*This component filters customer data as user choice*/
+// This component is used in routes/FilterRoutes
 const CustomersFilter = () => {
     const dispatch = useDispatch();
 
+    // Initialized pagination data
     const cardsPerPage = useRef(12);
     const [currentPage, setCurrentPage] = useState(1);
     const lastPage = useRef(1);
@@ -17,14 +20,18 @@ const CustomersFilter = () => {
 
     const [filteredCustomres, setFilteredCutomers] = useState();
 
+    // Get customers list and scrutinized user 
     const customersList = useSelector(state => state.customersListReducer)?.data;
     const scrutinizedUser = useSelector(state => state.scrutinyUserReducer);
 
+    // Checked and initialized. Is user admin or not.  
     const { Admin, Name: userName } = scrutinizedUser;
     const isAdmin = Admin === "self" || Admin === "stb-crm" ? true : false;
 
+    // Getting and initialized user seletion from local storage
     const [filterSetting, setFilterSetting] = useState(JSON.parse(localStorage.getItem("FilterSetting")));
 
+    // Initialized check box values
     const location = useRef(
         filterSetting?.custLocation ||
         "INLINE"
@@ -43,7 +50,9 @@ const CustomersFilter = () => {
         filterCustomers();
     }, [customersList === undefined])
 
+    // This function is called in option element to list area managers
     const listAreaManagers = () => {
+        // Filter and return area managers
         const areaManagers = customersList?.filter((customer, index, array) => {
             return array.findIndex(object =>
                 object.AreaManager === customer.AreaManager
@@ -53,7 +62,9 @@ const CustomersFilter = () => {
         return areaManagers
     };
 
+    // This function is called in option element to list area or persons
     const listAreaPersons = () => {
+        // Filter and rerutn area or persons
         const areaPersons = customersList?.filter(customer =>
             areaManager.current !== "All"
                 ? customer.AreaManager === areaManager.current
@@ -68,9 +79,13 @@ const CustomersFilter = () => {
         return areaPersons
     };
 
+    // This function filters customer data as user choice
+    // This function used by useEffect
     const filterCustomers = () => {
+        // Initialized data varible
         let filteredData;
 
+        // Check customer location, filter and return customer data
         if (location.current === "INLINE") {
             filteredData = customersList
                 ?.filter((customer, index) => {
@@ -156,17 +171,23 @@ const CustomersFilter = () => {
                 });
         }
 
+        // Set filtered customer data to state
         setFilteredCutomers(filteredData);
         setCurrentPage(1);
 
+        // Send filtered customer to slice
         sliceCustomers(filteredData);
     };
 
+    // This function slice filterd cutomers data and send to redux store
+    // This function called by filterCustomers and handlePagination functions
     const sliceCustomers = (filteredData, curPage = 1) => {
+        // Set up index for pages
         lastCardIndex.current = curPage * cardsPerPage.current;
         firtCardIndex.current = lastCardIndex.current - cardsPerPage.current;
         lastPage.current = Math.ceil(filteredData?.length / cardsPerPage.current)
 
+        // Updating sliced data to redux store using redux action
         dispatch(
             filterCustomersAction(
                 filteredData?.slice(firtCardIndex.current, lastCardIndex.current),
@@ -175,8 +196,12 @@ const CustomersFilter = () => {
         );
     }
 
+    // This function calls sliceCustomers and setCurrentPage functions
+    // This function used by pagination element (buttons) to move on first, last, next and pre page
     const handlePagination = (pageNo) => {
         sliceCustomers(filteredCustomres, pageNo);
+
+        // set current page no to state
         setCurrentPage(pageNo);
     }
 
@@ -184,6 +209,7 @@ const CustomersFilter = () => {
         <Container className="bg-secondary shadow rounded-bottom">
             <Form className="py-1">
                 <div className="d-lg-flex justify-content-between align-items-start">
+                    {/* Check boxes */}
                     <FormGroup className="d-flex flex-wrap gap-2 text-start">
                         <Form.Check variant="outline-success" type="radio" name="stbs" label="INLINE"
                             className="me-sm-3 text-warning fw-bold"
@@ -262,6 +288,7 @@ const CustomersFilter = () => {
                         />
                     </FormGroup>
 
+                    {/* Select options */}
                     <FormGroup className={`d-flex align-items-start ${isAdmin ? "col-lg-4" : "col-lg-3"}`}>
                         {isAdmin &&
                             <Form.Select name="areaManager" defaultValue={areaManager.current}
@@ -311,6 +338,7 @@ const CustomersFilter = () => {
                         </Form.Select>
                     </FormGroup>
 
+                    {/* Type and search */}
                     <FormGroup size="sm" className="d-flex mt-xl-0 mt-1 align-items-start">
                         <Form.Control type="text"
                             placeholder="Type and search"
@@ -321,6 +349,7 @@ const CustomersFilter = () => {
                     </FormGroup>
                 </div>
 
+                {/* Page Navigation buttons */}
                 {filteredCustomres?.length > cardsPerPage.current &&
                     <FormGroup className="mt-2 d-flex justify-content-center align-items-start">
                         {currentPage > 1 && <ButtonGroup size="sm">

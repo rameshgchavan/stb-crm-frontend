@@ -3,6 +3,8 @@ import { FormGroup } from "react-bootstrap";
 import FilterSection from "./FilterSection";
 import PackageCard from "../../cards/PackageCard";
 
+// This component used by packegeForm/index.js
+// This component is part of package form and holds bouquet details
 const PackageSection = ({ acNo, transactionDate }) => {
     const [bouquet, setBouquet] = useState();
 

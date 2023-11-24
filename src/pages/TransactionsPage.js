@@ -6,6 +6,8 @@ import { Button } from "react-bootstrap";
 import TransactionCard from "../components/cards/TransactionCard";
 import TransactionsPrint from "../components/prints/TransactionsPrint";
 
+// This page used by routes/PagesRoutes
+// This page shows Transaction cards and toggle to print component
 const TransactionsPage = () => {
     const [showPreview, setShowPreview] = useState(false);
 
