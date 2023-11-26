@@ -1,4 +1,17 @@
-# stb-crm-frontend
+## Set Top Boxes and Cutomers Relationship Management Web App
+
+### About App
+This app manages relationship between set top boxes and customers. It let the user enter, update, remove and show set top box as well customter details over the time. This is a responsive UI so user can access this app on Computer, Tab and Mobile as well.
+
+### Project description
+- This project has developed by using react js and devided into mudules which contains jsx componets, react routes, react redux, custom functions, navigation pages, axios crud apis.
+- Component folder again devided into modules cards, charts, filters, forms, modals, prints and security.
+- Project folders and files structure looks like as shown in following image.
+
+![image](https://github.com/rameshgchavan/stb-crm-frontend/assets/109573381/15cba04c-326e-4a29-94e6-480d18178021)
+
+### ./src/`components`/`cards`/
+- #### `CustomerCard.jsx`
 
 ### Step to create project on local machine
 1. create: stb-crm-project folder into your drive
