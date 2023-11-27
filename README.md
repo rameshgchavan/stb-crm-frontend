@@ -10,28 +10,35 @@ This app manages relationship between set top boxes and customers. It let the us
 
 ![image](https://github.com/rameshgchavan/stb-crm-frontend/assets/109573381/15cba04c-326e-4a29-94e6-480d18178021)
 
-### ./src/`components`/`cards`/
-- #### `CustomerCard.jsx`
+### ./src/`components`
+- #### /`cards`/`CustomerCard.jsx`
 This component shows customer details and has three buttons, 
 1. Yellow Booksatck button: On clicking this button it shows PackageModal
 2. WhatsappSquare button: On clicking this button it copies the customer details to clipboard
 3. ReadMore button: On clicking this button it shows CusomterModal
 
-- #### `TransactioCard.jsx`
+- #### /`cards`/`TransactioCard.jsx`
 This component shows customer details and has three buttons, 
 1. Yellow Rupees button: On clicking this button it shows PackageModal
 2. WhatsappSquare button: On clicking this button it copies the customer details to clipboard
 3. ReadMore button: On clicking this button it shows CusomterModal
 
-- #### `PackageCard.jsx`
+- #### /`cards`/`PackageCard.jsx`
 This component has devided in three sections
 1. customer details section: shows customer details
 2. filter section: filters month and year and list dates if any transaction found
 3. bouquet details section: shows details of transactions
 
-- #### `UserCard.jsx`
+- #### /`cards`/`UserCard.jsx`
 This component shows user name and last login date and time. It has two buttons 'Rename' and 'Block'
 
+- #### /`charts`/`STBPieChart.jsx`
+This component shows statistics graph of customers in form of pie chart
+
+- ####  /`charts`/`STBRCBarChart.jsx`
+This component shows statistics graph of transactions of a selected year in form of bar chart. This shows two bar charts
+1. Bar chart of paid STBs
+2. Bar chart of free STBs
 
 ### Step to create project on local machine
 1. create: stb-crm-project folder into your drive
