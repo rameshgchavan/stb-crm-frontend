@@ -128,6 +128,11 @@ This is a parent component in app.
 - This renders Header component (has a filter component as child component) and
 - Renders a routed page components (CustomersPage or TransactionsPage or UsersPage or StatisticsPage or PageNotFound)
 
+### ./src/`index.js`
+This is a entry file of app.
+- This file renders App.js component that has wrapped in HashRouter and Redux Store (Provider)
+- In this file I have imported bootstrap css and js modules. 
+
 ### Step to create project on local machine
 1. create: stb-crm-project folder into your drive
 2. type: "cmd" in folder address bar and hit enter. Command prompt will open
