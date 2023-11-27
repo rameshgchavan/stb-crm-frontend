@@ -4,7 +4,7 @@
 This app manages relationship between set top boxes and customers. It let the user enter, update, remove and show set top box as well customter details over the time. This is a responsive UI so user can access this app on Computer, Tab and Mobile as well.
 #
 
-### Rroject status
+### Project status
 Updating on users feedbacks.
 #
 
