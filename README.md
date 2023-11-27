@@ -114,6 +114,15 @@ This page renders number of CustomerCard as number of customers, it has New butt
 - #### /`TransactionsPage.js`
 This page renders number of TransactionCard as number of summerized transaction found on perticular date and time, it has a toggle button Show/Hide Print Preview, on cliking this button TransactionsPrint component can be show and hide.
 
+- #### /`UsersPage.js`
+This page renders number of UserCard as number of users.
+
+- #### /`StatisticsPage.js`
+This page renders chart components (STBPieChart and STBRCBarChart).
+
+- #### /`PageNotFound.js`
+This page get redirected if route not found.
+
 ### Step to create project on local machine
 1. create: stb-crm-project folder into your drive
 2. type: "cmd" in folder address bar and hit enter. Command prompt will open
