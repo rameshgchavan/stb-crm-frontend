@@ -137,9 +137,9 @@ This is a entry file of app.
 This folder contains transactions, customers and users related functions
 
 ### ./src/`crudAPIs`
-- This folder contains transactions, customers and users related axios HTTP requests (APIs)
-- These APIs are usefull for Create, Read, Update and Delete the requested data in/from database (MongoDb) 
-
+- This folder contains transactions, customers and users related APIs
+- By using axios these APIs sends HTTP requests to backend server to Create, Read Update and Delete the data.
+- And return corresponding response received from backend server.
 
 ### Step to create project on local machine
 1. create: stb-crm-project folder into your drive
