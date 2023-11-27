@@ -81,6 +81,11 @@ This component filters transactions of selected year and month that has chosen b
 
 This shows details of customer, STB and transactions (bouquets)
 
+- #### /`modals`/`CustomerModal.jsx`
+This renders customerForm 
+
+- #### /`modals`/`PackageModal.jsx`
+This renders packageForm 
 
 ### Step to create project on local machine
 1. create: stb-crm-project folder into your drive
