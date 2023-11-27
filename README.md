@@ -48,14 +48,6 @@ Updating on users feedbacks.
 - Type `npm build` to make app build.
 #
 
-### App flow >>
-- On app load Login component will be shown
-- After login Customer page will be default page
-- If user is Admin then shows Customer, Trasaction, Users, Statistics and Logout link in Navabar
-- If user is User (not admin) then show Customer, Trasaction and Logout link in Navabar
-- After Logout Login component will be shown
-#
-
 ### Project description
 - This project has developed by using react.js library and devided into mudules which contains jsx componets, react routes, react redux, custom functions, navigation pages, axios crud apis.
 - Component folder again devided into modules which coantains cards components, charts components, filters components, forms components, modals components, prints components and security components.
@@ -65,6 +57,14 @@ Updating on users feedbacks.
 
 ### Dependencies: 
 ![image](https://github.com/rameshgchavan/stb-crm-frontend/assets/109573381/edbe30e1-981b-4dc1-b363-5087a36a69aa)
+
+### App flow >>
+- On app load Login component will be shown
+- After login Customer page will be default page
+- If user is Admin then shows Customer, Trasaction, Users, Statistics and Logout link in Navabar
+- If user is User (not admin) then show Customer, Trasaction and Logout link in Navabar
+- After Logout Login component will be shown
+#
 
 ### ./src/`components`
 - #### /`cards`/`CustomerCard.jsx`
