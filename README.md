@@ -99,6 +99,9 @@ This is a user registration component, in this user fills his details and if all
 - #### /`security`/`ForgotPassword.jsx`
 This component let registered and approved user to reset password if he forgot or he want to change password.
 
+- #### /`Header.jsx`
+This component renders NavBar component and a routed filter component (CustomersFilter or TransanctionsFilter or UsersFilter) 
+
 ### Step to create project on local machine
 1. create: stb-crm-project folder into your drive
 2. type: "cmd" in folder address bar and hit enter. Command prompt will open
