@@ -4,6 +4,10 @@
 This app manages relationship between set top boxes and customers. It let the user enter, update, remove and show set top box as well customter details over the time. This is a responsive UI so user can access this app on Computer, Tab and Mobile as well.
 #
 
+### Live app link
+[stb-crm](https://stb-crm.cyclic.app/#/login)
+#
+
 ### Prerequisites
 - Download and install [Node.js](https://nodejs.org/en/download)
 - Download and install [Visual Studio Code](https://code.visualstudio.com/download)
@@ -28,6 +32,9 @@ This app manages relationship between set top boxes and customers. It let the us
 ![image](https://github.com/rameshgchavan/stb-crm-frontend/assets/109573381/cbc2228e-4553-4d0b-bbf2-8e58be247050)
 
 8. Type: "code ." and hit enter. Visual Studio Code will open
+#
+
+#### In command prompt type `npm start` to run app on local server in browser.
 #
 
 ### Project description
