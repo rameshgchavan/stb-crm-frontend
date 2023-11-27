@@ -2,6 +2,7 @@
 
 ### About App
 This app manages relationship between set top boxes and customers. It let the user enter, update, remove and show set top box as well customter details over the time. This is a responsive UI so user can access this app on Computer, Tab and Mobile as well.
+#
 
 ### Project description
 - This project has developed by using react js and devided into mudules which contains jsx componets, react routes, react redux, custom functions, navigation pages, axios crud apis.
@@ -156,9 +157,7 @@ These are customers, transactions and users page's routes used in private route
   
 These are customers, transactions and users filter's routes used in private route
 
-##
 ### ./src/`redux`
-##
 - This folder has following folders
 constants, actions, reducers and store
 
@@ -213,16 +212,18 @@ constants, actions, reducers and store
 - Import actions ![image](https://github.com/rameshgchavan/stb-crm-frontend/assets/109573381/1abcdabf-62e0-40cd-abe0-511b310829ea)
 - Create an object of useDispatch method ![image](https://github.com/rameshgchavan/stb-crm-frontend/assets/109573381/94ce39f4-2062-4234-a523-36b981cea975)
 - Dispatch action with data ![image](https://github.com/rameshgchavan/stb-crm-frontend/assets/109573381/cf6db8b0-211b-49e3-af25-10664ef3f1c5)
+#
 
-## Flow>>
+### App flow >>
 - On app load Login component will be shown
 - After login Customer page will be default page
 - If user is Admin then shows Customer, Trasaction, Users, Statistics and Logout link in Navabar
 - If user is User (not admin) then show Customer, Trasaction and Logout link in Navabar
 - After Logout Login component will be shown
+#
 
 ### Step to clone project on local machine
-
+- fgghfgf
   
 ### Step to create project on local machine
 1. create: stb-crm-project folder into your drive
