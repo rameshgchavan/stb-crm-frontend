@@ -27,7 +27,7 @@ This app manages relationship between set top boxes and customers. It let the us
 
 ![image](https://github.com/rameshgchavan/stb-crm-frontend/assets/109573381/cbc2228e-4553-4d0b-bbf2-8e58be247050)
 
-9. Type: "code ." and hit enter. Visual Studio Code will open
+8. Type: "code ." and hit enter. Visual Studio Code will open
 #
 
 ### Project description
