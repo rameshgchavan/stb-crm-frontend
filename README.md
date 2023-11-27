@@ -4,8 +4,18 @@
 This app manages relationship between set top boxes and customers. It let the user enter, update, remove and show set top box as well customter details over the time. This is a responsive UI so user can access this app on Computer, Tab and Mobile as well.
 #
 
-### Step to clone project on local machine
-- fgghfgf
+### Prerequisites
+- Download and install [Node.js](https://nodejs.org/en/download)
+- Download and install [Visual Studio Code](https://code.visualstudio.com/download)
+#
+
+### Step to clone repository on local machine
+- Click on Code button and copy path in HTTPS
+![image](https://github.com/rameshgchavan/stb-crm-frontend/assets/109573381/5f54decb-2660-4526-8ad1-1c9ee3b9f918)
+
+
+
+
 #
 
 ### Step to create project on local machine
@@ -18,7 +28,7 @@ This app manages relationship between set top boxes and customers. It let the us
 #
 
 ### Project description
-- This project has developed by using react js and devided into mudules which contains jsx componets, react routes, react redux, custom functions, navigation pages, axios crud apis.
+- This project has developed by using react.js library and devided into mudules which contains jsx componets, react routes, react redux, custom functions, navigation pages, axios crud apis.
 - Component folder again devided into modules which coantains cards components, charts components, filters components, forms components, modals components, prints components and security components.
 - Project folders and files structure looks like as shown in following image.
 
