@@ -12,6 +12,11 @@ Updating on users feedbacks.
 [stb-crm](https://stb-crm.cyclic.app/#/login)
 #
 
+### Reflection
+- At the begining I developed this app for Local Cable Operator who provides Television entertainment service.
+- Previously I used to work with LOCs and I understood the problems they have faced while managing customers and their set top boxes realation so decided to develop a app for them.
+#
+
 ### Prerequisites
 - Download and install [Node.js](https://nodejs.org/en/download)
 - Download and install [Visual Studio Code](https://code.visualstudio.com/download)
