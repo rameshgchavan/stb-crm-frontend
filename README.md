@@ -123,6 +123,11 @@ This page renders chart components (STBPieChart and STBRCBarChart).
 - #### /`PageNotFound.js`
 This page get redirected if route not found.
 
+### ./src/`App.js`
+This is a parent component in app.
+- This renders Header component (has a filter component as child component) and
+- Renders a routed page components (CustomersPage or TransactionsPage or UsersPage or StatisticsPage or PageNotFound)
+
 ### Step to create project on local machine
 1. create: stb-crm-project folder into your drive
 2. type: "cmd" in folder address bar and hit enter. Command prompt will open
