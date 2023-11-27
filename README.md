@@ -48,7 +48,7 @@ Updating on users feedbacks.
 - Type `npm build` to make app build.
 #
 
-### Project description
+## Project description
 - This project has developed by using react.js library and devided into mudules which contains jsx componets, react routes, react redux, custom functions, navigation pages, axios crud apis.
 - Component folder again devided into modules which coantains cards components, charts components, filters components, forms components, modals components, prints components and security components.
 - Project folders and files structure looks like as shown in following image.
@@ -64,8 +64,8 @@ Updating on users feedbacks.
 - If user is Admin then shows Customer, Trasaction, Users, Statistics and Logout link in Navabar
 - If user is User (not admin) then show Customer, Trasaction and Logout link in Navabar
 - After Logout Login component will be shown
-#
 
+### Elaboration:
 ### ./src/`components`
 - #### /`cards`/`CustomerCard.jsx`
 This component shows customer details and has three buttons, 
