@@ -129,8 +129,8 @@ This is a parent component in app.
 - Renders a routed page components (CustomersPage or TransactionsPage or UsersPage or StatisticsPage or PageNotFound)
 
 ### ./src/`index.js`
-This is a entry file of app.
-- This file renders App.js component that has wrapped in HashRouter and Redux Store (Provider)
+This is a main Javascript file of app.
+- This file renders App.js component in DOM that has wrapped in HashRouter and Redux Store (Provider)
 - In this file I have imported bootstrap css and js modules.
 
 ### ./src/`functions`
@@ -141,6 +141,22 @@ This folder contains transactions, customers and users related functions
 - By using axios these APIs sends HTTP requests to backend server to Create, Read Update and Delete the data.
 - And return corresponding response received from backend server.
 
+### ./src/`routes`
+This folder contains page and filter components routes
+- Public routes:
+  
+This contains public routes login, signup, forgotpass and "*" (any other route)
+- Private route:
+  
+This allows only predefined routes through the Outlet after successfull login
+- pageRoutes:
+  
+These are customers, transactions and users page's routes used in private route
+- filterRoutes:
+  
+These are customers, transactions and users filter's routes used in private route
+
+  
 ### Step to create project on local machine
 1. create: stb-crm-project folder into your drive
 2. type: "cmd" in folder address bar and hit enter. Command prompt will open
