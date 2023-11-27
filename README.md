@@ -35,25 +35,39 @@ This component shows user name and last login date and time. It has two buttons 
 - #### /`charts`/`STBPieChart.jsx`
 This component shows statistics graph of customers in form of pie chart
 
-- ####  /`charts`/`STBRCBarChart.jsx`
+- #### /`charts`/`STBRCBarChart.jsx`
 This component shows statistics graph of transactions of a selected year in form of bar chart. This shows two bar charts
 1. Bar chart of paid STBs
 2. Bar chart of free STBs
 
-- ####  /`filters`/`CustomersFilter.jsx`
+- #### /`filters`/`CustomersFilter.jsx`
 This component filters and paginate customers and has divided in two sections
 1. Filter section: filteration of customers as user choice
 2. Pagination section: Navigate pages of filtered customers
 
-- ####  /`filters`/`TransactionsFilter.jsx`
+- #### /`filters`/`TransactionsFilter.jsx`
 This component filters and paginate transactions and has divided in two sections
 1. Filter section: filteration of transactions as user choice
 2. Pagination section: Navigate pages of filtered transactions
 
-- ####  /`filters`/`UsersFilter.jsx`
+- #### /`filters`/`UsersFilter.jsx`
 This component filters users and has divided in two actions
 1. Filter users by clicking Buttons
 2. Filter users by type in text box and search button
+
+- #### /`forms`/`customerForms`/index.jsx`
+This is a root component and renders three components CustomerSection, STBSection and SeedSection.
+This component has Save (in case of adding new cusomter), Update and Delete buttons
+
+- #### /`forms`/`customerForms`/CustomerSection.jsx`
+If user updating a customer then this component shows prefilled customer details else empty values
+
+- #### /`forms`/`customerForms`/STBSection.jsx`
+If user updating a customer then this component shows prefilled STBs details else empty values
+
+- #### /`forms`/`customerForms`/SeedSection.jsx`
+If user updating a customer then this component shows prefilled STBs seed details else empty values
+
 
 ### Step to create project on local machine
 1. create: stb-crm-project folder into your drive
