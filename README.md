@@ -6,7 +6,8 @@ This app manages relationship between set top boxes and customers. It let the us
 
 ### Step to clone project on local machine
 - fgghfgf
-  
+#
+
 ### Step to create project on local machine
 1. create: stb-crm-project folder into your drive
 2. type: "cmd" in folder address bar and hit enter. Command prompt will open
@@ -14,6 +15,7 @@ This app manages relationship between set top boxes and customers. It let the us
 4. after successfull creation of app type cd stb-crm-frontend and hit enter
 5. type: "code ." and hit enter. VS code editor will open
 6. create: components, pages, redux, formik and routes folders into src folder
+#
 
 ### Project description
 - This project has developed by using react js and devided into mudules which contains jsx componets, react routes, react redux, custom functions, navigation pages, axios crud apis.
