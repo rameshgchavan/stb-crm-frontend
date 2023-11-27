@@ -90,6 +90,15 @@ This renders PackageForm
 - #### /`prints`/`TransactionsPrint.jsx`
 This shows print preview as well prints cusomters and packages summery in tabular form
 
+- #### /`security`/`Login.jsx`
+This scrutinize user's credentails if matches then user can use the app else not.
+
+- #### /`security`/`Sinup.jsx`
+This is a user registration component, in this user fills his details and if all details validated then he can register himself successfully and wait for approval from admin/authority or request to admin/authority for approval.
+
+- #### /`security`/`ForgotPassword.jsx`
+This component let registered and approved user to reset password if he forgot or he want to change password.
+
 ### Step to create project on local machine
 1. create: stb-crm-project folder into your drive
 2. type: "cmd" in folder address bar and hit enter. Command prompt will open
