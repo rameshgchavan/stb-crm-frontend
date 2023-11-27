@@ -55,18 +55,17 @@ This component filters users and has divided in two actions
 1. Filter users by clicking Buttons
 2. Filter users by type in text box and search button
 
-- #### /`forms`/`customerForms`/index.jsx`
+- #### /`forms`/`customerForms`
+     - /`index.jsx`
+       
 This is a root component and renders three components CustomerSection, STBSection and SeedSection.
 This component has Save (in case of adding new cusomter), Update and Delete buttons
 
-- #### /`forms`/`customerForms`/CustomerSection.jsx`
-If user updating a customer then this component shows prefilled customer details else empty values
+- #### /`forms`/`customerForms`
+     - /`CustomerSection.jsx`, /`STBSection.jsx`, /`SeedSection.jsx`
 
-- #### /`forms`/`customerForms`/STBSection.jsx`
-If user updating a customer then this component shows prefilled STBs details else empty values
+ If user updating a customer then these component shows prefilled customer and STBs details else empty values
 
-- #### /`forms`/`customerForms`/SeedSection.jsx`
-If user updating a customer then this component shows prefilled STBs seed details else empty values
 
 
 ### Step to create project on local machine
