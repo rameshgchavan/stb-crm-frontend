@@ -55,17 +55,31 @@ This component filters users and has divided in two actions
 1. Filter users by clicking Buttons
 2. Filter users by type in text box and search button
 
-- #### /`forms`/`customerForms`
+- #### /`forms`/`customerForm`
      - /`index.jsx`
        
 This is a root component and renders three components CustomerSection, STBSection and SeedSection.
 This component has Save (in case of adding new cusomter), Update and Delete buttons
 
-- #### /`forms`/`customerForms`
+- #### /`forms`/`customerForm`
      - /`CustomerSection.jsx`, /`STBSection.jsx`, /`SeedSection.jsx`
 
- If user updating a customer then these component shows prefilled customer and STBs details else empty values
+ If user updating a customer then these component shows prefilled customer and STB details else empty values
 
+- #### /`forms`/`packageForm`
+     - /`index.jsx`
+       
+This is a root component and renders three components CustomerSection, FilterSection and PackageSection.
+
+- #### /`forms`/`packageForm`
+     /`FilterSection.jsx`
+
+This component filters transactions of selected year and month that has chosen by user
+
+- #### /`forms`/`packageForm`
+     - /`CustomerSection.jsx`, /`PackageSection.jsx`
+
+This shows details of customer, STB and transactions (bouquets)
 
 
 ### Step to create project on local machine
