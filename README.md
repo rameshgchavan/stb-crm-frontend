@@ -131,7 +131,15 @@ This is a parent component in app.
 ### ./src/`index.js`
 This is a entry file of app.
 - This file renders App.js component that has wrapped in HashRouter and Redux Store (Provider)
-- In this file I have imported bootstrap css and js modules. 
+- In this file I have imported bootstrap css and js modules.
+
+### ./src/`functions`
+This folder contains transactions, customers and users related functions
+
+### ./src/`crudAPIs`
+- This folder contains transactions, customers and users related axios HTTP requests (APIs)
+- These APIs are usefull for Create, Read, Update and Delete the requested data in/from database (MongoDb) 
+
 
 ### Step to create project on local machine
 1. create: stb-crm-project folder into your drive
