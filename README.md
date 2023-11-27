@@ -102,6 +102,11 @@ This component let registered and approved user to reset password if he forgot o
 - #### /`Header.jsx`
 This component renders NavBar component and a routed filter component (CustomersFilter or TransanctionsFilter or UsersFilter) 
 
+- #### /`NavBar.jsx`
+This component contains two kind of links 
+1. Private Links: These are routed pages links (CustomersPage, TransactionsPage, UsersPage, StatisticsPage and PageNotFound) and logout link.
+2. Public Link: For a new user singup.
+
 ### Step to create project on local machine
 1. create: stb-crm-project folder into your drive
 2. type: "cmd" in folder address bar and hit enter. Command prompt will open
