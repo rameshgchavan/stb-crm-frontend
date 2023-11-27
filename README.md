@@ -5,7 +5,7 @@ This app manages relationship between set top boxes and customers. It let the us
 
 ### Project description
 - This project has developed by using react js and devided into mudules which contains jsx componets, react routes, react redux, custom functions, navigation pages, axios crud apis.
-- Component folder again devided into modules cards, charts, filters, forms, modals, prints and security.
+- Component folder again devided into modules which coantains cards components, charts components, filters components, forms components, modals components, prints components and security components.
 - Project folders and files structure looks like as shown in following image.
 
 ![image](https://github.com/rameshgchavan/stb-crm-frontend/assets/109573381/15cba04c-326e-4a29-94e6-480d18178021)
