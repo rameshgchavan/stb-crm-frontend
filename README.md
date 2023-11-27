@@ -40,6 +40,21 @@ This component shows statistics graph of transactions of a selected year in form
 1. Bar chart of paid STBs
 2. Bar chart of free STBs
 
+- ####  /`filters`/`CustomersFilter.jsx`
+This component filters and paginate customers and has divided in two sections
+1. Filter section: filteration of customers as user choice
+2. Pagination section: Navigate pages of filtered customers
+
+- ####  /`filters`/`TransactionsFilter.jsx`
+This component filters and paginate transactions and has divided in two sections
+1. Filter section: filteration of transactions as user choice
+2. Pagination section: Navigate pages of filtered transactions
+
+- ####  /`filters`/`UsersFilter.jsx`
+This component filters users and has divided in two actions
+1. Filter users by clicking Buttons
+2. Filter users by type in text box and search button
+
 ### Step to create project on local machine
 1. create: stb-crm-project folder into your drive
 2. type: "cmd" in folder address bar and hit enter. Command prompt will open
