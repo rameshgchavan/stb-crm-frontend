@@ -13,18 +13,21 @@ This app manages relationship between set top boxes and customers. It let the us
 - Click on Code button and copy path in HTTPS
 ![image](https://github.com/rameshgchavan/stb-crm-frontend/assets/109573381/5f54decb-2660-4526-8ad1-1c9ee3b9f918)
 
+1. Create: stb-crm-project folder on your local machine's desired drive
+2. Type: "cmd" in folder's address bar and hit Enter key on keybord. Command prompt will open
+3. Type `git clone`, then paste the URL you copied earlier, hit Enter key on keybord and wait until it done.
 
+![image](https://github.com/rameshgchavan/stb-crm-frontend/assets/109573381/85c0c341-9a60-4bec-a0be-02760ffc371a)
 
+5. Type: cd, press Spacebar then Tab and then hit Enter key on keybord.
 
-#
+![image](https://github.com/rameshgchavan/stb-crm-frontend/assets/109573381/5bfbf685-d461-42f6-b0fe-85cbada0b638)
 
-### Step to create project on local machine
-1. create: stb-crm-project folder into your drive
-2. type: "cmd" in folder address bar and hit enter. Command prompt will open
-3. type: npx create-react-app stb-crm-frontend and hit enter
-4. after successfull creation of app type cd stb-crm-frontend and hit enter
-5. type: "code ." and hit enter. VS code editor will open
-6. create: components, pages, redux, formik and routes folders into src folder
+7. Type: npm install and hit Enter key on keybord and wait for packages got installed successfully
+
+![image](https://github.com/rameshgchavan/stb-crm-frontend/assets/109573381/cbc2228e-4553-4d0b-bbf2-8e58be247050)
+
+9. Type: "code ." and hit enter. Visual Studio Code will open
 #
 
 ### Project description
