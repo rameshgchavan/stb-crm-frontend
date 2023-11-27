@@ -87,6 +87,9 @@ This renders CustomerForm
 - #### /`modals`/`PackageModal.jsx`
 This renders PackageForm 
 
+- #### /`prints`/`TransactionsPrint.jsx`
+This shows print preview as well prints cusomters and packages summery in tabular form
+
 ### Step to create project on local machine
 1. create: stb-crm-project folder into your drive
 2. type: "cmd" in folder address bar and hit enter. Command prompt will open
