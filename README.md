@@ -4,12 +4,33 @@
 This app manages relationship between set top boxes and customers. It let the user enter, update, remove and show set top box as well customter details over the time. This is a responsive UI so user can access this app on Computer, Tab and Mobile as well.
 #
 
+### Step to clone project on local machine
+- fgghfgf
+  
+### Step to create project on local machine
+1. create: stb-crm-project folder into your drive
+2. type: "cmd" in folder address bar and hit enter. Command prompt will open
+3. type: npx create-react-app stb-crm-frontend and hit enter
+4. after successfull creation of app type cd stb-crm-frontend and hit enter
+5. type: "code ." and hit enter. VS code editor will open
+6. create: components, pages, redux, formik and routes folders into src folder
+
 ### Project description
 - This project has developed by using react js and devided into mudules which contains jsx componets, react routes, react redux, custom functions, navigation pages, axios crud apis.
 - Component folder again devided into modules which coantains cards components, charts components, filters components, forms components, modals components, prints components and security components.
 - Project folders and files structure looks like as shown in following image.
 
 ![image](https://github.com/rameshgchavan/stb-crm-frontend/assets/109573381/15cba04c-326e-4a29-94e6-480d18178021)
+
+### Dependencies: 
+![image](https://github.com/rameshgchavan/stb-crm-frontend/assets/109573381/edbe30e1-981b-4dc1-b363-5087a36a69aa)
+
+### App flow >>
+- On app load Login component will be shown
+- After login Customer page will be default page
+- If user is Admin then shows Customer, Trasaction, Users, Statistics and Logout link in Navabar
+- If user is User (not admin) then show Customer, Trasaction and Logout link in Navabar
+- After Logout Login component will be shown
 
 ### ./src/`components`
 - #### /`cards`/`CustomerCard.jsx`
@@ -214,26 +235,5 @@ constants, actions, reducers and store
 - Dispatch action with data ![image](https://github.com/rameshgchavan/stb-crm-frontend/assets/109573381/cf6db8b0-211b-49e3-af25-10664ef3f1c5)
 #
 
-### App flow >>
-- On app load Login component will be shown
-- After login Customer page will be default page
-- If user is Admin then shows Customer, Trasaction, Users, Statistics and Logout link in Navabar
-- If user is User (not admin) then show Customer, Trasaction and Logout link in Navabar
-- After Logout Login component will be shown
-#
-
-### Step to clone project on local machine
-- fgghfgf
-  
-### Step to create project on local machine
-1. create: stb-crm-project folder into your drive
-2. type: "cmd" in folder address bar and hit enter. Command prompt will open
-3. type: npx create-react-app stb-crm-frontend and hit enter
-4. after successfull creation of app type cd stb-crm-frontend and hit enter
-5. type: "code ." and hit enter. VS code editor will open
-6. create: components, pages, redux, formik and routes folders into src folder
-
-### Requarements: 
-- type: npm install bootstrap, react-bootstrap, react-router-dom, axios, redux, react-redux, redux-thunk, formik and yup
 
 
