@@ -4,11 +4,6 @@
 This app manages relationship between set top boxes and customers. It let the user enter, update, remove and show set top box as well customter details over the time. This is a responsive UI so user can access this app on Computer, Tab and Mobile as well.
 #
 
-### Reflection
-- At the begining I developed this app for Local Cable Operator who provides Television entertainment service.
-- Previously I used to work with LOCs and I understood the problems they have faced while managing customers and their set top boxes realation so decided to develop a app for them.
-#
-
 ### Project status
 Updating on users feedbacks.
 #
@@ -267,6 +262,11 @@ constants, actions, reducers and store
 - Import actions ![image](https://github.com/rameshgchavan/stb-crm-frontend/assets/109573381/1abcdabf-62e0-40cd-abe0-511b310829ea)
 - Create an object of useDispatch method ![image](https://github.com/rameshgchavan/stb-crm-frontend/assets/109573381/94ce39f4-2062-4234-a523-36b981cea975)
 - Dispatch action with data ![image](https://github.com/rameshgchavan/stb-crm-frontend/assets/109573381/cf6db8b0-211b-49e3-af25-10664ef3f1c5)
+#
+
+### Reflection
+- At the begining I developed this app for Local Cable Operator who provides Television entertainment service.
+- Previously I used to work with LOCs and I understood the problems they have faced while managing customers and their set top boxes realation so decided to develop a app for them.
 #
 
 ### About me: 
