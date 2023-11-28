@@ -22,16 +22,16 @@ Updating on users feedbacks.
 ![image](https://github.com/rameshgchavan/stb-crm-frontend/assets/109573381/5f54decb-2660-4526-8ad1-1c9ee3b9f918)
 
 1. Create: stb-crm-project folder on your local machine's desired drive
-2. Type: "cmd" in folder's address bar and hit Enter key on keybord. Command prompt will open
-3. Type `git clone`, then paste the URL you copied earlier, hit Enter key on keybord and wait until it done.
+2. Type: "cmd" in folder's address bar and hit Enter key on keyboard. Command prompt will open
+3. Type `git clone`, then paste the URL you copied earlier, hit Enter key on keyboard and wait until it done.
 
 ![image](https://github.com/rameshgchavan/stb-crm-frontend/assets/109573381/85c0c341-9a60-4bec-a0be-02760ffc371a)
 
-5. Type: cd, press Spacebar then Tab and then hit Enter key on keybord.
+5. Type: cd, press Spacebar then Tab (until you get "stb-crm-frontend") and then hit Enter key on keyboard.
 
 ![image](https://github.com/rameshgchavan/stb-crm-frontend/assets/109573381/5bfbf685-d461-42f6-b0fe-85cbada0b638)
 
-7. Type: npm install and hit Enter key on keybord and wait for packages got installed successfully
+7. Type: npm install and hit Enter key on keyboard and wait for packages got installed successfully
 
 ![image](https://github.com/rameshgchavan/stb-crm-frontend/assets/109573381/cbc2228e-4553-4d0b-bbf2-8e58be247050)
 
