@@ -245,7 +245,7 @@ constants, actions, reducers and store
 - Create store and export
 - ![image](https://github.com/rameshgchavan/stb-crm-frontend/assets/109573381/e5653d62-b856-46bf-80e1-7700844765d1)
 
-#### Thus created redux state now use it
+#### How to use redux store?
 - Into root index.js file import Provider compoment from react-redux
 - Import store
 - ![image](https://github.com/rameshgchavan/stb-crm-frontend/assets/109573381/936d5f74-38e0-4cab-b65d-1999c214f1d5)
@@ -253,11 +253,11 @@ constants, actions, reducers and store
 - Wrap root App component inside Provider component as image
 - ![image](https://github.com/rameshgchavan/stb-crm-frontend/assets/109573381/0187a9d2-8c9c-4d98-b145-aa1f871be878)
 
-#### To fetch data from redux state
+#### How to fetch data from redux store?
 - Import useSelector method from react-redux
 - Create constant of useSelector and fetch data from redux state to it
 - ![image](https://github.com/rameshgchavan/stb-crm-frontend/assets/109573381/b4270e5d-8db1-4272-ab0b-998174974248)
-#### Update data to redux state
+#### How to update data in redux store?
 - Import useDispatch method from react-redux
 - Import actions ![image](https://github.com/rameshgchavan/stb-crm-frontend/assets/109573381/1abcdabf-62e0-40cd-abe0-511b310829ea)
 - Create an object of useDispatch method ![image](https://github.com/rameshgchavan/stb-crm-frontend/assets/109573381/94ce39f4-2062-4234-a523-36b981cea975)
