@@ -38,8 +38,10 @@ const NavBar = () => {
                             {/* Admin Links (Only Admin can access) */}
                             {scrutinizedUser.Admin == "self" &&
                                 <Nav>
+                                    <Nav.Link as={Link} to="/plans">Plans</Nav.Link>
                                     <Nav.Link as={Link} to="/statistics">Statistics</Nav.Link>
                                     <Nav.Link as={Link} to="/users">Users</Nav.Link>
+                                    <Nav.Link as={Link} to="/setting">Setting</Nav.Link>
                                 </Nav>
                             }
                         </Nav>
