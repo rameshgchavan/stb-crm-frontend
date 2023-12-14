@@ -2,7 +2,7 @@ import checkAdminGetDbName from "../../functions/checkAdminGetDbName"
 import axios from "axios";
 
 // Get all transactions of given month and year
-const readTransactions = async (scrutinizedUser, collectionName, acNo) => {
+const readTransactions = async (scrutinizedUser, collectionName, yearMonth) => {
     const { dbName } = checkAdminGetDbName(scrutinizedUser);
 
     return (
@@ -10,10 +10,23 @@ const readTransactions = async (scrutinizedUser, collectionName, acNo) => {
             {
                 method: "post",
                 headers: { authorization: `bearer ${scrutinizedUser.token}` },
-                data: { dbName, collectionName, acNo }
+                data: { dbName, collectionName, yearMonth }
             }
         ))?.data
     );
+};
+
+//Download Bulk Transactions.xlsx file
+const downloadTransactionsSampleFile = async (scrutinizedUser) => {
+    return (
+        (await axios(`/transactions/download`,
+            {
+                method: "post",
+                headers: { authorization: `bearer ${scrutinizedUser.token}` },
+                responseType: "blob"
+            }
+        ))?.data
+    )
 };
 
 // List all months(Jan to Dec) transactions a/c no of given year
@@ -34,5 +47,6 @@ const readTransactionsAcNosOfYear = async (scrutinizedUser, ofYear) => {
 
 export {
     readTransactions,
+    downloadTransactionsSampleFile,
     readTransactionsAcNosOfYear
 }
