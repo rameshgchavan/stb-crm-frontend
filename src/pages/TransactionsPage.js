@@ -39,7 +39,7 @@ const TransactionsPage = () => {
                         ? <h3>Oops... no record found.</h3>
                         : !showPreview && filteredTransactionsSlice?.map((transaction, index) => {
                             return <TransactionCard
-                                key={transaction._id}
+                                key={index}
                                 srNo={(index + 1) + firtCardIndex}
                                 transaction={transaction}
                             />
