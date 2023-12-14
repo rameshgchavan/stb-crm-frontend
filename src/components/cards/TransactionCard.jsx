@@ -15,24 +15,26 @@ const TransactionCard = ({ transaction, srNo }) => {
     const [customerModalShow, setCustomerModalShow] = useState(false);
     const [packageModalShow, setPackageModalShow] = useState(false);
 
-    // Destructured and put aliases. Here rechargeDate is an alias of TransactionDateTime
-    // Its not an object of key value pair.
+    //  Initialized customers data
+
     const {
-        TransactionDateTime: rechargeDate,
-        ExpiryDate: lastDate,
+        transactionDate: rechargeDate,
+        expiryDate: lastDate,
         Bill: bill,
-        AcNo: acNo
+        customer,
     } = transaction;
 
-    //  Initialized customers data
-    const id = transaction?.Customer?._id;
-    const name = transaction?.Customer?.CustName;
-    const area = transaction?.Customer?.Area;
-    const mobile = transaction?.Customer?.MobNo;
-    const lcoCode = transaction?.Customer?.LCOCode;
-    const vcNdsMacId = transaction?.Customer?.VC_NDS_MAC_ID;
-    const areaPerson = transaction?.Customer?.AreaPerson;
-    const areaManager = transaction?.Customer?.AreaManager;
+    const {
+        _id: id,
+        CustName: name,
+        Area: area,
+        MobNo: mobile,
+        AcNo: acNo,
+        VC_NDS_MAC_ID: vcNdsMacId,
+        LCOCode: lcoCode,
+        AreaPerson: areaPerson,
+        AreaManager: areaManager,
+    } = customer;
 
     // Variable stores text to copy to clipboard
     const copyToShare = `*Name:* ${name}
@@ -47,46 +49,56 @@ const TransactionCard = ({ transaction, srNo }) => {
         <>
             {/* Card */}
             <Form >
-                <FormGroup className="border rounded shadow px-3 py-2 mb-3" style={{ width: "20rem" }}>
-                    <Form.Label className="d-flex justify-content-between fw-bold">
+                <FormGroup className="border rounded shadow p-2 mb-3" style={{ width: "20rem" }}>
+                    <Form.Label className="d-flex justify-content-between fw-bold px-3">
                         <div className="text-start">{srNo}.</div>
-                        <div style={{ fontSize: "0.8rem" }} className="text-success text-nowrap">{DateTime.fromISO(rechargeDate).toFormat("dd-LLL-yy")}</div>
-                        <div style={{ fontSize: "0.8rem" }} className="text-danger text-nowrap">{DateTime.fromISO(lastDate).toFormat("dd-LLL-yy")}</div>
-                        <div>Ac:{acNo}</div>
+                        <div style={{ fontSize: "0.8rem" }}>Ac:{acNo}</div>
+                        <div style={{ fontSize: "0.8rem" }}>LCO:{lcoCode ? lcoCode : "N/A"}</div>
                     </Form.Label>
 
-                    <Form.Label className="d-block text-uppercase fw-bold text-primary text-truncate">{name ? name : "N/A"}</Form.Label>
-                    <Form.Label className="d-block text-truncate">{area}<br /> {mobile ? mobile : "N/A"}</Form.Label>
+                    <div className="shadow rounded p-2 mb-1">
+                        <label className="d-block text-uppercase fw-bold text-primary text-truncate">{name ? name : "N/A"}</label>
 
-                    <Form.Label className="d-flex fw-bold justify-content-between">
-                        <div>LCO:{lcoCode ? lcoCode : "N/A"}</div>
-                        <div className="text-primary">ID:{vcNdsMacId ? vcNdsMacId : "N/A"}</div>
+                        <div className="d-flex justify-content-between">
+                            <Form.Label className="d-block text-truncate"> {area}</Form.Label>
+                            <Form.Label className="d-block text-truncate">{mobile ? mobile : "N/A"}</Form.Label>
+                        </div>
 
-                        <CopyToClipboard text={vcNdsMacId}>
-                            <RiCheckboxMultipleLine size={18} className="text-secondary"
-                                onClick={() => alert("ID copied.")}
+                        <Form.Label className="d-flex fw-bold justify-content-between">
+                            <div className="d-flex">
+                                <div className="text-primary">ID:{vcNdsMacId ? vcNdsMacId : "N/A"}</div>
+
+                                <CopyToClipboard text={vcNdsMacId}>
+                                    <RiCheckboxMultipleLine size={18} className="text-secondary"
+                                        onClick={() => alert("ID copied.")}
+                                    />
+                                </CopyToClipboard>
+                            </div>
+
+                            <CopyToClipboard text={copyToShare}>
+                                <FaWhatsappSquare size={30} className="text-success"
+                                    onClick={() => alert("Copied to share on whatsapp")}
+                                />
+                            </CopyToClipboard>
+
+                            <MdReadMore size={35} className="text-primary"
+                                onClick={() => setCustomerModalShow(true)}
                             />
-                        </CopyToClipboard>
-                    </Form.Label>
-
-                    <div className="d-flex justify-content-between">
-                        <Button variant="warning"
-                            onClick={() => setPackageModalShow(true)}
-                        >₹{bill}</Button>
-
-                        <CopyToClipboard text={copyToShare}>
-                            <FaWhatsappSquare size={30} className="text-success"
-                                onClick={() => alert("Copied to share on whatsapp")}
-                            />
-                        </CopyToClipboard>
-
-                        <MdReadMore size={35} className="text-primary"
-                            onClick={() => setCustomerModalShow(true)}
-                        />
+                        </Form.Label>
                     </div>
 
-                    <hr />
-                    <Form.Label className="d-flex justify-content-between text-truncate" >
+                    <div className="d-flex justify-content-between shadow py-1 px-4 rounded">
+                        <div>
+                            <div style={{ fontSize: "0.8rem" }} className="text-success text-nowrap fw-bold">RC Date: {DateTime.fromISO(rechargeDate).toFormat("dd-LLL-yyyy")}</div>
+                            <div style={{ fontSize: "0.8rem" }} className="text-danger text-nowrap fw-bold">Last Date: {DateTime.fromISO(lastDate).toFormat("dd-LLL-yyyy")}</div>
+                        </div>
+
+                        <Button variant="warning"
+                            onClick={() => setPackageModalShow(true)}
+                        >₹{bill.toFixed(2)}</Button>
+                    </div>
+
+                    <Form.Label className="d-flex justify-content-between text-truncate px-3" >
                         <div className="me-3 lh-1">
                             <span style={{ fontSize: "x-small" }}>
                                 {areaManager ? "Manager" : "N/A"}
@@ -121,8 +133,7 @@ const TransactionCard = ({ transaction, srNo }) => {
                 showMe={packageModalShow}
                 closeMe={setPackageModalShow}
                 title={"Package"}
-                acNo={acNo}
-                transactionDate={DateTime.fromISO(rechargeDate).toISODate()}
+                transaction={transaction}
             />
         </>
     )

@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { Button, ButtonGroup, Container, Form } from "react-bootstrap"
+import { Button, ButtonGroup, Container, Form, InputGroup } from "react-bootstrap"
 
 // This component shows user details and used by pages/UsersPage
 const UserCard = ({ userInfo }) => {
@@ -17,9 +17,9 @@ const UserCard = ({ userInfo }) => {
                                 defaultValue={userName.current}
                                 onChange={(e) => { userName.current = e.target.value }}
                             />
-                            <Form.Label className="text-primary fw-bold">User Name</Form.Label>
+                            <Form.Label className="text-secondary fw-bold">User Name</Form.Label>
                             {user.LastLogin &&
-                                <Form.Text className="fw-bold">Last Login: {user.LastLogin}</Form.Text>
+                                <Form.Text className="text-secondary fw-bold">Last Login: {user.LastLogin}</Form.Text>
                             }
                         </Form.Floating>
 
@@ -27,6 +27,16 @@ const UserCard = ({ userInfo }) => {
                             <Button variant="primary" className="mt-2"
                                 onClick={() => { updateStatus(user._id, { Name: userName.current }) }}
                             >Rename</Button>}
+
+                        {user.LastLogin && user.Admin == "self" &&
+                            <InputGroup className="ms-2">
+                                <Form.Label className="text-secondary">Bulk_Tansactions</Form.Label>
+
+                                <Form.Check type="switch" checked={user.BulkTransactions}
+                                    onChange={() => { updateStatus(user._id, { BulkTransactions: !user.BulkTransactions }) }}
+                                />
+                            </InputGroup>
+                        }
                     </Form.Group>
 
                     <ButtonGroup >

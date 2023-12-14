@@ -46,46 +46,50 @@ const CustomerCard = ({ customer, srNo }) => {
         <>
             {/* Card */}
             <Form >
-                <Form.Group className="border rounded shadow px-3 py-2 mb-3" style={{ width: "20rem" }}>
-                    <Form.Label className="d-flex justify-content-between fw-bold">
+                <Form.Group className="border rounded shadow p-2 mb-3" style={{ width: "20rem" }}>
+                    <Form.Label className="d-flex justify-content-between fw-bold px-3">
                         <div className="fs-6 fw-bold text-start">{srNo}.</div>
-                        <div style={{ fontSize: "0.75rem" }}
+                        <div style={{ fontSize: "0.8rem" }} >Ac:{acNo}</div>
+                        <div style={{ fontSize: "0.8rem" }} >LCO:{lcoCode}</div>
+                    </Form.Label>
+
+                    <div className="shadow rounded p-2 mb-1">
+                        <label className="d-block text-uppercase fw-bold text-primary text-truncate">{name}</label>
+                        <Form.Label className="d-block text-truncate">{area}, {address}.<br /> Mobile: {mobile}</Form.Label>
+
+                        <Form.Label className="d-flex fw-bold justify-content-between">
+                            <div className="d-flex">
+                                <div className="fw-bold text-primary">ID:{vcNdsMacId}</div>
+
+                                <CopyToClipboard text={vcNdsMacId}>
+                                    <RiCheckboxMultipleLine size={18} className="text-secondary"
+                                        onClick={() => alert("ID copied.")}
+                                    />
+                                </CopyToClipboard>
+                            </div>
+
+                            <CopyToClipboard text={copyToShare}>
+                                <FaWhatsappSquare size={30} className="text-success"
+                                    onClick={() => alert("Copied to share on whatsapp")}
+                                />
+                            </CopyToClipboard>
+
+                            <MdReadMore size={35} className="text-primary"
+                                onClick={() => setCustomerModalShow(true)}
+                            />
+                        </Form.Label>
+                    </div>
+
+                    <div className="d-flex justify-content-between shadow py-1 px-4 rounded">
+                        <div style={{ fontSize: "0.8rem" }}
                             className={`${status == "ACTIVE" ? "text-success" : "text-danger"}
-                     text-uppercase fw-bolder text-start`}>{status}</div>
-                        <div className="fs-6 fw-bold text-start">Ac:{acNo}</div>
-                    </Form.Label>
+                     text-uppercase fw-bolder`}>{status}</div>
 
-                    <Form.Label className="d-block text-uppercase fw-bold text-primary text-truncate">{name}</Form.Label>
-                    <Form.Label className="d-block text-truncate">{area}, {address}.<br /> Mobile: {mobile}</Form.Label>
-
-                    <Form.Label className="d-flex fw-bold justify-content-between">
-                        <div className="fw-bold">LCO:{lcoCode}</div>
-                        <div className="fw-bold text-primary">ID:{vcNdsMacId}</div>
-
-                        <CopyToClipboard text={vcNdsMacId}>
-                            <RiCheckboxMultipleLine size={18} className="text-secondary"
-                                onClick={() => alert("ID copied.")}
-                            />
-                        </CopyToClipboard>
-                    </Form.Label>
-
-                    <div className="d-flex justify-content-between">
                         <SiBookstack size={30} className="text-warning"
-                            onClick={() => setPackageModalShow(true)}
-                        />
-
-                        <CopyToClipboard text={copyToShare}>
-                            <FaWhatsappSquare size={30} className="text-success"
-                                onClick={() => alert("Copied to share on whatsapp")}
-                            />
-                        </CopyToClipboard>
-
-                        <MdReadMore size={35} className="text-primary"
-                            onClick={() => setCustomerModalShow(true)}
+                        // onClick={() => setPackageModalShow(true)}
                         />
                     </div>
 
-                    <hr />
                     <Form.Label className="d-flex justify-content-between text-truncate" >
                         <div className="me-3 lh-1">
                             <span style={{ fontSize: "x-small" }}>
