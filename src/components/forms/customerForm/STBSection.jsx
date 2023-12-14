@@ -110,7 +110,7 @@ const STBSection = ({ stb }) => {
 
                 <Form.Floating className="col-8 mb-3">
                     <Form.Control name="acNo" placeholder="A/c No" defaultValue={acNo?.trim()}
-                        required maxLength={10} minLength={10} autocomplete="off" />
+                        required maxLength={10} minLength={10} autoComplete="off" />
                     <Form.Label className="text-primary fw-bold">A/c No</Form.Label>
                 </Form.Floating>
             </div>
@@ -127,27 +127,27 @@ const STBSection = ({ stb }) => {
                 </Form.Floating>
                 <Form.Floating className="col-8 mb-3">
                     <Form.Control name="stbSrNo" placeholder="STB Sr No" defaultValue={stb_SN}
-                        required minLength={16} autocomplete="off" />
+                        required minLength={16} autoComplete="off" />
                     <Form.Label className="text-primary fw-bold">STB Sr No</Form.Label>
                 </Form.Floating>
             </div>
 
             <Form.Floating className="mb-3">
                 <Form.Control name="ndsNo" placeholder="NDS No" defaultValue={nds_No}
-                    required minLength={16} autocomplete="off" />
+                    required minLength={16} autoComplete="off" />
                 <Form.Label className="text-primary fw-bold">NDS No</Form.Label>
             </Form.Floating>
 
             <div className="d-flex justify-content-evenly">
                 <Form.Floating className="col-5 mb-3">
                     <Form.Control name="vcNdsMacID" placeholder="VC/NDS/MAC ID" defaultValue={vc_Nds_Mac_ID}
-                        required minLength={10} autocomplete="off" />
+                        required minLength={10} autoComplete="off" />
                     <Form.Label className="text-primary fw-bold">VC/NDS/MAC ID</Form.Label>
                 </Form.Floating>
 
                 <Form.Floating className="col-5 mb-3">
                     <Form.Control name="lcoCode" placeholder="LCO Code" defaultValue={lcoCode}
-                        required maxLength={10} minLength={10} autocomplete="off" />
+                        required maxLength={10} minLength={10} autoComplete="off" />
                     <Form.Label className="text-primary fw-bold">LCO Code</Form.Label>
                 </Form.Floating>
             </div>
