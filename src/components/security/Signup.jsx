@@ -96,7 +96,7 @@ const Signup = () => {
         <Container style={{ width: "22rem" }} className='border px-4 pt-2 pb-4 shadow' >
             <div className="d-flex flex-column">
                 <Button variant="danger" size='sm'
-                    className="flex-direction: column align-self-end rounded"
+                    className="flex-direction: column align-self-end rounded-5"
                     onClick={() => navigate("/")}
                 >X</Button>
             </div>
