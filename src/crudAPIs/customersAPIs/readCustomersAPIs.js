@@ -15,6 +15,20 @@ const readCustomers = async (scrutinizedUser) => {
     );
 };
 
+//Download Bulk Customer.xlsx file
+const downloadCustomersSampleFile = async (scrutinizedUser) => {
+    return (
+        (await axios(`/customers/download`,
+            {
+                method: "post",
+                headers: { authorization: `bearer ${scrutinizedUser.token}` },
+                responseType: "blob"
+            }
+        ))?.data
+    )
+};
+
 export {
-    readCustomers
+    readCustomers,
+    downloadCustomersSampleFile
 }
