@@ -71,7 +71,7 @@ const summarizeTransactions = async (transactions, customersList) => {
         const transOjectID = `61633${uniqueTransaction.AcNo.split("").join("3")}`;
 
         //Populated customer for transactions 
-        let customerIndex = customersList.findIndex((customer) => customer._id === transOjectID)
+        let customerIndex = customersList.findIndex((customer) => customer._id === transOjectID);
         // uniqueTransactions[uniqueIndex]['Customer'] = customersList[customerIndex];
 
         return {
