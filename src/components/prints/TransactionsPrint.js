@@ -75,25 +75,25 @@ const TransactionsPrint = () => {
                 <tbody>
                     {filteredSummarizedTransactions.map((transactions, index) => {
                         totalBill += parseFloat(transactions.Bill);
-                        totalLCOPrice += parseFloat(transactions.LCOPrice);
+                        totalLCOPrice += parseFloat(transactions.totalLCOPrice);
 
                         return <tr key={index} >
                             <td style={{ minWidth: "15mm", maxWidth: "15mm", width: "15mm" }} className="text-end">{index + 1}.</td>
 
                             <td style={{ minWidth: "30mm", maxWidth: "30mm", width: "30mm" }}>
                                 {rcDate && <div style={{ lineHeight: "14px" }}>
-                                    {DateTime.fromISO(transactions.TransactionDateTime).toFormat("dd-LLL-yy")}
+                                    {DateTime.fromISO(transactions.transactionDate).toFormat("dd-LLL-yy")}
                                     <div style={{ fontSize: "11px", }}>
-                                        {DateTime.fromISO(transactions.TransactionDateTime).toFormat("hh:mm a")}
+                                        {DateTime.fromISO(transactions.transactionTime).toFormat("hh:mm a")}
                                     </div>
                                 </div>}
 
                                 {lastDate && <div>
-                                    {DateTime.fromISO(transactions.ExpiryDate).toFormat("dd-LLL-yy")}
+                                    {DateTime.fromISO(transactions.expiryDate).toFormat("dd-LLL-yy")}
                                 </div>}
 
                                 <div style={{ fontSize: "12px", lineHeight: "15px" }} className='text-wrap mt-1'>
-                                    {transactions.Customer?.AreaPerson?.slice(0, 20)}
+                                    {transactions.customer?.AreaPerson?.slice(0, 20)}
                                 </div>
                             </td>
 
@@ -103,34 +103,34 @@ const TransactionsPrint = () => {
                                     {transactions.AcNo?.slice(6, 10)}
                                 </div>
                                 <div>
-                                    ID:{transactions.Customer?.VC_NDS_MAC_ID?.slice(0, 5)}<br />
-                                    {transactions.Customer?.VC_NDS_MAC_ID?.slice(5, 12)}
+                                    ID:{transactions.customer?.VC_NDS_MAC_ID?.slice(0, 5)}<br />
+                                    {transactions.customer?.VC_NDS_MAC_ID?.slice(5, 12)}
                                 </div>
                             </td>
 
                             <td style={{ minWidth: "55mm", maxWidth: "55mm", width: "55mm" }} >
                                 <div className="text-wrap fw-bold" style={{ height: "45px", lineHeight: "18px" }}>
-                                    {transactions.Customer?.CustName}
+                                    {transactions.customer?.CustName}
                                 </div>
 
                                 <div>
-                                    {transactions.Customer?.Area?.slice(0, 20)}<br />
-                                    {transactions.Customer?.MobNo?.slice(0, 10)}
+                                    {transactions.customer?.Area?.slice(0, 20)}<br />
+                                    {transactions.customer?.MobNo?.slice(0, 10)}
                                 </div>
                             </td>
 
                             <td style={{ minWidth: "25mm", maxWidth: "25mm", width: "25mm" }}>
                                 <div style={{ fontSize: "17px" }}>
-                                    <b>₹{transactions.Bill}</b>
+                                    <b>₹{transactions.Bill.toFixed(2)}</b>
                                 </div>
 
                                 {lcoPrice && <div style={{ fontSize: "12px" }}>
-                                    ₹{transactions.LCOPrice}<br />
+                                    ₹{transactions.totalLCOPrice.toFixed(2)}<br />
                                 </div>
                                 }
                             </td>
 
-                            <td> {transactions.Customer?.IsFree ? `Free: ${transactions.Customer?.Remark}` : ""}</td>
+                            <td> {transactions.customer?.IsFree ? `Free: ${transactions.customer?.Remark}` : ""}</td>
                         </tr>
                     }
                     )}

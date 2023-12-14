@@ -7,10 +7,12 @@ import {
     summarizeTransactionsAction,
     filterSummarizedTransactionsAction,
     sliceFilteredTransactionsAction,
-    loadingAction, loadedAction
+    loadingAction, loadedAction, listTransactionsAction
 } from "../../redux/actions";
 
-import getSummarizedTransactionsByType from "../../functions/transactions/getSummarizedTransactionsByType";
+import getTransactionsByType from "../../functions/transactions/getTransactionsByType";
+import { readTransactions } from "../../crudAPIs/transactionsAPIs";
+import { FILTER_CUSTOMERS } from "../../redux/constants/customers";
 
 /*This component filters transaction data as user choice*/
 // This component is used in routes/FilterRoutes
@@ -79,6 +81,7 @@ const TransactionsFilter = () => {
     const transacionsSummary = useSelector(state => state.transactionsSummaryReducer)?.data;
     const filteredSummarizedTtransactions = useSelector(state => state.summarizedTransactionsFilterationReducer)?.data;
     const scrutinizedUser = useSelector(state => state.scrutinyUserReducer);
+    const transactionsList = useSelector(state => state.transactionsListReducer).data;
 
     // Checked and initialized. Is user admin or not.
     const { Admin, Name: userName } = scrutinizedUser;
@@ -96,8 +99,8 @@ const TransactionsFilter = () => {
     );
 
     useEffect(() => {
-        filterTransactions(true);
-    }, [])
+        filterTransactions();
+    }, [transactionsList])
 
     // This function is called in option element to list area managers
     const listAreaManagers = () => {
@@ -127,69 +130,72 @@ const TransactionsFilter = () => {
     };
 
     // This function summerizes transaction and called by filterTransactions functions
-    const getSummarizedTransactions = async () => {
+    const getTransactions = async () => {
         const yearMonth = `${selectedYear.current}-${selectedMonth.current}`;
 
         // Update loading value to redux store using redux action to show Loading...
         dispatch(loadingAction());
 
-        const summarizedTransactionsByType = await getSummarizedTransactionsByType(scrutinizedUser, customersList, yearMonth, selectedType.current);
+        const transactionsByType = await getTransactionsByType(scrutinizedUser, yearMonth, selectedType.current);
+        // console.warn(transactionsByType);
 
         // Update summerized data to redux store by using redux actions
         dispatch(
-            summarizeTransactionsAction(summarizedTransactionsByType)
+            listTransactionsAction(transactionsByType)
         )
 
         // Update loading value to redux store using redux action to hide Loading...
         dispatch(loadedAction());
 
-        return summarizedTransactionsByType;
+        // filterTransactions();
+
+        // return transactionsByType;
     }
 
     // This function filters transaction data as user choice
     // This function used by useEffect
-    const filterTransactions = async (transactions = false) => {
-        // Initialized summerized transactions data
-        const summarizedTransactions = !transactions
-            ? await getSummarizedTransactions()
-            : transacionsSummary;
+    const filterTransactions = async () => {
+        // // Initialized summerized transactions data
+        // const summarizedTransactions = !transactions
+        //     ? await getSummarizedTransactions()
+        //     : transacionsSummary;
 
         // filter and return transaction data
-        const filteredData = summarizedTransactions
+        const filteredData = transactionsList
             ?.filter((transaction, index) => {
                 // console.warn(DateTime.fromRFC2822(`${selectedDay.current} ${selectedMonth.current} ${selectedYear.current} 00:00 Z`).plus({ months: 1 }).toISODate());
                 return selectedDay.current !== "All"
                     ? selectedType.current === "Expiry"
-                        ? DateTime.fromISO(transaction?.ExpiryDate).toISODate() ===
+                        ? DateTime.fromISO(transaction.expiryDate).toISODate() ===
                         DateTime.fromISO(`${selectedYear.current}-${selectedMonth.current}-${selectedDay.current}`).toISODate()
-                        : DateTime.fromISO(transaction?.TransactionDateTime).toISODate() ===
+                        : DateTime.fromISO(transaction.transactionDate).toISODate() ===
                         DateTime.fromISO(`${selectedYear.current}-${selectedMonth.current}-${selectedDay.current}`).toISODate()
                     : transaction
             })
-            ?.filter((transaction, index) => {
-                return areaManager.current !== "All"
-                    ? transaction.Customer?.AreaManager === areaManager.current
-                    : transaction
-            })
-            ?.filter((transaction, index) => {
-                return areaPerson.current !== "All"
-                    ? transaction.Customer?.AreaPerson === areaPerson.current
-                    : transaction
-            })
-            ?.filter((transaction) => {
-                return transaction.AcNo.toLowerCase().includes(searchedName.current.toLowerCase())
-                    || transaction.Bill.toLowerCase().includes(searchedName.current.toLowerCase())
-                    || transaction.Customer?.CustName.toLowerCase().includes(searchedName.current.toLowerCase())
-                    || transaction.Customer?.Area.toLowerCase().includes(searchedName.current.toLowerCase())
-                    || transaction.Customer?.Address.toLowerCase().includes(searchedName.current.toLowerCase())
-                    || transaction.Customer?.MobNo.toLowerCase().includes(searchedName.current.toLowerCase())
-                    || transaction.Customer?.VC_NDS_MAC_ID.toLowerCase().includes(searchedName.current.toLowerCase())
-                    || transaction.Customer?.NDS_No.toLowerCase().includes(searchedName.current.toLowerCase())
-                    || transaction.Customer?.STB_SN.toLowerCase().includes(searchedName.current.toLowerCase());
-            });
+        ?.filter((transaction, index) => {
+            return areaManager.current !== "All"
+                ? transaction.customer.AreaManager === areaManager.current
+                : transaction
+        })
+        ?.filter((transaction, index) => {
+            return areaPerson.current !== "All"
+                ? transaction.customer.AreaPerson === areaPerson.current
+                : transaction
+        })
+        ?.filter((transaction) => {
+            return transaction?.AcNo?.includes(searchedName.current)
+                || transaction?.Bill?.toString().includes(searchedName.current)
+                || transaction?.customer.CustName?.toLowerCase().includes(searchedName.current.toLowerCase())
+                || transaction?.customer.Area?.toLowerCase().includes(searchedName.current.toLowerCase())
+                || transaction?.customer.Address?.toLowerCase().includes(searchedName.current.toLowerCase())
+                || transaction?.customer.MobNo?.toLowerCase().includes(searchedName.current.toLowerCase())
+                || transaction?.customer.VC_NDS_MAC_ID?.toLowerCase().includes(searchedName.current.toLowerCase())
+        });
 
         // Update filtered summerized transaction to redux store using redux action
-        dispatch(filterSummarizedTransactionsAction(filteredData));
+        dispatch(
+            filterSummarizedTransactionsAction(filteredData)
+        );
 
         setCurrentPage(1);
 
@@ -287,7 +293,7 @@ const TransactionsFilter = () => {
                             )}
                         </Form.Select>
                         <Button variant="success" className="border ms-2"
-                            onClick={() => { filterTransactions(); }}>
+                            onClick={() => { getTransactions(); }}>
                             Go
                         </Button>
                     </FormGroup>

@@ -5,12 +5,14 @@ import PackageSection from "./PackageSection";
 
 // This component combines customer and package components
 // This index component used by modals/PackageModal
-const PackageForm = ({ acNo, transactionDate }) => {
+const PackageForm = ({ transaction }) => {
+    const { customer } = transaction
+
     return (
         <Form >
             <div className="mx-sm-3">
-                <CustomerSection acNo={acNo} />
-                <PackageSection acNo={acNo} transactionDate={transactionDate} />
+                <CustomerSection customer={customer} />
+                <PackageSection transaction={transaction} />
             </div>
         </Form>
     )
