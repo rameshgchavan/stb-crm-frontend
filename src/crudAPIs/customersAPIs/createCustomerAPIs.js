@@ -17,7 +17,7 @@ const createCustomer = async (scrutinizedUser, customerData) => {
 };
 
 // Bulk create Customers by sending csv file
-const createCustomers = async (scrutinizedUser, formData) => {
+const createCustomers = async (scrutinizedUser, fileData) => {
     const { dbName } = checkAdminGetDbName(scrutinizedUser);
 
     return (
@@ -25,7 +25,7 @@ const createCustomers = async (scrutinizedUser, formData) => {
             {
                 method: "post",
                 headers: { authorization: `bearer ${scrutinizedUser.token}`, dbName },
-                data: formData
+                data: { fileData }
             }
         ))?.data
     )

@@ -16,7 +16,7 @@ const createPlan = async (scrutinizedUser, planData) => {
 };
 
 // Bulk create Planss by sending csv file
-const createPlans = async (scrutinizedUser, formData) => {
+const createPlans = async (scrutinizedUser, fileData) => {
     const { dbName } = checkAdminGetDbName(scrutinizedUser);
 
     return (
@@ -24,7 +24,7 @@ const createPlans = async (scrutinizedUser, formData) => {
             {
                 method: "post",
                 headers: { authorization: `bearer ${scrutinizedUser.token}`, dbName },
-                data: formData
+                data: { fileData }
             }
         ))?.data
     )
