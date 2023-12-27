@@ -4,6 +4,7 @@ import fileDownload from "js-file-download";
 
 import { createCustomers, downloadCustomersSampleFile } from "../../crudAPIs/customersAPIs";
 import { useState } from "react";
+import papaParse from "papaparse";
 
 // This component used by pages/SettingPage.js
 // This component used for uploading customers in bulk
@@ -14,14 +15,23 @@ export const BulkCustomers = () => {
     const [isUploading, setIsUploading] = useState(false);
 
     const handleUpload = async () => {
-        setIsUploading(true);
+        // let formData = new FormData();
+        // formData.append('csvFile', file);
 
-        let formData = new FormData();
-        formData.append('csvFile', file);
-        const resp = await createCustomers(scrutinizedUser, formData);
-        alert(resp.message);
+        papaParse.parse(file, {
+            skipEmptyLines: true,
+            header: true,
+            complete: async (data) => {
+                setIsUploading(true);
 
-        setIsUploading(false);
+                const fileData = data.data.filter(data => data.AcNo != "");
+
+                const resp = await createCustomers(scrutinizedUser, fileData);
+                alert(resp.message);
+
+                setIsUploading(false);
+            }
+        });
     }
 
     const handleDownload = async () => {

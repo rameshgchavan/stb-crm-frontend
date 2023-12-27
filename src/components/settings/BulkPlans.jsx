@@ -4,6 +4,7 @@ import fileDownload from "js-file-download";
 
 import { createPlans, downloadPlansSampleFile } from "../../crudAPIs/plansAPIs";
 import { useState } from "react";
+import papaParse from "papaparse";
 
 // This component used by pages/SettingPage.js
 // This component used for uploading Plans in bulk
@@ -14,14 +15,23 @@ export const BulkPlans = () => {
     const [isUploading, setIsUploading] = useState(false);
 
     const handleUpload = async () => {
-        setIsUploading(true);
+        // let formData = new FormData();
+        // formData.append('csvFile', file);
 
-        let formData = new FormData();
-        formData.append('csvFile', file);
-        const resp = await createPlans(scrutinizedUser, formData);
-        alert(resp.message);
+        papaParse.parse(file, {
+            skipEmptyLines: true,
+            header: true,
+            complete: async (data) => {
+                setIsUploading(true);
 
-        setIsUploading(false);
+                const fileData = data.data.filter(data => data.PlanName != "");
+
+                const resp = await createPlans(scrutinizedUser, fileData);
+                alert(resp.message);
+
+                setIsUploading(false);
+            }
+        });
     }
 
     const handleDownload = async () => {
@@ -52,7 +62,7 @@ export const BulkPlans = () => {
                     >Upload</Button>
                 }
 
-                {isUploading && 
+                {isUploading &&
                     <Button variant="success" size="sm" disabled
                     >Uploading wait...</Button>
                 }

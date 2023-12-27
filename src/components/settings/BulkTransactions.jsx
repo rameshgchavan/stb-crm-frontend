@@ -5,6 +5,7 @@ import { createTransactions, downloadTransactionsSampleFile } from "../../crudAP
 import { useRef, useState } from "react";
 import { DateTime } from "luxon";
 import fileDownload from "js-file-download";
+import papaParse from "papaparse";
 
 // This component used by pages/SettingPage.js
 // This component used for uploading transactions in bulk
@@ -38,18 +39,26 @@ const BulkTransactions = () => {
     }
 
     const handleUpload = async () => {
-        setIsUploading(true);
-
         const yearMonth = DateTime.fromISO(`${selectedYear.current}-${selectedMonth.current}-01`).toFormat("yyyy-LLL");
-        let formData = new FormData();
-        formData.append('csvFile', file);
-        const resp = await createTransactions(scrutinizedUser, formData, yearMonth);
+        // let formData = new FormData();
+        // formData.append('csvFile', file);
 
-        alert(
-            `${resp.packagesBillsRes.message}, ${resp.packageCustomersRes.message} and ${resp.statisticsRes.message} uploaded successfully`
-        );
+        papaParse.parse(file, {
+            skipEmptyLines: true,
+            header: true,
+            complete: async (data) => {
+                setIsUploading(true);
 
-        setIsUploading(false);
+                const fileData = data.data.filter(data => data.CustomerID != "");
+                const resp = await createTransactions(scrutinizedUser, fileData, yearMonth);
+
+                alert(
+                    `${resp.packagesBillsRes.message}, ${resp.packageCustomersRes.message} and ${resp.statisticsRes.message} uploaded successfully`
+                );
+
+                setIsUploading(false);
+            }
+        });
     }
 
     const handleDownload = async () => {
