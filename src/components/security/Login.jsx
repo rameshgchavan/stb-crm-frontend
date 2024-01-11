@@ -84,7 +84,7 @@ const Login = () => {
         updateLoginDateTime(user, { LastLogin: DateTime.now().toFormat("dd-MMM-yyyy hh:mm:ss a") });
 
         // navigate to user or customer page
-        user.Admin === "stb-crm" ? navigate("/users") : navigate("/customers");
+        user.Admin === "stb-crm" ? navigate("/private/users") : navigate("/private/customers");
     }
 
     return (
@@ -116,19 +116,6 @@ const Login = () => {
             <Nav className='d-flex flex-column align-items-center mt-4'>
                 <Nav.Link onClick={() => navigate("/forgotpass")}>Forgot password</Nav.Link>
             </Nav>
-
-            <hr />
-            <div>
-                Following IDs are to test this application<br />
-
-                <b>Admin ID:</b><br />
-                demoadmin@gmail.com<br />
-                <b>Admin's User IDs:</b> <br />
-                demouser1@gmail.com<br />
-                demouser2@gmail.com<br />
-                <br />
-                <b> All IDs password:</b> Demo@123
-            </div>
         </Container>
     )
 }
