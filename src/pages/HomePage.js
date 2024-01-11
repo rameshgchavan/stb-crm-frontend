@@ -20,7 +20,7 @@ const HomePage = () => {
             <hr />
             <Button
                 onClick={() => navigate("/login")}
-            >Login</Button>
+            >Go to Login</Button>
         </div>
     )
 }
