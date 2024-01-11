@@ -11,7 +11,7 @@ const PageNotFound = () => {
             <h1>404: Page Not Found</h1>
 
             <Button className="mt-5"
-                onClick={() => navigate("/")}
+                onClick={() => navigate("/login")}
             >
                 Click here to Login
             </Button>
