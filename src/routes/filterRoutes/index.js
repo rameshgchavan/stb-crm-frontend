@@ -1,23 +1,16 @@
-import { Route, Routes } from 'react-router-dom';
+import { Routes } from 'react-router-dom';
 
-import privateRoute from '../privateRoute';
-import { filterRoutesAuthority, filterRoutesAdmin, filterRoutesComman } from './filterRoutes';
+import privateRoutes from './privateRoutes';
 
 // This function called by src/App.js
-// This function combines routes
-const filterRoutes = (scrutinizedUser) => {
+// This function returns only private filter routes
+const pageRoutes = (scrutinizedUser) => {
     return (
         <Routes >
             {/* Private Routes */}
-            <Route path="/" element={privateRoute(scrutinizedUser)}>
-                {/* Admin Routes (Only Admin can access) */}
-                {scrutinizedUser.Admin === "self" && filterRoutesAdmin}
-
-                {/* If user stb-crm then routes user filer only else routes comman filter */}
-                {scrutinizedUser.Admin === "stb-crm" ? filterRoutesAuthority : filterRoutesComman}
-            </Route>
+            {scrutinizedUser.token && privateRoutes(scrutinizedUser.Admin)}
         </Routes>
     )
-}
+};
 
-export default filterRoutes;
+export default pageRoutes;

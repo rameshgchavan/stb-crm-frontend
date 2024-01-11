@@ -1,5 +1,6 @@
 import { Route } from 'react-router-dom';
 
+// Pages 
 import CustomersPage from "../../pages/CustomersPage";
 import TransactionsPage from "../../pages/TransactionsPage";
 import UsersPage from '../../pages/UsersPage';
@@ -8,25 +9,24 @@ import SettingPage from '../../pages/SettingPage';
 import PlansPage from '../../pages/PlansPage';
 
 
-// Initilalized and exported following routes
-// These routes used by pageRoutes/index.js
+// Initilalized and exported following page routes
+// These routes used by pageRoutes/privateRoutes.js
 
-const pageRoutesAuthority = <Route path="/users" element={<UsersPage />} />;
+const authorityRoutes = <Route path="users" element={<UsersPage />} />;
 
-const pageRoutesAdmin = (
+const userRoutes =
     <Route>
-        <Route path="/users" element={<UsersPage />} />
-        <Route path="/statistics" element={<StatisticsPage />} />
-        <Route path="/plans" element={<PlansPage />} />
-        <Route path="/setting" element={<SettingPage />} />
+        <Route path="customers" element={<CustomersPage />} />
+        <Route path="transactions" element={<TransactionsPage />} />
     </Route>
-);
 
-const pageRoutesComman = (
+const adminRoutes =
     <Route>
-        <Route path="/customers" element={<CustomersPage />} />
-        <Route path="/transactions" element={<TransactionsPage />} />
+        {authorityRoutes}
+        {userRoutes}
+        <Route path="statistics" element={<StatisticsPage />} />
+        <Route path="plans" element={<PlansPage />} />
+        <Route path="setting" element={<SettingPage />} />
     </Route>
-);
 
-export { pageRoutesAuthority, pageRoutesAdmin, pageRoutesComman } 
+export { authorityRoutes, userRoutes, adminRoutes } 

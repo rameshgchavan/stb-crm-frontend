@@ -1,25 +1,24 @@
 import { Route, Routes } from 'react-router-dom';
 
-import privateRoute from '../privateRoute';
+// Page
+import PageNotFound from "../../pages/PageNotFound";
+
+import privateRoutes from './privateRoutes';
 import publicRoutes from '../publicRoutes';
-import { pageRoutesAuthority, pageRoutesAdmin, pageRoutesComman } from './pageRoutes';
 
 // This function called by src/App.js
-// This function combines routes
+// This function returns pages routes
 const pageRoutes = (scrutinizedUser) => {
     return (
         <Routes >
-            {/* Private Routes */}
-            <Route path="/" element={privateRoute(scrutinizedUser)}>
-                {/* Admin Routes (Only Admin can access) */}
-                {scrutinizedUser.Admin === "self" && pageRoutesAdmin}
-
-                {/* Comman Routes (Only Admin and User can access ) */}
-                {scrutinizedUser.Admin === "stb-crm" ? pageRoutesAuthority : pageRoutesComman}
-            </Route>
-
             {/* Public Routes */}
             {publicRoutes}
+
+            {/* Private Routes */}
+            {scrutinizedUser.token && privateRoutes("self")}
+
+            {/* Unknown Route */}
+            <Route path="*" element={<PageNotFound />} />
         </Routes>
     )
 };
