@@ -97,7 +97,7 @@ const Signup = () => {
             <div className="d-flex flex-column">
                 <Button variant="danger" size='sm'
                     className="flex-direction: column align-self-end rounded-5"
-                    onClick={() => navigate("/")}
+                    onClick={() => navigate("/login")}
                 >X</Button>
             </div>
             <hr />
