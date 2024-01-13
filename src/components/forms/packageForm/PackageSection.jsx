@@ -16,7 +16,7 @@ const PackageSection = ({ transaction }) => {
 
     return (
         <FormGroup className="border shadow rounded p-3">
-            {plans.sort((a, b) => a.Priority - b.Priority)
+            {plans.slice().sort((a, b) => a.Priority - b.Priority)
                 .map((plan, index) => {
                     if (plan.Priority == 1 || plan.Priority == 2) {
                         return <div name="ftaPlan"

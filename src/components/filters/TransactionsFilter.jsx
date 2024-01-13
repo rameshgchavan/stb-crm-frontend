@@ -3,16 +3,12 @@ import { useEffect, useRef, useState } from "react";
 import { DateTime } from "luxon";
 
 import { useDispatch, useSelector } from "react-redux";
-import {
-    summarizeTransactionsAction,
-    filterSummarizedTransactionsAction,
-    sliceFilteredTransactionsAction,
-    loadingAction, loadedAction, listTransactionsAction
-} from "../../redux/actions";
 
 import getTransactionsByType from "../../functions/transactions/getTransactionsByType";
-import { readTransactions } from "../../crudAPIs/transactionsAPIs";
-import { FILTER_CUSTOMERS } from "../../redux/constants/customers";
+
+// actions
+import { addTransactionsAction, addFilteredTransactionsAction } from "../../redux/features/transactions/transactionsSlice";
+import { changeLoadingAction } from "../../redux/features/loadingSlice";
 
 /*This component filters transaction data as user choice*/
 // This component is used in routes/FilterRoutes
@@ -77,11 +73,9 @@ const TransactionsFilter = () => {
 
     /* Get customers list, transactions summery, filtered summerized transactions 
     and scrutinized user from redux store*/
-    const customersList = useSelector(state => state.customersListReducer)?.data;
-    const transacionsSummary = useSelector(state => state.transactionsSummaryReducer)?.data;
-    const filteredSummarizedTtransactions = useSelector(state => state.summarizedTransactionsFilterationReducer)?.data;
-    const scrutinizedUser = useSelector(state => state.scrutinyUserReducer);
-    const transactionsList = useSelector(state => state.transactionsListReducer).data;
+    const { customers: customersList } = useSelector(state => state.customersReducer);
+    const { scrutinizedUser } = useSelector(state => state.usersReducer);
+    const { transactions: transactionsList } = useSelector(state => state.transactionsReducer);
 
     // Checked and initialized. Is user admin or not.
     const { Admin, Name: userName } = scrutinizedUser;
@@ -97,6 +91,9 @@ const TransactionsFilter = () => {
         filterSetting?.transAreaPerson ||
         "All"
     );
+
+    const [filteredTransactions, setFilteredTransactions] = useState();
+
 
     useEffect(() => {
         filterTransactions();
@@ -133,19 +130,19 @@ const TransactionsFilter = () => {
     const getTransactions = async () => {
         const yearMonth = `${selectedYear.current}-${selectedMonth.current}`;
 
-        // Update loading value to redux store using redux action to show Loading...
-        dispatch(loadingAction());
+        // // Update loading value to redux store using redux action to show Loading...
+        dispatch(changeLoadingAction(true));
 
         const transactionsByType = await getTransactionsByType(scrutinizedUser, yearMonth, selectedType.current);
         // console.warn(transactionsByType);
 
         // Update summerized data to redux store by using redux actions
         dispatch(
-            listTransactionsAction(transactionsByType)
+            addTransactionsAction(transactionsByType)
         )
 
-        // Update loading value to redux store using redux action to hide Loading...
-        dispatch(loadedAction());
+        // // Update loading value to redux store using redux action to hide Loading...
+        dispatch(changeLoadingAction(false));
 
         // filterTransactions();
 
@@ -172,30 +169,28 @@ const TransactionsFilter = () => {
                         DateTime.fromISO(`${selectedYear.current}-${selectedMonth.current}-${selectedDay.current}`).toISODate()
                     : transaction
             })
-        ?.filter((transaction, index) => {
-            return areaManager.current !== "All"
-                ? transaction.customer.AreaManager === areaManager.current
-                : transaction
-        })
-        ?.filter((transaction, index) => {
-            return areaPerson.current !== "All"
-                ? transaction.customer.AreaPerson === areaPerson.current
-                : transaction
-        })
-        ?.filter((transaction) => {
-            return transaction?.AcNo?.includes(searchedName.current)
-                || transaction?.Bill?.toString().includes(searchedName.current)
-                || transaction?.customer.CustName?.toLowerCase().includes(searchedName.current.toLowerCase())
-                || transaction?.customer.Area?.toLowerCase().includes(searchedName.current.toLowerCase())
-                || transaction?.customer.Address?.toLowerCase().includes(searchedName.current.toLowerCase())
-                || transaction?.customer.MobNo?.toLowerCase().includes(searchedName.current.toLowerCase())
-                || transaction?.customer.VC_NDS_MAC_ID?.toLowerCase().includes(searchedName.current.toLowerCase())
-        });
+            ?.filter((transaction, index) => {
+                return areaManager.current !== "All"
+                    ? transaction.customer.AreaManager === areaManager.current
+                    : transaction
+            })
+            ?.filter((transaction, index) => {
+                return areaPerson.current !== "All"
+                    ? transaction.customer.AreaPerson === areaPerson.current
+                    : transaction
+            })
+            ?.filter((transaction) => {
+                return transaction?.AcNo?.includes(searchedName.current)
+                    || transaction?.Bill?.toString().includes(searchedName.current)
+                    || transaction?.customer.CustName?.toLowerCase().includes(searchedName.current.toLowerCase())
+                    || transaction?.customer.Area?.toLowerCase().includes(searchedName.current.toLowerCase())
+                    || transaction?.customer.Address?.toLowerCase().includes(searchedName.current.toLowerCase())
+                    || transaction?.customer.MobNo?.toLowerCase().includes(searchedName.current.toLowerCase())
+                    || transaction?.customer.VC_NDS_MAC_ID?.toLowerCase().includes(searchedName.current.toLowerCase())
+            });
 
-        // Update filtered summerized transaction to redux store using redux action
-        dispatch(
-            filterSummarizedTransactionsAction(filteredData)
-        );
+        // Set filtered customer data to state
+        setFilteredTransactions(filteredData);
 
         setCurrentPage(1);
 
@@ -213,9 +208,11 @@ const TransactionsFilter = () => {
 
         // Updating sliced data to redux store using redux action
         dispatch(
-            sliceFilteredTransactionsAction(
-                filteredData?.slice(firtCardIndex.current, lastCardIndex.current),
-                firtCardIndex.current
+            addFilteredTransactionsAction(
+                {
+                    filteredData: filteredData?.slice(firtCardIndex.current, lastCardIndex.current),
+                    firtCardIndex: firtCardIndex.current
+                }
             )
         );
     }
@@ -223,7 +220,7 @@ const TransactionsFilter = () => {
     // This function calls sliceTransactions and setCurrentPage functions
     // This function used by pagination element (buttons) to move on first, last, next and pre page
     const handlePagination = (pageNo) => {
-        sliceTransactions(filteredSummarizedTtransactions, pageNo);
+        sliceTransactions(filteredTransactions, pageNo);
         setCurrentPage(pageNo);
     }
 
@@ -384,7 +381,7 @@ const TransactionsFilter = () => {
                 </div>
 
                 {/* Page Navigation buttons */}
-                {filteredSummarizedTtransactions?.length > cardsPerPage.current &&
+                {filteredTransactions?.length > cardsPerPage.current &&
                     <FormGroup className="mt-2 d-flex justify-content-center align-items-start">
                         {currentPage > 1 && <ButtonGroup size="sm">
                             <Button variant="dark" className="fw-bold text-light"
@@ -398,17 +395,17 @@ const TransactionsFilter = () => {
 
                         <Form.Label className="text-light mx-2">
                             {
-                                firtCardIndex.current + 1 === filteredSummarizedTtransactions?.length // if first index equal to no of records
+                                firtCardIndex.current + 1 === filteredTransactions?.length // if first index equal to no of records
                                     ? ""
                                     : firtCardIndex.current + 1 + "-"
                             }
                             {
-                                lastCardIndex.current > filteredSummarizedTtransactions?.length // if last index is greater than no of records
-                                    ? filteredSummarizedTtransactions?.length
+                                lastCardIndex.current > filteredTransactions?.length // if last index is greater than no of records
+                                    ? filteredTransactions?.length
                                     : lastCardIndex.current
                             }
                             {
-                                " of " + filteredSummarizedTtransactions?.length
+                                " of " + filteredTransactions?.length
                             }
                         </Form.Label>
 

@@ -15,7 +15,10 @@ const pageRoutes = (scrutinizedUser) => {
             {publicRoutes}
 
             {/* Private Routes */}
-            {scrutinizedUser.token && privateRoutes("self")}
+            {
+                scrutinizedUser.token &&
+                privateRoutes(scrutinizedUser.Admin)
+            }
 
             {/* Unknown Route */}
             <Route path="*" element={<PageNotFound />} />

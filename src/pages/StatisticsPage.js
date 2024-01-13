@@ -4,7 +4,7 @@ import STBPieChart from "../components/charts/STBPieChart";
 import STBRCBarChart from "../components/charts/STBRCBarChart";
 import { Form } from "react-bootstrap";
 import { useSelector } from "react-redux";
-import { readTransactions } from "../crudAPIs/transactionsAPIs";
+import { readTransactionsRequest } from "../apiRequests/transactionsAPIs";
 import { useEffect, useRef, useState } from "react";
 import { DateTime } from "luxon";
 import _ from "lodash";
@@ -12,7 +12,7 @@ import _ from "lodash";
 // This page used by routes/PagesRoutes
 // This page shows charts
 const StatisticsPage = () => {
-    const scrutinizedUser = useSelector(state => state.scrutinyUserReducer); // to get token
+    const { scrutinizedUser } = useSelector(state => state.usersReducer); // to get token
 
     // Variable to store month and year
     const statMonth = useRef(DateTime.now().minus({ months: 1 }).toFormat("LLL"));
@@ -38,7 +38,7 @@ const StatisticsPage = () => {
         // Variable to store collection nam
         const collectionName = "statistics";
 
-        const statData = (await readTransactions(scrutinizedUser, collectionName, statYear.current));
+        const statData = (await readTransactionsRequest(scrutinizedUser, collectionName, statYear.current));
 
         setStatisticsData(statData);
 

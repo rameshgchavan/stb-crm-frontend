@@ -5,7 +5,7 @@ import { DateTime } from "luxon";
 import { useSelector } from "react-redux";
 
 import composeBouquet from "../../../functions/transactions/composeBouquet";
-import { readTransactions } from "../../../crudAPIs/transactionsAPIs";
+import { readTransactionsRequest } from "../../../apiRequests/transactionsAPIs";
 
 // This component used by packegeForm/FilterSection
 // This component filters bouquets by year and months
@@ -38,7 +38,7 @@ const FilterSection = ({ requiredTools }) => {
     }
 
     // Get scrutinized user form redux store
-    const scrutinizedUser = useSelector(state => state.scrutinyUserReducer); // to get token
+    const { scrutinizedUser } = useSelector(state => state.usersReducer); // to get token
 
     useEffect(() => {
         const collectionName = transactionDate.length == 8
@@ -52,7 +52,7 @@ const FilterSection = ({ requiredTools }) => {
     // This fucntion get transantion where A/c No matches
     const listTransactions = async (collectionName, transactionDate) => {
         // Get transactions by A/c no
-        const acNoTransactionsList = await readTransactions(scrutinizedUser, collectionName, acNo);
+        const acNoTransactionsList = await readTransactionsRequest(scrutinizedUser, collectionName, acNo);
 
         setTransactions(acNoTransactionsList);
 

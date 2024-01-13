@@ -3,19 +3,17 @@ import { Link } from "react-router-dom";
 
 // Import redux methods
 import { useSelector, useDispatch } from "react-redux";
-import { authenticateUserAction } from "../redux/actions"
+import { addScrutinizedUserAction } from "../redux/features/users/usersSlice";
 
 // This component used in components/Header.jsx
 // This component shows page navigation links
 const NavBar = () => {
-    const scrutinizedUser = useSelector(reducers => reducers.scrutinyUserReducer);
-
-    // JSON.stringify(scrutinizedUser);
+    const { scrutinizedUser } = useSelector(state => state.usersReducer);
 
     const dispatch = useDispatch();
 
     const handleLogout = () => {
-        dispatch(authenticateUserAction({}));
+        dispatch(addScrutinizedUserAction({}));
     }
 
     return (

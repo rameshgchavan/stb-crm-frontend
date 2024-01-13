@@ -1,6 +1,18 @@
-import { legacy_createStore as createStore, applyMiddleware, compose } from "redux";
-import thunk from "redux-thunk";
+import { configureStore } from "@reduxjs/toolkit";
 
-import { rootReducer } from "../reducers";
+// reducers
+import usersReducer from "../features/users/usersSlice";
+import customersReducer from "../features/customers/customersSlice";
+import transactionsReducer from "../features/transactions/transactionsSlice";
+import loadingReducer from "../features/loadingSlice";
 
-export const store = createStore(rootReducer, compose(applyMiddleware(thunk)))
+// store
+export const store = configureStore({
+    reducer:
+    {
+        usersReducer,
+        customersReducer,
+        transactionsReducer,
+        loadingReducer
+    }
+});

@@ -2,14 +2,14 @@ import { Button, Container, Form, FormGroup } from "react-bootstrap"
 import { useSelector } from "react-redux";
 import fileDownload from "js-file-download";
 
-import { createCustomers, downloadCustomersSampleFile } from "../../crudAPIs/customersAPIs";
+import { createCustomersRequest, downloadCustomersSampleFileRequest } from "../../apiRequests/customersAPIs";
 import { useState } from "react";
 import papaParse from "papaparse";
 
 // This component used by pages/SettingPage.js
 // This component used for uploading customers in bulk
 export const BulkCustomers = () => {
-    const scrutinizedUser = useSelector(state => state.scrutinyUserReducer);
+    const { scrutinizedUser } = useSelector(state => state.usersReducer);
 
     const [file, setFile] = useState();
     const [isUploading, setIsUploading] = useState(false);
@@ -26,7 +26,7 @@ export const BulkCustomers = () => {
 
                 const fileData = data.data.filter(data => data.AcNo != "");
 
-                const resp = await createCustomers(scrutinizedUser, fileData);
+                const resp = await createCustomersRequest(scrutinizedUser, fileData);
                 alert(resp.message);
 
                 setIsUploading(false);
@@ -35,7 +35,7 @@ export const BulkCustomers = () => {
     }
 
     const handleDownload = async () => {
-        const file = await downloadCustomersSampleFile(scrutinizedUser);
+        const file = await downloadCustomersSampleFileRequest(scrutinizedUser);
         fileDownload(file, "Bulk Customers.xlsx")
     }
 

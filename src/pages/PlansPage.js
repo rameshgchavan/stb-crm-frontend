@@ -1,21 +1,21 @@
 import { Button, Container, Form, FormGroup } from "react-bootstrap";
 import PlansCard from "../components/cards/PlanCard";
 import { useEffect, useRef, useState } from "react";
-import { readPlans } from "../crudAPIs/plansAPIs";
+import { readPlansRequest } from "../apiRequests/plansAPIs";
 import { useSelector } from "react-redux";
 import PlanForm from "../components/forms/PlanForm";
 
 // This page used by routes/PagesRoutes
 // This page shows plan components
 const PlansPage = () => {
-    const scrutinizedUser = useSelector(state => state.scrutinyUserReducer);
+    const { scrutinizedUser } = useSelector(state => state.usersReducer);
     const [plans, setPlans] = useState();
     const [addPlan, setAddPlan] = useState(false);
     const plansData = useRef();
     const searchedName = useRef();
 
     useEffect(() => {
-        readPlans(scrutinizedUser)
+        readPlansRequest(scrutinizedUser)
             .then((plans) => {
                 plansData.current = plans;
                 setPlans(plans);

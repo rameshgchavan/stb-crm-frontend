@@ -4,11 +4,13 @@ import { useRef } from 'react';
 
 import { useDispatch } from 'react-redux';
 
-// Import actions from redux/actions folder
-import { authenticateUserAction, listCustomersAction, listUsersAction } from "../../redux/actions"
 import { DateTime } from 'luxon';
-import { readCustomers } from '../../crudAPIs/customersAPIs';
-import { readUsers, readUser, updateUser } from '../../crudAPIs/usersAPIs';
+import { readCustomersRequest } from '../../apiRequests/customersAPIs';
+import { readUsersRequest, readUserRequest, updateUserRequest } from '../../apiRequests/usersAPIs';
+
+// redux actions
+import { addScrutinizedUserAction, addUsersAction } from '../../redux/features/users/usersSlice';
+import { addCustomersAction } from "../../redux/features/customers/customersSlice"
 
 // This component used by routes/PublicRoutes
 // This component checks user credentials
@@ -23,7 +25,7 @@ const Login = () => {
 
     const updateLoginDateTime = async (user, object) => {
         const id = user._id
-        await updateUser(user, id, object)
+        await updateUserRequest(user, id, object)
     }
 
     // This function called on form's submit button (Login) clicked
@@ -35,7 +37,7 @@ const Login = () => {
             Password: password.current.toString()
         }
 
-        const user = await readUser(crediantials);
+        const user = await readUserRequest(crediantials);
 
         if (user.code === 404) {
             alert("Email ID not matching or not registered")
@@ -72,13 +74,15 @@ const Login = () => {
         localStorage.setItem("FilterSetting", JSON.stringify(resetSetting));
 
         // update user redux
-        dispatch(authenticateUserAction(user));
+        // dispatch(authenticateUserAction(user));
+        dispatch(addScrutinizedUserAction(user));
 
         // Get users and update users rudux
-        dispatch(listUsersAction(await readUsers(user)));
+        (user.Admin == "stb-crm" || user.Admin == "self") &&
+            dispatch(addUsersAction(await readUsersRequest(user)));
 
         // Get customers and update customers rudux
-        dispatch(listCustomersAction(await readCustomers(user)));
+        dispatch(addCustomersAction(await readCustomersRequest(user)));
 
         // update last login date and time in database
         updateLoginDateTime(user, { LastLogin: DateTime.now().toFormat("dd-MMM-yyyy hh:mm:ss a") });

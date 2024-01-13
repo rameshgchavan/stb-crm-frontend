@@ -1,6 +1,6 @@
 import { Button, ButtonGroup, Container, Form, FormGroup } from "react-bootstrap"
 import { useDispatch } from "react-redux";
-import { setUserStatusAction, searchUserAction } from "../../redux/actions";
+import { addUserStatus } from "../../redux/features/users/usersSlice";
 import { useRef } from "react";
 
 /*This component filters users */
@@ -15,15 +15,15 @@ const UsersFilter = () => {
                 {/* Choice buttons */}
                 <ButtonGroup size="sm">
                     <Button variant="warning"
-                        onClick={() => { dispatch(setUserStatusAction("pending")) }}
+                        onClick={() => { dispatch(addUserStatus("pending")) }}
                     >Pending</Button>
 
                     <Button variant="success"
-                        onClick={() => { dispatch(setUserStatusAction("approved")) }}
+                        onClick={() => { dispatch(addUserStatus("approved")) }}
                     >Approved</Button>
 
                     <Button variant="danger"
-                        onClick={() => { dispatch(setUserStatusAction("blocked")) }}
+                        onClick={() => { dispatch(addUserStatus("blocked")) }}
                     >Blocked</Button>
                 </ButtonGroup>
 
@@ -34,7 +34,7 @@ const UsersFilter = () => {
                     />
 
                     <Button className="ms-2"
-                        onClick={() => { dispatch(searchUserAction(userName.current)) }}
+                    // onClick={() => { dispatch(searchUserAction(userName.current)) }}
                     >Search</Button>
                 </FormGroup>
             </Form>

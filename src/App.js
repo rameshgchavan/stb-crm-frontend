@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 
 function App() {
   // Get scrutinized user from redux store
-  const scrutinizedUser = useSelector(state => state.scrutinyUserReducer);
+  const { scrutinizedUser } = useSelector(state => state.usersReducer);
 
   return (
     <div className="App">

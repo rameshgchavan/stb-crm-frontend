@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react"
 import { Button, Container, FormGroup } from "react-bootstrap"
 import { Form } from "react-bootstrap"
-import { updatePlan } from "../../crudAPIs/plansAPIs";
+import { updatePlanRequest } from "../../apiRequests/plansAPIs";
 import { useSelector } from "react-redux";
 
 // This component used by pages/PlansPage.js
 // This component shows plan details
 const PlanCard = ({ index, plans }) => {
-    const scrutinizedUser = useSelector(state => state.scrutinyUserReducer);
+    const { scrutinizedUser } = useSelector(state => state.usersReducer);
 
     const [customMRP, setCustomMRP] = useState(plans?.CustomMRP);
 
@@ -20,7 +20,7 @@ const PlanCard = ({ index, plans }) => {
             CustomMRP: customMRP
         };
 
-        updatePlan(scrutinizedUser, plans?.PlanName, planData)
+        updatePlanRequest(scrutinizedUser, plans?.PlanName, planData)
             .then(res => {
                 alert(res.message);
             })

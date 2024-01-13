@@ -2,7 +2,8 @@ import { Button, ButtonGroup, Container, Form, FormGroup } from "react-bootstrap
 import { useEffect, useRef, useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
-import { filterCustomersAction } from "../../redux/actions";
+
+import { addFilteredCustomersAction } from "../../redux/features/customers/customersSlice";
 
 /*This component filters customer data as user choice*/
 // This component is used in routes/FilterRoutes
@@ -18,11 +19,12 @@ const CustomersFilter = () => {
 
     const searchedName = useRef("");
 
-    const [filteredCustomres, setFilteredCutomers] = useState();
+    const [filteredCustomres, setFilteredCustomers] = useState();
 
     // Get customers list and scrutinized user 
-    const customersList = useSelector(state => state.customersListReducer)?.data;
-    const scrutinizedUser = useSelector(state => state.scrutinyUserReducer);
+    const customersList = useSelector(state => state.customersReducer.customers);
+    const { scrutinizedUser } = useSelector(state => state.usersReducer);
+
 
     // Checked and initialized. Is user admin or not.  
     const { Admin, Name: userName } = scrutinizedUser;
@@ -172,7 +174,7 @@ const CustomersFilter = () => {
         }
 
         // Set filtered customer data to state
-        setFilteredCutomers(filteredData);
+        setFilteredCustomers(filteredData);
         setCurrentPage(1);
 
         // Send filtered customer to slice
@@ -189,9 +191,11 @@ const CustomersFilter = () => {
 
         // Updating sliced data to redux store using redux action
         dispatch(
-            filterCustomersAction(
-                filteredData?.slice(firtCardIndex.current, lastCardIndex.current),
-                firtCardIndex.current
+            addFilteredCustomersAction(
+                {
+                    filteredData: filteredData?.slice(firtCardIndex.current, lastCardIndex.current),
+                    firtCardIndex: firtCardIndex.current
+                }
             )
         );
     }

@@ -2,14 +2,14 @@ import { Button, Container, Form, FormGroup } from "react-bootstrap"
 import { useSelector } from "react-redux";
 import fileDownload from "js-file-download";
 
-import { createPlans, downloadPlansSampleFile } from "../../crudAPIs/plansAPIs";
+import { createPlansRequest, downloadPlansSampleFileRequest } from "../../apiRequests/plansAPIs";
 import { useState } from "react";
 import papaParse from "papaparse";
 
 // This component used by pages/SettingPage.js
 // This component used for uploading Plans in bulk
 export const BulkPlans = () => {
-    const scrutinizedUser = useSelector(state => state.scrutinyUserReducer);
+    const { scrutinizedUser } = useSelector(state => state.usersReducer);
 
     const [file, setFile] = useState();
     const [isUploading, setIsUploading] = useState(false);
@@ -26,7 +26,7 @@ export const BulkPlans = () => {
 
                 const fileData = data.data.filter(data => data.PlanName != "");
 
-                const resp = await createPlans(scrutinizedUser, fileData);
+                const resp = await createPlansRequest(scrutinizedUser, fileData);
                 alert(resp.message);
 
                 setIsUploading(false);
@@ -35,7 +35,7 @@ export const BulkPlans = () => {
     }
 
     const handleDownload = async () => {
-        const file = await downloadPlansSampleFile(scrutinizedUser);
+        const file = await downloadPlansSampleFileRequest(scrutinizedUser);
         fileDownload(file, "Bulk Plans.xlsx")
     }
 

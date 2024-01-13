@@ -4,12 +4,6 @@ import { useSelector } from "react-redux";
 // This component used by packegeForm/index.js
 // This component is part of package form and holds customer details
 const CustomerSection = ({ customer }) => {
-    // Get customer list form redux store
-    const customersList = useSelector(state => state.customersListReducer)?.data;
-
-    // Find customer where id matches
-    // const customer = customersList?.find((customer) => customer.AcNo == acNo);
-
     // Destructure customer details and set aliases
     const {
         AcNo:acNo,CustName:name, Area:area, MobNo:mobile, LCOCode:lcoCode, VC_NDS_MAC_ID:vcNdsMacId

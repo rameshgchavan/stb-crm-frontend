@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 // This component used by customerForm/index.js
 // This component is part of customer form and holds customer details
 const CustomerSection = ({ customer }) => {
-    const customersList = useSelector(state => state.customersListReducer)?.data;
+    const { customers: customersList } = useSelector(state => state.customersReducer);
 
     const {
         isFree, setIsFree, date, name, area, address, mobile

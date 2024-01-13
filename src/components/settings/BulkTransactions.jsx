@@ -1,7 +1,7 @@
 import { Button, Container, Form, FormGroup } from "react-bootstrap"
 import { useSelector } from "react-redux";
 
-import { createTransactions, downloadTransactionsSampleFile } from "../../crudAPIs/transactionsAPIs";
+import { createTransactionsRequest, downloadTransactionsSampleFileRequest } from "../../apiRequests/transactionsAPIs";
 import { useRef, useState } from "react";
 import { DateTime } from "luxon";
 import fileDownload from "js-file-download";
@@ -10,7 +10,7 @@ import papaParse from "papaparse";
 // This component used by pages/SettingPage.js
 // This component used for uploading transactions in bulk
 const BulkTransactions = () => {
-    const scrutinizedUser = useSelector(state => state.scrutinyUserReducer);
+    const { scrutinizedUser } = useSelector(state => state.usersReducer);
 
     const [file, setFile] = useState();
     const [isUploading, setIsUploading] = useState(false);
@@ -50,7 +50,7 @@ const BulkTransactions = () => {
                 setIsUploading(true);
 
                 const fileData = data.data.filter(data => data.CustomerID != "");
-                const resp = await createTransactions(scrutinizedUser, fileData, yearMonth);
+                const resp = await createTransactionsRequest(scrutinizedUser, fileData, yearMonth);
 
                 alert(
                     `${resp.packagesBillsRes.message}, ${resp.packageCustomersRes.message} and ${resp.statisticsRes.message} uploaded successfully`
@@ -62,7 +62,7 @@ const BulkTransactions = () => {
     }
 
     const handleDownload = async () => {
-        const file = await downloadTransactionsSampleFile(scrutinizedUser);
+        const file = await downloadTransactionsSampleFileRequest(scrutinizedUser);
         fileDownload(file, "Bulk Transactions.xlsx")
     }
 

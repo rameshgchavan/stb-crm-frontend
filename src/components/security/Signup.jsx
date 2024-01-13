@@ -1,12 +1,12 @@
 import { Container, Button, Form } from 'react-bootstrap';
 import emailjs from "@emailjs/browser";
 
-import { readUserEmail } from '../../crudAPIs/usersAPIs/readUsersAPIs';
+import { readUserEmailRequest } from '../../apiRequests/usersAPIs/readUsersAPIs';
 
 // Import actions from redux/actions folder
 import { useNavigate } from 'react-router-dom';
 import { useRef, useState } from 'react';
-import { createUser } from '../../crudAPIs/usersAPIs';
+import { createUserRequest } from '../../apiRequests/usersAPIs';
 
 // This component used by routes/PublicRoutes
 // This component checks user credentials and saves new user to database
@@ -32,8 +32,8 @@ const Signup = () => {
     const sendEmail = async (e) => {
         e.preventDefault();
 
-        const isAdminEmail = await readUserEmail({ Email: adminEmail.current?.trim() });
-        const isUserEmail = await readUserEmail({ Email: emailID.current?.trim() });
+        const isAdminEmail = await readUserEmailRequest({ Email: adminEmail.current?.trim() });
+        const isUserEmail = await readUserEmailRequest({ Email: emailID.current?.trim() });
 
         if (!isAdmin && isAdminEmail.code == 404) {
             alert(`${adminEmail.current} not found.`)
@@ -79,7 +79,7 @@ const Signup = () => {
             LastLogin: ""
         }
 
-        const user = await createUser(userDetails);
+        const user = await createUserRequest(userDetails);
 
         user.code === 201
             ? alert(`${user.message} Wait for approval or contact to authority.`)

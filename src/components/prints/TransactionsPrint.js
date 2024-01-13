@@ -16,8 +16,7 @@ const TransactionsPrint = () => {
     const [lcoPrice, setLCOPrice] = useState(false);
 
     // Get filtered summerized transactions from redux store
-    const filteredSummarizedTransactions =
-        useSelector(state => state.summarizedTransactionsFilterationReducer)?.data;
+    const { filteredTransactions } = useSelector(state => state.transactionsReducer);
 
     // This function called on print button clicked
     // This function passes form data to print-to-react library
@@ -73,7 +72,7 @@ const TransactionsPrint = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {filteredSummarizedTransactions.map((transactions, index) => {
+                    {filteredTransactions.map((transactions, index) => {
                         totalBill += parseFloat(transactions.Bill);
                         totalLCOPrice += parseFloat(transactions.totalLCOPrice);
 

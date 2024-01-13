@@ -4,7 +4,7 @@ import emailjs from "@emailjs/browser";
 // Import actions from redux/actions folder
 import { useNavigate } from 'react-router-dom';
 import { useRef, useState } from 'react';
-import { readUserEmail, updateUserPassword } from '../../crudAPIs/usersAPIs';
+import { readUserEmailRequest, updateUserPasswordRequest } from '../../apiRequests/usersAPIs';
 
 // This component used by routes/PublicRoutes
 // This component reset user login password
@@ -28,7 +28,7 @@ const ForgotPassword = () => {
     const sendEmail = async (e) => {
         e.preventDefault();
 
-        const isEmail = await readUserEmail({ Email: emailID.current.trim() });
+        const isEmail = await readUserEmailRequest({ Email: emailID.current.trim() });
 
         if (isEmail.code == 200) {
             // console.warn(emailOTP);
@@ -69,7 +69,7 @@ const ForgotPassword = () => {
             Password: newPassword.current.trim(),
         }
 
-        const user = await updateUserPassword(userCredentails);
+        const user = await updateUserPasswordRequest(userCredentails);
 
         if (user.code === 202) {
             alert("Password changed successfully.");

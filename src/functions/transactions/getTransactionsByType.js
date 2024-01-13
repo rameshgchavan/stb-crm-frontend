@@ -1,7 +1,7 @@
 import { DateTime } from "luxon";
 import _ from "lodash";
 
-import { readTransactions } from "../../crudAPIs/transactionsAPIs";
+import { readTransactionsRequest } from "../../apiRequests/transactionsAPIs";
 
 const getTransactionsByType = async (scrutinizedUser, yearMonth, selectedType) => {
     if (selectedType === "Expiry") {
@@ -91,7 +91,7 @@ const customersPackages = async (scrutinizedUser, curDocName) => {
     const {
         packagesBills,
         packageCustomers
-    } =( await readTransactions(scrutinizedUser, "", curDocName));
+    } =( await readTransactionsRequest(scrutinizedUser, "", curDocName));
 
     return await packagesBills?.map(packageBill => {
         const id = "61633" + packageBill.AcNo.split("").join("3");

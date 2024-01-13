@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react"
 import { Button, Container, FormGroup } from "react-bootstrap"
 import { Form } from "react-bootstrap"
-import { createPlan, readPlans } from "../../crudAPIs/plansAPIs";
+import { createPlanRequest, readPlansRequest } from "../../apiRequests/plansAPIs";
 import { useSelector } from "react-redux";
 
 // This component used by pages/PlansPage.js
@@ -12,10 +12,10 @@ const PlanForm = ({ props }) => {
     const planForm = useRef();
     const plansData = useRef();
 
-    const scrutinizedUser = useSelector(state => state.scrutinyUserReducer);
+    const { scrutinizedUser } = useSelector(state => state.usersReducer);
 
     useEffect(() => {
-        readPlans(scrutinizedUser)
+        readPlansRequest(scrutinizedUser)
             .then((plans) => {
                 plansData.current = plans;
             })
@@ -49,7 +49,7 @@ const PlanForm = ({ props }) => {
             return
         };
 
-        createPlan(scrutinizedUser, planData)
+        createPlanRequest(scrutinizedUser, planData)
             .then(res => {
                 alert(res.message);
                 setAddPlan(false);

@@ -8,8 +8,8 @@ import STBSection from "./STBSection";
 import SeedSection from "./SeedSection";
 
 import checkAdminGetDbName from "../../../functions/checkAdminGetDbName"
-import { updateCustomerAction } from "../../../redux/actions";
-import { createCustomer, updateCustomer } from "../../../crudAPIs/customersAPIs";
+import { updateCustomerAction } from "../../../redux/features/customers/customersSlice";
+import { createCustomerRequest, updateCustomerRequest } from "../../../apiRequests/customersAPIs";
 
 // This component combines customer related components
 // This index component used by modals/CustomerModal
@@ -19,12 +19,12 @@ const CustomerForm = ({ id }) => {
     const dispatch = useDispatch();
 
     // to get token
-    const scrutinizedUser = useSelector(state => state.scrutinyUserReducer);
+    const { scrutinizedUser } = useSelector(state => state.usersReducer);
 
     const { isAdmin } = checkAdminGetDbName(scrutinizedUser);
 
     // Got customer list from redux store
-    const customersList = useSelector(state => state.customersListReducer)?.data;
+    const { customers: customersList } = useSelector(state => state.customersReducer);
 
     // To count Names those already exist in database
     const countName = (name) => {
@@ -83,7 +83,7 @@ const CustomerForm = ({ id }) => {
     // This function called by handleSubmit function
     const handleSave = async (customerData) => {
         // Save a customer data
-        const response = await createCustomer(scrutinizedUser, customerData);
+        const response = await createCustomerRequest(scrutinizedUser, customerData);
 
         response.code === 201
             ? alert(`${response.message}`)
@@ -99,7 +99,7 @@ const CustomerForm = ({ id }) => {
     // This function called by handleSubmit function
     const handleUpdate = async (customerData) => {
         // Update a customer data
-        const response = await updateCustomer(scrutinizedUser, customerData, id);
+        const response = await updateCustomerRequest(scrutinizedUser, customerData, id);
 
         response.code === 202
             ? alert(`${response.message}`)
