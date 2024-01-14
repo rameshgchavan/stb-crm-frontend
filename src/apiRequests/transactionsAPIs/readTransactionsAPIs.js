@@ -16,6 +16,24 @@ const readTransactionsRequest = async (scrutinizedUser, collectionName, yearMont
     );
 };
 
+// get all packages by customer's account number
+const readPackagesByAcNoRequest = async (scrutinizedUser, acNo) => {
+    const { dbName } = checkAdminGetDbName(scrutinizedUser);
+
+    return (
+        (
+            await axios.request(
+                {
+                    method: "POST",
+                    url: "/transactions/packages",
+                    headers: { authorization: `bearer ${scrutinizedUser.token}` },
+                    data: { dbName, acNo }
+                }
+            )
+        )?.data
+    )
+}
+
 //Download Bulk Transactions.xlsx file
 const downloadTransactionsSampleFileRequest = async (scrutinizedUser) => {
     return (
@@ -32,4 +50,5 @@ const downloadTransactionsSampleFileRequest = async (scrutinizedUser) => {
 export {
     readTransactionsRequest,
     downloadTransactionsSampleFileRequest,
+    readPackagesByAcNoRequest
 }

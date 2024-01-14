@@ -1,5 +1,5 @@
 import { Form } from "react-bootstrap"
-import { DateTime } from "luxon";
+import { useSelector } from "react-redux";
 
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { RiCheckboxMultipleLine } from "react-icons/ri"
@@ -7,14 +7,20 @@ import { FaWhatsappSquare } from "react-icons/fa"
 import { MdReadMore } from "react-icons/md"
 import { SiBookstack } from "react-icons/si"
 import CustomerModal from "../modals/CustomerModal";
-import PackageModal from "../modals/PackageModal";
+import PackageHistoryModal from "../modals/PackageHistoryModal";
 import { useState } from "react";
+
+import { readPackagesByAcNoRequest } from "../../apiRequests/transactionsAPIs/readTransactionsAPIs";
 
 // This component shows customer's details and used by pages/CustomersPage 
 const CustomerCard = ({ customer, srNo }) => {
+    // get scrutinized user
+    const { scrutinizedUser } = useSelector(state => state.usersReducer)
+
     // Initialized state varibles
     const [customerModalShow, setCustomerModalShow] = useState(false);
-    const [packageModalShow, setPackageModalShow] = useState(false);
+    const [packageHistoryModalShow, setPackageHistoryModalShow] = useState(false);
+    const [packageHistory, setPackageHistory] = useState([]);
 
     // Destructured and put aliases. Here name is an alias of CustName
     // Its not an object of key value pair.
@@ -33,7 +39,7 @@ const CustomerCard = ({ customer, srNo }) => {
         AreaPerson: areaPerson,
     } = customer;
 
-    // Variable stores text to copy to clipboard
+    // Variable to store copied text to clipboard
     const copyToShare = `*Name:* ${name}
 *Area:* ${area}
 *Mobile:* ${mobile}
@@ -86,7 +92,13 @@ const CustomerCard = ({ customer, srNo }) => {
                      text-uppercase fw-bolder`}>{status}</div>
 
                         <SiBookstack size={30} className="text-warning"
-                        // onClick={() => setPackageModalShow(true)}
+                            onClick={async () => {
+                                setPackageHistory(
+                                    await readPackagesByAcNoRequest(scrutinizedUser, acNo)
+                                );
+                                
+                                setPackageHistoryModalShow(true);
+                            }}
                         />
                     </div>
 
@@ -120,12 +132,12 @@ const CustomerCard = ({ customer, srNo }) => {
                 id={id}
             />
             {/* Modal */}
-            <PackageModal
-                showMe={packageModalShow}
-                closeMe={setPackageModalShow}
-                title={"Package"}
-                acNo={acNo}
-                transactionDate={DateTime.now().minus({ months: 1 }).toFormat("LLL-yyyy")}
+            <PackageHistoryModal
+                showMe={packageHistoryModalShow}
+                closeMe={setPackageHistoryModalShow}
+                title={`Package history: ${customer?.CustName}`}
+                customer={customer}
+                packageHistory={packageHistory}
             />
         </>
     )
