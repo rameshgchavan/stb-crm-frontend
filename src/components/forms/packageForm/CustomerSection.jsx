@@ -1,5 +1,4 @@
 import { Form, FormGroup } from "react-bootstrap";
-import { useSelector } from "react-redux";
 
 // This component used by packegeForm/index.js
 // This component is part of package form and holds customer details

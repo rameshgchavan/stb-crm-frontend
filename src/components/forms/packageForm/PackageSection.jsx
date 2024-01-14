@@ -63,7 +63,7 @@ const PackageSection = ({ transaction }) => {
                         >
                             <PackageCard key={index} plan={plan} />
                         </div>
-                })};
+                })}
 
             <div name="ncf" className="d-lg-flex justify-content-between bg-secondary text-light rounded-bottom p-2 mb-1 text-lg-start">
                 <div className="d-flex col-lg-3 justify-content-between">
