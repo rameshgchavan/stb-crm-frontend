@@ -29,24 +29,7 @@ const downloadTransactionsSampleFileRequest = async (scrutinizedUser) => {
     )
 };
 
-// List all months(Jan to Dec) transactions a/c no of given year
-const readTransactionsAcNosOfYearRequest = async (scrutinizedUser, ofYear) => {
-    const { dbName } = checkAdminGetDbName(scrutinizedUser);
-
-    return (
-        (await axios(`/transactions/rcstbacno`,
-            {
-                method: "post",
-                headers: { authorization: `bearer ${scrutinizedUser.token}` },
-                data: { dbName, ofYear }
-            }
-        ))?.data
-    )
-};
-
-
 export {
     readTransactionsRequest,
     downloadTransactionsSampleFileRequest,
-    readTransactionsAcNosOfYearRequest
 }
