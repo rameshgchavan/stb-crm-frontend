@@ -120,12 +120,7 @@ This component has Save (in case of adding new cusomter), Update and Delete butt
 - #### /`forms`/`packageForm`
      - /`index.jsx`
        
-This is a root component and renders three components CustomerSection, FilterSection and PackageSection.
-
-- #### /`forms`/`packageForm`
-     /`FilterSection.jsx`
-
-This component filters transactions of selected year and month that has chosen by user
+This is a root component and renders tow components CustomerSection and PackageSection.
 
 - #### /`forms`/`packageForm`
      - /`CustomerSection.jsx`, /`PackageSection.jsx`
