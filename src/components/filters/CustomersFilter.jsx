@@ -25,7 +25,6 @@ const CustomersFilter = () => {
     const customersList = useSelector(state => state.customersReducer.customers);
     const { scrutinizedUser } = useSelector(state => state.usersReducer);
 
-
     // Checked and initialized. Is user admin or not.  
     const { Admin, Name: userName } = scrutinizedUser;
     const isAdmin = Admin === "self" || Admin === "stb-crm" ? true : false;
