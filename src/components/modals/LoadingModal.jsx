@@ -10,9 +10,9 @@ const LoadingModal = () => {
   return (
     <div >
       <Modal show={showMe} fullscreen={true}>
-        <Modal.Header closeButton>
+        {/* <Modal.Header closeButton>
           <Modal.Title style={{ height: "16px", fontSize: "16px" }}>Loading</Modal.Title>
-        </Modal.Header>
+        </Modal.Header> */}
         <Modal.Body>
           <h3>Loading... please wait</h3>
         </Modal.Body>
