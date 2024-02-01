@@ -11,6 +11,10 @@ import { readUsersRequest, readUserRequest, updateUserRequest } from '../../apiR
 // redux actions
 import { addScrutinizedUserAction, addUsersAction } from '../../redux/features/users/usersSlice';
 import { addCustomersAction } from "../../redux/features/customers/customersSlice"
+import { changeLoadingAction } from "../../redux/features/loadingSlice";
+
+// component
+import LoadingModal from '../modals/LoadingModal';
 
 // This component used by routes/PublicRoutes
 // This component checks user credentials
@@ -59,6 +63,9 @@ const Login = () => {
             return
         }
 
+        // update redux to show loading modal
+        dispatch(changeLoadingAction(true));
+
         const filterSetting = JSON.parse(localStorage.getItem("FilterSetting"));
 
         const resetSetting = {
@@ -87,40 +94,48 @@ const Login = () => {
         // update last login date and time in database
         updateLoginDateTime(user, { LastLogin: DateTime.now().toFormat("dd-MMM-yyyy hh:mm:ss a") });
 
+        // update redux to hide loading modal
+        dispatch(changeLoadingAction(false));
+
         // navigate to user or customer page
         user.Admin === "stb-crm" ? navigate("/private/users") : navigate("/private/customers");
     }
 
     return (
-        <Container style={{ width: "22rem" }} className='border p-4 shadow' >
-            <Form onSubmit={handleLogin}>
-                <Form.Text className="text-muted">
-                    We'll never share your email with anyone else.
-                </Form.Text>
+        <>
+            <Container style={{ width: "22rem" }} className='border p-4 shadow' >
+                <Form onSubmit={handleLogin}>
+                    <Form.Text className="text-muted">
+                        We'll never share your email with anyone else.
+                    </Form.Text>
 
-                <Form.Floating className="mb-4">
-                    <Form.Control name="email" type="email" placeholder="Enter email" required
-                        onChange={(e) => emailID.current = e.target.value}
-                    />
-                    <Form.Label className="text-primary fw-bold">Enter email</Form.Label>
-                </Form.Floating>
+                    <Form.Floating className="mb-4">
+                        <Form.Control name="email" type="email" placeholder="Enter email" required
+                            onChange={(e) => emailID.current = e.target.value}
+                        />
+                        <Form.Label className="text-primary fw-bold">Enter email</Form.Label>
+                    </Form.Floating>
 
-                <Form.Floating className="mb-4">
-                    <Form.Control name="password" type="password" placeholder="Enter password" required
-                        onChange={(e) => password.current = e.target.value}
-                    />
-                    <Form.Label className="text-primary fw-bold">Enter password</Form.Label>
-                </Form.Floating>
+                    <Form.Floating className="mb-4">
+                        <Form.Control name="password" type="password" placeholder="Enter password" required
+                            onChange={(e) => password.current = e.target.value}
+                        />
+                        <Form.Label className="text-primary fw-bold">Enter password</Form.Label>
+                    </Form.Floating>
 
-                <Button variant="primary" type="submit" >
-                    Login
-                </Button>
-            </Form>
+                    <Button variant="primary" type="submit" >
+                        Login
+                    </Button>
+                </Form>
 
-            <Nav className='d-flex flex-column align-items-center mt-4'>
-                <Nav.Link onClick={() => navigate("/forgotpass")}>Forgot password</Nav.Link>
-            </Nav>
-        </Container>
+                <Nav className='d-flex flex-column align-items-center mt-4'>
+                    <Nav.Link onClick={() => navigate("/forgotpass")}>Forgot password</Nav.Link>
+                </Nav>
+            </Container>
+
+            {/* showing loading modal if that taking time */}
+            <LoadingModal />
+        </>
     )
 }
 
