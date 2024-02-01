@@ -212,7 +212,7 @@ const TransactionsFilter = () => {
         dispatch(
             addFilteredSlicedTransactionsAction(
                 {
-                    slicedTransactions: filteredData?.slice(firstCardIndex.current, lastCardIndex.current),
+                    slicedData: filteredData?.slice(firstCardIndex.current, lastCardIndex.current),
                     firstCardIndex: firstCardIndex.current
                 }
             )

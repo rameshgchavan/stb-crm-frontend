@@ -5,7 +5,7 @@ const initialState =
 {
     transactions: [],
     filteredTransactions: [],
-    filteredSlicedTransactions: { slicedTransactions: [], firstCardIndex: 0 },
+    filteredSlicedTransactions: { slicedData: [], firstCardIndex: 0 },
 };
 
 const transactionsSlice = createSlice({

@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 
-import { addFilteredCustomersAction } from "../../redux/features/customers/customersSlice";
+import { addFilteredSlicedCustomersAction } from "../../redux/features/customers/customersSlice";
 
 /*This component filters customer data as user choice*/
 // This component is used in routes/FilterRoutes
@@ -14,7 +14,7 @@ const CustomersFilter = () => {
     const cardsPerPage = useRef(12);
     const [currentPage, setCurrentPage] = useState(1);
     const lastPage = useRef(1);
-    const firtCardIndex = useRef(0);
+    const firstCardIndex = useRef(0);
     const lastCardIndex = useRef(cardsPerPage.current);
 
     const searchedName = useRef("");
@@ -186,15 +186,15 @@ const CustomersFilter = () => {
     const sliceCustomers = (filteredData, curPage = 1) => {
         // Set up index for pages
         lastCardIndex.current = curPage * cardsPerPage.current;
-        firtCardIndex.current = lastCardIndex.current - cardsPerPage.current;
+        firstCardIndex.current = lastCardIndex.current - cardsPerPage.current;
         lastPage.current = Math.ceil(filteredData?.length / cardsPerPage.current)
 
         // Updating sliced data to redux store using redux action
         dispatch(
-            addFilteredCustomersAction(
+            addFilteredSlicedCustomersAction(
                 {
-                    filteredData: filteredData?.slice(firtCardIndex.current, lastCardIndex.current),
-                    firtCardIndex: firtCardIndex.current
+                    slicedData: filteredData?.slice(firstCardIndex.current, lastCardIndex.current),
+                    firstCardIndex: firstCardIndex.current
                 }
             )
         );
@@ -368,9 +368,9 @@ const CustomersFilter = () => {
 
                         <Form.Label className="text-light mx-2">
                             {
-                                firtCardIndex.current + 1 === filteredCustomres?.length // if first index equal to no of records
+                                firstCardIndex.current + 1 === filteredCustomres?.length // if first index equal to no of records
                                     ? ""
-                                    : firtCardIndex.current + 1 + "-"
+                                    : firstCardIndex.current + 1 + "-"
                             }
                             {
                                 lastCardIndex.current > filteredCustomres?.length // if last index is greater than no of records

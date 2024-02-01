@@ -5,7 +5,7 @@ const initialState =
 {
     customers: [],
     filteredCustomers: [],
-    firtCardIndex: 0
+    filteredSlicedCustomers: { slicedData: [], firstCardIndex: 0 },
 };
 
 const customersSlice = createSlice({
@@ -23,10 +23,9 @@ const customersSlice = createSlice({
             state.customers.push(action.payload);
         },
         // setting data in filteredCustomers array and firstCardIndex 
-        addFilteredCustomersAction: (state, action) => {
+        addFilteredSlicedCustomersAction: (state, action) => {
             // overriding customers and spreading payload array
-            state.filteredCustomers = [...action.payload.filteredData];
-            state.firtCardIndex = action.payload.firtCardIndex;
+            state.filteredSlicedCustomers = action.payload;
         },
         updateCustomerAction: (state, action) => {
             const { id, customerData } = action.payload;
@@ -38,7 +37,7 @@ const customersSlice = createSlice({
 export const {
     addCustomerAction,
     addCustomersAction,
-    addFilteredCustomersAction,
+    addFilteredSlicedCustomersAction,
     updateCustomerAction
 } = customersSlice.actions;
 // exporting reducer
