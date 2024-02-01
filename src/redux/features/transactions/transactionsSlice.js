@@ -5,7 +5,7 @@ const initialState =
 {
     transactions: [],
     filteredTransactions: [],
-    firtCardIndex: 0
+    filteredSlicedTransactions: { slicedTransactions: [], firstCardIndex: 0 },
 };
 
 const transactionsSlice = createSlice({
@@ -13,16 +13,21 @@ const transactionsSlice = createSlice({
     initialState,
     reducers:
     {
-        // setting data intransactions array
+        // setting data in transactions array
         addTransactionsAction: (state, action) => {
             // overriding transactions and spreading payload array
             state.transactions = [...action.payload];
         },
-        // setting data in filteredTransactions array and firstCardIndex 
+
+        // setting data in filteredTransactions array
         addFilteredTransactionsAction: (state, action) => {
+            state.filteredTransactions = [...action.payload]
+        },
+
+        // setting data in filteredSlicedTransactions array and firstCardIndex 
+        addFilteredSlicedTransactionsAction: (state, action) => {
             // overriding transactions and spreading payload array
-            state.filteredTransactions = [...action.payload.filteredData];
-            state.firtCardIndex = action.payload.firtCardIndex;
+            state.filteredSlicedTransactions = action.payload;
         },
     }
 });
@@ -30,7 +35,8 @@ const transactionsSlice = createSlice({
 // exporting actions
 export const {
     addTransactionsAction,
-    addFilteredTransactionsAction
+    addFilteredTransactionsAction,
+    addFilteredSlicedTransactionsAction
 } = transactionsSlice.actions;
 // exporting reducer
 export default transactionsSlice.reducer;

@@ -13,19 +13,20 @@ const TransactionsPage = () => {
 
     const { isLoading } = useSelector(state => state.loadingReducer);
 
-    // Note: data: filteredCustomers is not object key value pair
-    // data: filteredCustomers <-- here  filteredCustomers is alias of data
-    const { filteredTransactions, firtCardIndex } = useSelector(state => state.transactionsReducer);
+    // getting filtered and sliced transactions
+    const { filteredSlicedTransactions } = useSelector(state => state.transactionsReducer);
+    // destructuring filteredSlicedTransactions object
+    const { slicedTransactions, firstCardIndex } = filteredSlicedTransactions;
 
     return (
         <>
-            {!isLoading && filteredTransactions.length > 0 && !showPreview &&
+            {!isLoading && slicedTransactions.length > 0 && !showPreview &&
                 <Button variant="success" size="sm" className="my-2"
                     onClick={() => { setShowPreview(true) }}
                 >Show Print Preview</Button>
             }
 
-            {!isLoading && filteredTransactions.length > 0 && showPreview &&
+            {!isLoading && slicedTransactions.length > 0 && showPreview &&
                 <Button variant="danger" size="sm" className="my-2"
                     onClick={() => { setShowPreview(false) }}
                 >Hide Print Preview</Button>
@@ -34,12 +35,12 @@ const TransactionsPage = () => {
             <div className="d-flex flex-wrap justify-content-evenly">
                 {isLoading
                     ? <h3>Loading...</h3>
-                    : filteredTransactions?.length === 0
+                    : slicedTransactions?.length === 0
                         ? <h3>Oops... no record found.</h3>
-                        : !showPreview && filteredTransactions?.map((transaction, index) => {
+                        : !showPreview && slicedTransactions?.map((transaction, index) => {
                             return <TransactionCard
                                 key={index}
-                                srNo={(index + 1) + firtCardIndex}
+                                srNo={(index + 1) + firstCardIndex}
                                 transaction={transaction}
                             />
                         })

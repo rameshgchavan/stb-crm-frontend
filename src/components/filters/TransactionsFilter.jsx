@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import getTransactionsByType from "../../functions/transactions/getTransactionsByType";
 
 // actions
-import { addTransactionsAction, addFilteredTransactionsAction } from "../../redux/features/transactions/transactionsSlice";
+import { addTransactionsAction, addFilteredTransactionsAction, addFilteredSlicedTransactionsAction } from "../../redux/features/transactions/transactionsSlice";
 import { changeLoadingAction } from "../../redux/features/loadingSlice";
 
 /*This component filters transaction data as user choice*/
@@ -19,7 +19,7 @@ const TransactionsFilter = () => {
     const cardsPerPage = useRef(12);
     const [currentPage, setCurrentPage] = useState(1);
     const lastPage = useRef(1);
-    const firtCardIndex = useRef(0);
+    const firstCardIndex = useRef(0);
     const lastCardIndex = useRef(cardsPerPage.current);
 
     // Getting and initialized user seletion from local storage
@@ -189,10 +189,12 @@ const TransactionsFilter = () => {
                     || transaction?.customer.VC_NDS_MAC_ID?.toLowerCase().includes(searchedName.current.toLowerCase())
             });
 
+        // Updating filteted trandactions to redux store using redux action
+        // Its usefull in printing transations
+        dispatch(addFilteredTransactionsAction(filteredData))
+
         // Set filtered customer data to state
         setFilteredTransactions(filteredData);
-
-        setCurrentPage(1);
 
         // Send filtered transactions to slice
         sliceTransactions(filteredData);
@@ -203,15 +205,15 @@ const TransactionsFilter = () => {
     const sliceTransactions = (filteredData, curPage = 1) => {
         // Set up index for pages
         lastCardIndex.current = curPage * cardsPerPage.current;
-        firtCardIndex.current = lastCardIndex.current - cardsPerPage.current;
+        firstCardIndex.current = lastCardIndex.current - cardsPerPage.current;
         lastPage.current = Math.ceil(filteredData?.length / cardsPerPage.current)
 
-        // Updating sliced data to redux store using redux action
+        // Updating sliced data and card index to redux store using redux action
         dispatch(
-            addFilteredTransactionsAction(
+            addFilteredSlicedTransactionsAction(
                 {
-                    filteredData: filteredData?.slice(firtCardIndex.current, lastCardIndex.current),
-                    firtCardIndex: firtCardIndex.current
+                    slicedTransactions: filteredData?.slice(firstCardIndex.current, lastCardIndex.current),
+                    firstCardIndex: firstCardIndex.current
                 }
             )
         );
@@ -395,9 +397,9 @@ const TransactionsFilter = () => {
 
                         <Form.Label className="text-light mx-2">
                             {
-                                firtCardIndex.current + 1 === filteredTransactions?.length // if first index equal to no of records
+                                firstCardIndex.current + 1 === filteredTransactions?.length // if first index equal to no of records
                                     ? ""
-                                    : firtCardIndex.current + 1 + "-"
+                                    : firstCardIndex.current + 1 + "-"
                             }
                             {
                                 lastCardIndex.current > filteredTransactions?.length // if last index is greater than no of records
