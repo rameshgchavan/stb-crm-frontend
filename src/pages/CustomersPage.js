@@ -17,9 +17,8 @@ const CustomersPage = () => {
     return (
         <>
             <div className="d-flex flex-wrap justify-content-evenly">
-                {!slicedData
-                    ? <h3>Loading...</h3>
-                    : slicedData?.length == 0
+                {
+                    slicedData?.length == 0
                         ? <h3>Oops... no record found.</h3>
                         : slicedData?.map((customer, index) => {
                             return <CustomerCard
