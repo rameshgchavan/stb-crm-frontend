@@ -8,12 +8,14 @@ const LoadingModal = () => {
   if (!showMe) return null;
 
   return (
-    <Modal show={showMe} className="d-flex align-items-center">
+    <Modal show={showMe} className="d-flex justify-content-center align-items-center">
       <Modal.Header >
-          <Modal.Title style={{ height: "16px", fontSize: "16px" }}>Please wait</Modal.Title>
-        </Modal.Header>
+        <Modal.Title style={{ height: "16px", fontSize: "16px" }}>Please wait</Modal.Title>
+      </Modal.Header>
       <Modal.Body className="text-center">
-        <h4>Loading...</h4>
+        <h4>Loading<img src="/loading.gif" alt="working" width="100" height="20"/></h4>
+       
+        <img src="/working.gif" alt="working" width="200" height="135"/>
       </Modal.Body>
       {/* <Modal.Footer>
                     <Button variant="secondary" onClick={() => closeMe(false)}>
