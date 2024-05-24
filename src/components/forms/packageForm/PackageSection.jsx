@@ -74,8 +74,8 @@ const PackageSection = ({ transaction }) => {
 
                 <div>A-La-Carte Count: {aLaCarteCount.current}</div>
 
-                <div>Toal LCO Price: {totalBasePrice.toFixed(2)}</div>
-                <div>Total Base Price: {totalLCOPrice.toFixed(2)}</div>
+                <div>Total LCO Price: {totalLCOPrice.toFixed(2)}</div>
+                <div>Total Base Price: {totalBasePrice.toFixed(2)}</div> 
 
                 <div className="fs-5 fw-bold bg-danger text.light p-1 rounded m-0">
                     ₹ {Bill.toFixed(2)}
